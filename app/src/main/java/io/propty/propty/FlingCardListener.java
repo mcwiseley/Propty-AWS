@@ -1,8 +1,5 @@
 package io.propty.propty;
 
-/**
- * Created by Michael on 1/28/2016.
- */
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.PointF;
