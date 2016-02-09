@@ -18,6 +18,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <manifest android:versioncode="1" android:versionname="1.0" package="com.learn2crack" xmlns:android="http://schemas.android.com/apk/res/android">
+            <uses-sdk android:minsdkversion="9" android:targetsdkversion="17">
+                <application android:icon="@drawable/ic_launcher" android:label="@string/app_name">
+
+                    <activity android:label="@string/app_name" android:name="Login">
+                        <intent-filter>
+                            <action android:name="android.intent.action.MAIN">
+                                <category android:name="android.intent.category.LAUNCHER">
+                                </category></action></intent-filter>
+                    </activity>
+                    <activity android:label="@string/app_name" android:name="Register">
+
+                    </activity>
+
+                    <activity android:label="@string/app_name" android:name="Registered">
+
+                    </activity>
+
+                    <activity android:label="Propty Command Center" android:name="Main">
+
+                    </activity>
+
+                    <activity android:label="@string/app_name" android:name="PasswordReset">
+
+                    </activity>
+                    <activity android:label="@string/app_name" android:name="ChangePassword">
+
+                    </activity>
+
+                </application>
+                <!-- Allow to connect with internet and to know the current network state-->
+                <uses-permission android:name="android.permission.INTERNET">
+                    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
+
+                    </uses-permission></uses-permission></uses-sdk></manifest>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -28,7 +63,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" android:theme="@style/AppTheme" />
+        <activity android:name=".Login" android:theme="@style/AppTheme" />
         <activity android:name=".SignupActivity" android:theme="@style/AppTheme" />
         <activity
             android:name="com.amazon.identity.auth.device.authorization.AuthorizationActivity"

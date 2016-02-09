@@ -21,59 +21,75 @@ import com.facebook.login.LoginResult;
 import java.util.Arrays;
 
 
-public class MainActivity extends AppCompatActivity {
-    CallbackManager callbackManager;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import net.chainring.developer.propty.UserFunctions;
+import net.chainring.developer.propty.DatabaseHandler;
+
+import java.util.HashMap;
+
+public class Main extends Activity {
+    Button btnLogout;
+    Button changepas;
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        setContentView(R.layout.main);
+
+        changepas = (Button) findViewById(R.id.btchangepass);
+        btnLogout = (Button) findViewById(R.id.logout);
+
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+
+        /**
+         * Hashmap to load data from the Sqlite database
+         **/
+        HashMap user = new HashMap();
+        user = db.getUserDetails();
+
+        /**
+         * Change Password Activity Started
+         **/
+        changepas.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View arg0){
+
+                Intent chgpass = new Intent(getApplicationContext(), ChangePassword.class);
+
+                startActivity(chgpass);
+            }
+
         });
 
+        /**
+         *Logout from the User Panel which clears the data in Sqlite database
+         **/
+        btnLogout.setOnClickListener(new View.OnClickListener() {
 
-    }
+            public void onClick(View arg0) {
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+                UserFunctions logout = new UserFunctions();
+                logout.logoutUser(getApplicationContext());
+                Intent login = new Intent(getApplicationContext(), Login.class);
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(login);
+                finish();
+            }
+        });
+/**
+ * Sets user first name and last name in text view.
+ **/
+        final TextView login = (TextView) findViewById(R.id.textwelcome);
+        login.setText("Welcome  "+user.get("fname"));
+        final TextView lname = (TextView) findViewById(R.id.lname);
+        lname.setText(user.get("lname"));
 
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
-    @Override
-
-    protected void onPause() {
-        super.onPause();
-
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-}
+    }}
 
