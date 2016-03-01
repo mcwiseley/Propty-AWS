@@ -69,7 +69,7 @@ public class ChangePassword extends Activity {
             }
         });}
 
-    private class NetCheck extends AsyncTask
+    private class NetCheck extends AsyncTask<String, Void, Boolean>
     {
         private ProgressDialog nDialog;
 
@@ -121,7 +121,8 @@ public class ChangePassword extends Activity {
         }
     }
 
-    private class ProcessRegister extends AsyncTask {
+    private class ProcessRegister extends AsyncTask<String, Void, JSONObject>
+    {
 
         private ProgressDialog pDialog;
 
@@ -131,7 +132,7 @@ public class ChangePassword extends Activity {
             super.onPreExecute();
             DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-            HashMap user = new HashMap();
+            HashMap<String, String> user = new HashMap();
             user = db.getUserDetails();
 
             newpas = newpass.getText().toString();

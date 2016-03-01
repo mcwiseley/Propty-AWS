@@ -29,7 +29,7 @@ public class Registered extends Activity {
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-        HashMap user = new HashMap();
+        HashMap<String, String> user = new HashMap();
         user = db.getUserDetails();
 
         /**

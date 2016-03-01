@@ -68,8 +68,7 @@ public class PasswordReset extends Activity {
 
         });}
 
-    private class NetCheck extends AsyncTask
-
+    private class NetCheck extends AsyncTask<String, Void, Boolean>
     {
         private ProgressDialog nDialog;
 
@@ -123,7 +122,8 @@ public class PasswordReset extends Activity {
         }
     }
 
-    private class ProcessRegister extends AsyncTask {
+    private class ProcessRegister extends AsyncTask<String, Void, JSONObject>
+    {
 
         private ProgressDialog pDialog;
 

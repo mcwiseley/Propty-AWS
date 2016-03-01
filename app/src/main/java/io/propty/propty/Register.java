@@ -121,7 +121,7 @@ public class Register extends Activity {
      * Async Task to check whether internet connection is working
      **/
 
-    private class NetCheck extends AsyncTask
+    private class NetCheck extends AsyncTask<String, Void, Boolean>
     {
         private ProgressDialog nDialog;
 
@@ -178,7 +178,8 @@ public class Register extends Activity {
         }
     }
 
-    private class ProcessRegister extends AsyncTask {
+    private class ProcessRegister extends AsyncTask<String, Void, JSONObject>
+    {
 
         /**
          * Defining Process dialog

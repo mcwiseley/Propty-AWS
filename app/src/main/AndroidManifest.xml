@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="io.propty.propty">
 
+    <!-- Allow to connect with internet and to know the current network state-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/proptydog2"
@@ -18,57 +22,67 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <manifest android:versioncode="1" android:versionname="1.0" package="com.learn2crack" xmlns:android="http://schemas.android.com/apk/res/android">
-            <uses-sdk android:minsdkversion="9" android:targetsdkversion="17">
-                <application android:icon="@drawable/ic_launcher" android:label="@string/app_name">
 
-                    <activity android:label="@string/app_name" android:name="Login">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN">
-                                <category android:name="android.intent.category.LAUNCHER">
-                                </category></action></intent-filter>
-                    </activity>
-                    <activity android:label="@string/app_name" android:name="Register">
-
-                    </activity>
-
-                    <activity android:label="@string/app_name" android:name="Registered">
-
-                    </activity>
-
-                    <activity android:label="Propty Command Center" android:name="Main">
-
-                    </activity>
-
-                    <activity android:label="@string/app_name" android:name="PasswordReset">
-
-                    </activity>
-                    <activity android:label="@string/app_name" android:name="ChangePassword">
-
-                    </activity>
-
-                </application>
-                <!-- Allow to connect with internet and to know the current network state-->
-                <uses-permission android:name="android.permission.INTERNET">
-                    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE">
-
-                    </uses-permission></uses-permission></uses-sdk></manifest>
         <activity
             android:name=".Main"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- STUB -->
         </activity>
-        <activity android:name=".Login" android:theme="@style/AppTheme" />
-        <activity android:name=".SignupActivity" android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".Login"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name=".SignupActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name=".Register"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name="Registered"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name=".PasswordReset"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name=".ChangePassword"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <!-- STUB -->
+        </activity>
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
 
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
 </manifest>
