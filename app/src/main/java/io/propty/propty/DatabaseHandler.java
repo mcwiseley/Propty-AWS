@@ -20,10 +20,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "propty_login";
 
-    // Login table name
+    // L_ogin table name
     private static final String TABLE_LOGIN = "login";
 
-    // Login Table Columns names
+    // L_ogin Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_FIRSTNAME = "fname";
     private static final String KEY_LASTNAME = "lname";
@@ -82,8 +82,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Getting user data from database
      * */
-    public HashMap getUserDetails(){
-        HashMap user = new HashMap();
+    public HashMap<String, String> getUserDetails(){
+        HashMap<String, String> user = new HashMap<>();
         String selectQuery = "SELECT  * FROM " + TABLE_LOGIN;
 
         SQLiteDatabase db = this.getReadableDatabase();

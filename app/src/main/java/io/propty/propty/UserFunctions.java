@@ -25,7 +25,7 @@ public class UserFunctions {
     }
 
     /**
-     * Function to Login
+     * Function to L_ogin
      **/
 
     public JSONObject loginUser(String email, String password) {

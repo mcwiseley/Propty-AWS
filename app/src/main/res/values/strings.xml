@@ -14,4 +14,5 @@
     <string name="facebook_login_success">Login attempt successful!\nUser ID: %1$s\nAuth Token: %2$s</string>
     <string name="facebook_login_cancel">Login attempt canceled.</string>
     <string name="facebook_login_error">Login attempt failed.</string>
+    <string name="welcome_text">Welcome, %1$s</string>
 </resources>

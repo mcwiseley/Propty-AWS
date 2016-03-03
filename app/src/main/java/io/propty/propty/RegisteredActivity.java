@@ -13,11 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import io.propty.propty.DatabaseHandler;
-
 import java.util.HashMap;
 
-public class Registered extends Activity {
+public class RegisteredActivity extends Activity {
 
     /**
      * Called when the activity is first created.
@@ -25,7 +23,7 @@ public class Registered extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.registered);
+        setContentView(R.layout.activity_registered);
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
@@ -50,7 +48,7 @@ public class Registered extends Activity {
         Button login = (Button) findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), Login.class);
+                Intent myIntent = new Intent(view.getContext(), LoginActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
             }

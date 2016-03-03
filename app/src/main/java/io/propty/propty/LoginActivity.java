@@ -32,7 +32,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Login extends Activity {
+public class LoginActivity extends Activity {
 
     private CallbackManager callbackManager;
     private LoginButton fbLoginBtn;
@@ -97,26 +97,26 @@ public class Login extends Activity {
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), Main.class);
+                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(myIntent);
         }});
 
         btnPassReset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), PasswordReset.class);
+                Intent myIntent = new Intent(view.getContext(), ResetPasswordActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
         }});
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), Register.class);
+                Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
         }});
 
         /**
-         * Login button click event
+         * L_ogin button click event
          * A Toast is set to alert when the Email and Password field is empty
          **/
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +157,7 @@ public class Login extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            nDialog = new ProgressDialog(Login.this);
+            nDialog = new ProgressDialog(LoginActivity.this);
             nDialog.setTitle("Checking Network");
             nDialog.setMessage("Loading..");
             nDialog.setIndeterminate(false);
@@ -219,7 +219,7 @@ public class Login extends Activity {
             inputPassword = (EditText) findViewById(R.id.pword);
             email = inputEmail.getText().toString();
             password = inputPassword.getText().toString();
-            pDialog = new ProgressDialog(Login.this);
+            pDialog = new ProgressDialog(LoginActivity.this);
             pDialog.setTitle("Contacting Servers");
             pDialog.setMessage("Logging in ...");
             pDialog.setIndeterminate(false);
@@ -250,11 +250,11 @@ public class Login extends Activity {
                         logout.logoutUser(getApplicationContext());
                         db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
                         // If JSON array details are stored in SQlite it launches the User Panel.
-                        Intent upanel = new Intent(getApplicationContext(), Main.class);
+                        Intent upanel = new Intent(getApplicationContext(), MainActivity.class);
                         upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         pDialog.dismiss();
                         startActivity(upanel);
-                        // Close Login Screen
+                        // Close L_ogin Screen
                         finish();
                     }
                     else {
@@ -268,7 +268,5 @@ public class Login extends Activity {
         }
     }
 
-    public void NetAsync(View view) {
-        new NetCheck().execute();
-    }
+    public void NetAsync(View view) { new NetCheck().execute(); }
 }

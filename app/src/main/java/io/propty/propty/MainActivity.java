@@ -1,43 +1,22 @@
 package io.propty.propty;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
-//import android.support.design.widget.Snackbar;
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v7.widget.Toolbar;
 import android.view.View;
-//import android.view.Menu;
-//import android.view.MenuItem;
-
-//import com.facebook.CallbackManager;
-//import com.facebook.FacebookCallback;
-//import com.facebook.FacebookException;
-//import com.facebook.FacebookSdk;
-//import com.facebook.appevents.AppEventsLogger;
-//import com.facebook.login.LoginManager;
-//import com.facebook.login.LoginResult;
-
-//import java.util.Arrays;
-
-
 import android.app.Activity;
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import java.util.HashMap;
 //import net.chainring.developer.propty.UserFunctions;
 //import net.chainring.developer.propty.DatabaseHandler;
 
-import com.facebook.FacebookSdk;
-
-import java.util.HashMap;
-
-public class Main extends Activity {
-    Button btnLogin;
-    Button btnLogout;
+public class MainActivity extends Activity {
     Button btnChangePass;
+    Button btnLogout;
+    Button btnLogin;
+    Button btnSwipeCard;
+    Resources res;
 
     /**
      * Called when the activity is first created.
@@ -45,44 +24,37 @@ public class Main extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         btnChangePass = (Button) findViewById(R.id.btchangepass);
         btnLogout = (Button) findViewById(R.id.btlogout);
         btnLogin = (Button) findViewById(R.id.btlogin);
+        btnSwipeCard = (Button) findViewById(R.id.btswipecard);
+        res = getResources();
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-        /**
-         * Hashmap to load data from the Sqlite database
-         **/
-        HashMap user = new HashMap();
-        user = db.getUserDetails();
+        // Hashmap to load data from the Sqlite database
+        HashMap<String, String> user = db.getUserDetails();
 
         /**
          * Change Password Activity Started
          **/
-        btnChangePass.setOnClickListener(new View.OnClickListener(){
+        btnChangePass.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0){
-
-                Intent chgpass = new Intent(getApplicationContext(), ChangePassword.class);
-
+                Intent chgpass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
                 startActivity(chgpass);
             }
-
         });
 
         /**
          *Logout from the User Panel which clears the data in Sqlite database
          **/
         btnLogout.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View arg0) {
-
                 UserFunctions logout = new UserFunctions();
                 logout.logoutUser(getApplicationContext());
-                Intent login = new Intent(getApplicationContext(), Login.class);
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
                 finish();
@@ -91,18 +63,25 @@ public class Main extends Activity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                Intent login = new Intent(getApplicationContext(), Login.class);
+                Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
             }
         });
-/**
- * Sets welcome message for a logged-in user.
- **/
-//        final TextView login = (TextView) findViewById(R.id.textwelcome);
-//        login.setText("Welcome  " + user.get("fname"));
+
+        btnSwipeCard.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
+                startActivity(swipecard);
+            }
+        });
+
+//        // Set welcome message for a logged-in user.
+//        final TextView welcome = (TextView) findViewById(R.id.textwelcome);
+//        String fname = user.get("fname").toString();
+//        String welcomeText = String.format(res.getString(R.string.welcome_text), fname);
+//        welcome.setText(welcomeText);
 //        final TextView lname = (TextView) findViewById(R.id.lname);
-//        lname.setText(user.get("lname"));
-//
+//        lname.setText(user.get("lname").toString());
     }
 
 }

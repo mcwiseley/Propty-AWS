@@ -1,8 +1,5 @@
 package io.propty.propty;
 
-/**
- * Created by micheal on 11/18/15.
- */
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -12,12 +9,11 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import io.propty.propty.UserFunctions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,15 +22,17 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 
-public class PasswordReset extends Activity {
+public class ChangePasswordActivity extends Activity {
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_ERROR = "error";
 
-    EditText email;
+    EditText newpass;
     TextView alert;
-    Button resetpass;
+    Button changepass;
+    Button cancel;
 
     /**
      * Called when the activity is first created.
@@ -43,29 +41,29 @@ public class PasswordReset extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.passwordreset);
+        setContentView(R.layout.activity_changepassword);
 
-        Button login = (Button) findViewById(R.id.bktolog);
-        login.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), Login.class);
-                startActivityForResult(myIntent, 0);
+        cancel = (Button) findViewById(R.id.btcancel);
+        cancel.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View arg0){
+
+                Intent login = new Intent(getApplicationContext(), MainActivity.class);
+
+                startActivity(login);
                 finish();
             }
 
         });
 
-        email = (EditText) findViewById(R.id.forpas);
-        alert = (TextView) findViewById(R.id.alert);
-        resetpass = (Button) findViewById(R.id.respass);
-        resetpass.setOnClickListener(new View.OnClickListener() {
+        newpass = (EditText) findViewById(R.id.newpass);
+        alert = (TextView) findViewById(R.id.alertpass);
+        changepass = (Button) findViewById(R.id.btchangepass);
+
+        changepass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 NetAsync(view);
-
             }
-
         });}
 
     private class NetCheck extends AsyncTask<String, Void, Boolean>
@@ -75,7 +73,7 @@ public class PasswordReset extends Activity {
         @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            nDialog = new ProgressDialog(PasswordReset.this);
+            nDialog = new ProgressDialog(ChangePasswordActivity.this);
             nDialog.setMessage("Loading..");
             nDialog.setTitle("Checking Network");
             nDialog.setIndeterminate(false);
@@ -85,7 +83,6 @@ public class PasswordReset extends Activity {
 
         @Override
         protected Boolean doInBackground(String... args){
-
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnected()) {
@@ -106,7 +103,6 @@ public class PasswordReset extends Activity {
                 }
             }
             return false;
-
         }
         @Override
         protected void onPostExecute(Boolean th){
@@ -127,13 +123,19 @@ public class PasswordReset extends Activity {
 
         private ProgressDialog pDialog;
 
-        String forgotpassword;
+        String newpas,email;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            forgotpassword = email.getText().toString();
+            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-            pDialog = new ProgressDialog(PasswordReset.this);
+            HashMap<String, String> user = new HashMap();
+            user = db.getUserDetails();
+
+            newpas = newpass.getText().toString();
+            email = user.get("email");
+
+            pDialog = new ProgressDialog(ChangePasswordActivity.this);
             pDialog.setTitle("Contacting Servers");
             pDialog.setMessage("Getting Data ...");
             pDialog.setIndeterminate(false);
@@ -145,42 +147,44 @@ public class PasswordReset extends Activity {
         protected JSONObject doInBackground(String... args) {
 
             UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.forPass(forgotpassword);
+            JSONObject json = userFunction.chgPass(newpas, email);
+            Log.d("Button", "Register");
             return json;
 
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
-            /**
-             * Checks if the Password Change Process is sucesss
-             **/
+
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                     alert.setText("");
                     String res = json.getString(KEY_SUCCESS);
                     String red = json.getString(KEY_ERROR);
 
-                    if(Integer.parseInt(res) == 1){
+                    if (Integer.parseInt(res) == 1) {
+                        /**
+                         * Dismiss the process dialog
+                         **/
                         pDialog.dismiss();
-                        alert.setText("A recovery email is sent to you, see it for more details.");
+                        alert.setText("Your Password is successfully changed.");
 
-                    }
-                    else if (Integer.parseInt(red) == 2)
-                    {    pDialog.dismiss();
-                        alert.setText("Your email does not exist in our database.");
-                    }
-                    else {
+                    } else if (Integer.parseInt(red) == 2) {
                         pDialog.dismiss();
-                        alert.setText("Error occured in changing Password");
+                        alert.setText("Invalid old Password.");
+                    } else {
+                        pDialog.dismiss();
+                        alert.setText("Error occured in changing Password.");
                     }
 
-                }}
-            catch (JSONException e) {
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
 
             }
+
         }}
     public void NetAsync(View view){
         new NetCheck().execute();
     }}
+
