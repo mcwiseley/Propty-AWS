@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -33,17 +32,13 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                signup();
-            }
+            public void onClick(View v) { signup(); }
         });
 
         _loginLink.setOnClickListener(new View.OnClickListener() {
+            // Finish the registration screen and return to the Login activity
             @Override
-            public void onClick(View v) {
-                // Finish the registration screen and return to the Login activity
-                finish();
-            }
+            public void onClick(View v) { finish(); }
         });
     }
 
@@ -57,8 +52,7 @@ public class SignupActivity extends AppCompatActivity {
 
         _signupButton.setEnabled(false);
 
-        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
-                R.style.AppTheme);
+        final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this, R.style.AppTheme);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
@@ -90,13 +84,11 @@ public class SignupActivity extends AppCompatActivity {
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
-
         _signupButton.setEnabled(true);
     }
 
     public boolean validate() {
         boolean valid = true;
-
         String name = _nameText.getText().toString();
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();

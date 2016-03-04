@@ -1,36 +1,31 @@
 package io.propty.propty;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import org.json.JSONException;
-import org.json.JSONObject;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-//import io.propty.propty.DatabaseHandler;
-//import io.propty.propty.UserFunctions;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends Activity {
 
@@ -96,31 +91,37 @@ public class LoginActivity extends Activity {
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), MainActivity.class);
                 startActivity(myIntent);
-        }});
+            }
+        });
 
         btnPassReset.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ResetPasswordActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
-        }});
+            }
+        });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
-        }});
+            }
+        });
 
         /**
          * Login button click event
          * A Toast is set to alert when the Email and Password field is empty
          **/
         btnLogin.setOnClickListener(new View.OnClickListener() {
-
+            @Override
             public void onClick(View view) {
                 if ((!inputEmail.getText().toString().isEmpty()) && (!inputPassword.getText().toString().isEmpty())) {
                     // TODO: log the user in
@@ -129,15 +130,15 @@ public class LoginActivity extends Activity {
                 }
                 else if ((!inputEmail.getText().toString().isEmpty())) {
                     Toast.makeText(getApplicationContext(),
-                            "Password field empty", Toast.LENGTH_SHORT).show();
+                            "Password field is empty", Toast.LENGTH_SHORT).show();
                 }
                 else if ((!inputPassword.getText().toString().isEmpty())) {
                     Toast.makeText(getApplicationContext(),
-                            "Email field empty", Toast.LENGTH_SHORT).show();
+                            "Email field is empty", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(getApplicationContext(),
-                            "Email and Password field are empty", Toast.LENGTH_SHORT).show();
+                            "Email and Password fields are empty", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -192,7 +193,6 @@ public class LoginActivity extends Activity {
 
         @Override
         protected void onPostExecute(Boolean th) {
-
             if (th) {
                 nDialog.dismiss();
                 new ProcessLogin().execute();
@@ -214,7 +214,6 @@ public class LoginActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             inputEmail = (EditText) findViewById(R.id.email);
             inputPassword = (EditText) findViewById(R.id.pword);
             email = inputEmail.getText().toString();
@@ -262,9 +261,7 @@ public class LoginActivity extends Activity {
                         loginErrorMsg.setText("Incorrect username/password");
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            } catch (JSONException e) { e.printStackTrace(); }
         }
     }
 

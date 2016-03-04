@@ -8,13 +8,16 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import io.propty.propty.SwipeCard;
 import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-
+/**
+ * Swipe Card Activity
+ * Called when the user wants to see local property listings in a swipe-card format
+ * Uses an ArrayList of SwipeCard objects to populate the list
+ **/
 public class SwipeCardActivity extends Activity {
 
     private ArrayList<SwipeCard> sc;
@@ -23,7 +26,6 @@ public class SwipeCardActivity extends Activity {
     private int i;
 
     @InjectView(R.id.frame) SwipeFlingAdapterView flingContainer;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,6 @@ public class SwipeCardActivity extends Activity {
         }
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al );
-
-
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -94,7 +94,6 @@ public class SwipeCardActivity extends Activity {
             }
         });
 
-
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -122,8 +121,4 @@ public class SwipeCardActivity extends Activity {
     public void left() {
         flingContainer.getTopCardListener().selectLeft();
     }
-
-
-
-
 }

@@ -2,7 +2,7 @@ package io.propty.propty;
 
 /**
  * Created by tkelly on 3/4/16.
- * SwipeCard data class
+ * Swipe Card Data Class
  * Contains all of the relevant MLS data for a single listing, and get methods that convert the data into a String for display purposes
  * Constructor takes 7 arguments:
  * 1. String description - the 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
@@ -12,7 +12,7 @@ package io.propty.propty;
  * 5. int sq_ft - the square footage ('SqFtTotal' or 'SqFtUnderRoof' on MLS)
  * 6. double list_price - the listed price of the property ('ListPrice' on MLS)
  * 7. String property_type - the type of the property ('ListingType' or 'PropertyType' on MLS)
- */
+ **/
 public class SwipeCard {
     private String desc, type;
     private int beds, sqFt;
@@ -29,10 +29,10 @@ public class SwipeCard {
         type = property_type;
     }
 
-    public String getDesc() { return desc; }
-    public String getBeds() { return Integer.toString(beds); }
-    public String getBaths() { return Double.toString(baths); }
-    public String getSqFt() { return Integer.toString(sqFt); }
-    public String getPrice() { return Double.toString(price); }
-    public String getType() { return type; }
+    String getDesc() { return desc; }
+    String getBeds() { return Integer.toString(beds); }
+    String getBaths() { return Double.toString(baths); }
+    String getSqFt() { return Integer.toString(sqFt); }
+    String getPrice() { return Double.toString(price); }
+    String getType() { return type; }
 }

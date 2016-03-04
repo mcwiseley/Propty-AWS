@@ -1,9 +1,6 @@
 package io.propty.propty;
 
 /**
- * Created by mike on 2/9/16.
- */
-/**
  * Created by micheal on 11/18/15.
  */
 import android.app.Activity;
@@ -12,7 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.HashMap;
 
 public class RegisteredActivity extends Activity {
@@ -27,13 +23,9 @@ public class RegisteredActivity extends Activity {
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-        HashMap<String, String> user = new HashMap();
-        user = db.getUserDetails();
+        HashMap<String, String> user = db.getUserDetails();
 
-        /**
-         * Displays the registration details in Text view
-         **/
-
+        // Displays the registration details in Text view
         final TextView fname = (TextView)findViewById(R.id.fname);
         final TextView lname = (TextView)findViewById(R.id.lname);
         final TextView uname = (TextView)findViewById(R.id.uname);
@@ -55,4 +47,5 @@ public class RegisteredActivity extends Activity {
 
         });
 
-    }}
+    }
+}

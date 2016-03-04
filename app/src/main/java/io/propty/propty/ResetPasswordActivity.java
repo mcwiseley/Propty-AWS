@@ -11,28 +11,25 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ResetPasswordActivity extends Activity {
 
+    private EditText email;
+    private TextView alert;
+    private Button resetpass, login;
+
     private static String KEY_SUCCESS = "success";
     private static String KEY_ERROR = "error";
-
-    EditText email;
-    TextView alert;
-    Button resetpass;
 
     /**
      * Called when the activity is first created.
@@ -40,38 +37,33 @@ public class ResetPasswordActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_resetpassword);
 
-        Button login = (Button) findViewById(R.id.bktolog);
+        email = (EditText) findViewById(R.id.forpas);
+        alert = (TextView) findViewById(R.id.alert);
+        resetpass = (Button) findViewById(R.id.respass);
+        login = (Button) findViewById(R.id.bktolog);
+
         login.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), LoginActivity.class);
                 startActivityForResult(myIntent, 0);
                 finish();
             }
-
         });
 
-        email = (EditText) findViewById(R.id.forpas);
-        alert = (TextView) findViewById(R.id.alert);
-        resetpass = (Button) findViewById(R.id.respass);
         resetpass.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { NetAsync(view); }
+        });
+    }
 
-                NetAsync(view);
-
-            }
-
-        });}
-
-    private class NetCheck extends AsyncTask<String, Void, Boolean>
-    {
+    private class NetCheck extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog nDialog;
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
             nDialog = new ProgressDialog(ResetPasswordActivity.this);
             nDialog.setMessage("Loading..");
@@ -82,8 +74,7 @@ public class ResetPasswordActivity extends Activity {
         }
 
         @Override
-        protected Boolean doInBackground(String... args){
-
+        protected Boolean doInBackground(String... args) {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnected()) {
@@ -92,9 +83,7 @@ public class ResetPasswordActivity extends Activity {
                     HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
                     urlc.setConnectTimeout(3000);
                     urlc.connect();
-                    if (urlc.getResponseCode() == 200) {
-                        return true;
-                    }
+                    if (urlc.getResponseCode() == 200) return true;
                 } catch (MalformedURLException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -104,33 +93,28 @@ public class ResetPasswordActivity extends Activity {
                 }
             }
             return false;
-
         }
         @Override
-        protected void onPostExecute(Boolean th){
-
-            if(th == true){
+        protected void onPostExecute(Boolean th) {
+            if (th) {
                 nDialog.dismiss();
                 new ProcessRegister().execute();
             }
-            else{
+            else {
                 nDialog.dismiss();
                 alert.setText("Error in Network Connection");
             }
         }
     }
 
-    private class ProcessRegister extends AsyncTask<String, Void, JSONObject>
-    {
-
+    private class ProcessRegister extends AsyncTask<String, Void, JSONObject> {
         private ProgressDialog pDialog;
-
         String forgotpassword;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             forgotpassword = email.getText().toString();
-
             pDialog = new ProgressDialog(ResetPasswordActivity.this);
             pDialog.setTitle("Contacting Servers");
             pDialog.setMessage("Getting Data ...");
@@ -141,31 +125,27 @@ public class ResetPasswordActivity extends Activity {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-
             UserFunctions userFunction = new UserFunctions();
             JSONObject json = userFunction.forPass(forgotpassword);
             return json;
-
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
-            /**
-             * Checks if the Password Change Process is sucesss
-             **/
+            // Checks if the Password Change Process is sucesss
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                     alert.setText("");
                     String res = json.getString(KEY_SUCCESS);
                     String red = json.getString(KEY_ERROR);
 
-                    if(Integer.parseInt(res) == 1){
+                    if (Integer.parseInt(res) == 1) {
                         pDialog.dismiss();
                         alert.setText("A recovery email is sent to you, see it for more details.");
 
                     }
-                    else if (Integer.parseInt(red) == 2)
-                    {    pDialog.dismiss();
+                    else if (Integer.parseInt(red) == 2) {
+                        pDialog.dismiss();
                         alert.setText("Your email does not exist in our database.");
                     }
                     else {
@@ -173,12 +153,10 @@ public class ResetPasswordActivity extends Activity {
                         alert.setText("Error occured in changing Password");
                     }
 
-                }}
-            catch (JSONException e) {
-                e.printStackTrace();
+                }
+            } catch (JSONException e) { e.printStackTrace(); }
+        }
+    }
 
-            }
-        }}
-    public void NetAsync(View view){
-        new NetCheck().execute();
-    }}
+    public void NetAsync(View view) { new NetCheck().execute(); }
+}

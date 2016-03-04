@@ -4,7 +4,12 @@ package io.propty.propty;
  * Created by micheal on 11/18/15.
  */
 import android.util.Log;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -14,26 +19,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
 public class JSONParser {
 
     static InputStream is = null;
     static JSONObject jObj = null;
     static String json = "";
 
-    // constructor
     public JSONParser() {
-
+        // STUB
     }
 
     public JSONObject getJSONFromUrl(String url, List params) {
-
         // Making HTTP request
         try {
             // defaultHttpClient
@@ -44,7 +40,6 @@ public class JSONParser {
             HttpResponse httpResponse = httpClient.execute(httpPost);
             HttpEntity httpEntity = httpResponse.getEntity();
             is = httpEntity.getContent();
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -77,6 +72,5 @@ public class JSONParser {
 
         // return JSON String
         return jObj;
-
     }
 }

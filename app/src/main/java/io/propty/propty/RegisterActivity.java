@@ -16,16 +16,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends Activity {
+
+    private EditText inputFirstName, inputLastName, inputUsername, inputEmail, inputPassword;
+    private Button btnRegister, btnLogin;
+    private TextView registerErrorMsg;
 
     // JSON Response node names.
     private static String KEY_SUCCESS = "success";
@@ -36,15 +38,6 @@ public class RegisterActivity extends Activity {
     private static String KEY_EMAIL = "email";
     private static String KEY_CREATED_AT = "created_at";
     private static String KEY_ERROR = "error";
-
-    EditText inputFirstName;
-    EditText inputLastName;
-    EditText inputUsername;
-    EditText inputEmail;
-    EditText inputPassword;
-    Button btnRegister;
-    Button btnLogin;
-    TextView registerErrorMsg;
 
     /**
      * Called when the activity is first created.
@@ -68,6 +61,7 @@ public class RegisterActivity extends Activity {
          * Switches back to the login screen when clicked
          */
         btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), LoginActivity.class);
                 startActivityForResult(myIntent, 0);
@@ -233,7 +227,7 @@ public class RegisterActivity extends Activity {
                 }
                 else {
                     pDialog.dismiss();
-                    registerErrorMsg.setText("Error occured in registration");
+                    registerErrorMsg.setText("Error occurred in registration");
                 }
             } catch (JSONException e) { e.printStackTrace(); }
         }

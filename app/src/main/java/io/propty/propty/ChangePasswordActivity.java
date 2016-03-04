@@ -8,22 +8,23 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 
+/**
+ * Change Password Activity
+ * Called when a logged-in user wants to change their password
+ **/
 public class ChangePasswordActivity extends Activity {
 
     private static String KEY_SUCCESS = "success";
@@ -34,25 +35,18 @@ public class ChangePasswordActivity extends Activity {
     Button changepass;
     Button cancel;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_changepassword);
 
         cancel = (Button) findViewById(R.id.btcancel);
-        cancel.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-
+        cancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
                 Intent login = new Intent(getApplicationContext(), MainActivity.class);
-
                 startActivity(login);
                 finish();
             }
-
         });
 
         newpass = (EditText) findViewById(R.id.newpass);
@@ -61,17 +55,15 @@ public class ChangePasswordActivity extends Activity {
 
         changepass.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                NetAsync(view);
-            }
-        });}
+            public void onClick(View view) { NetAsync(view); }
+        });
+    }
 
-    private class NetCheck extends AsyncTask<String, Void, Boolean>
-    {
+    private class NetCheck extends AsyncTask<String, Void, Boolean> {
         private ProgressDialog nDialog;
 
         @Override
-        protected void onPreExecute(){
+        protected void onPreExecute() {
             super.onPreExecute();
             nDialog = new ProgressDialog(ChangePasswordActivity.this);
             nDialog.setMessage("Loading..");
@@ -82,7 +74,7 @@ public class ChangePasswordActivity extends Activity {
         }
 
         @Override
-        protected Boolean doInBackground(String... args){
+        protected Boolean doInBackground(String... args) {
             ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
             if (netInfo != null && netInfo.isConnected()) {
@@ -91,9 +83,7 @@ public class ChangePasswordActivity extends Activity {
                     HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
                     urlc.setConnectTimeout(3000);
                     urlc.connect();
-                    if (urlc.getResponseCode() == 200) {
-                        return true;
-                    }
+                    if (urlc.getResponseCode() == 200) return true;
                 } catch (MalformedURLException e1) {
                     // TODO Auto-generated catch block
                     e1.printStackTrace();
@@ -104,37 +94,31 @@ public class ChangePasswordActivity extends Activity {
             }
             return false;
         }
-        @Override
-        protected void onPostExecute(Boolean th){
 
-            if(th == true){
+        @Override
+        protected void onPostExecute(Boolean th) {
+            if (th) {
                 nDialog.dismiss();
                 new ProcessRegister().execute();
             }
-            else{
+            else {
                 nDialog.dismiss();
                 alert.setText("Error in Network Connection");
             }
         }
     }
 
-    private class ProcessRegister extends AsyncTask<String, Void, JSONObject>
-    {
-
+    private class ProcessRegister extends AsyncTask<String, Void, JSONObject> {
         private ProgressDialog pDialog;
-
         String newpas,email;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-
-            HashMap<String, String> user = new HashMap();
-            user = db.getUserDetails();
-
+            HashMap<String, String> user = db.getUserDetails();
             newpas = newpass.getText().toString();
             email = user.get("email");
-
             pDialog = new ProgressDialog(ChangePasswordActivity.this);
             pDialog.setTitle("Contacting Servers");
             pDialog.setMessage("Getting Data ...");
@@ -145,17 +129,14 @@ public class ChangePasswordActivity extends Activity {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-
             UserFunctions userFunction = new UserFunctions();
             JSONObject json = userFunction.chgPass(newpas, email);
             Log.d("Button", "Register");
             return json;
-
         }
 
         @Override
         protected void onPostExecute(JSONObject json) {
-
             try {
                 if (json.getString(KEY_SUCCESS) != null) {
                     alert.setText("");
@@ -163,12 +144,9 @@ public class ChangePasswordActivity extends Activity {
                     String red = json.getString(KEY_ERROR);
 
                     if (Integer.parseInt(res) == 1) {
-                        /**
-                         * Dismiss the process dialog
-                         **/
+                        // Dismiss the process dialog
                         pDialog.dismiss();
                         alert.setText("Your Password is successfully changed.");
-
                     } else if (Integer.parseInt(red) == 2) {
                         pDialog.dismiss();
                         alert.setText("Invalid old Password.");
@@ -178,12 +156,10 @@ public class ChangePasswordActivity extends Activity {
                     }
 
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            } catch (JSONException e) { e.printStackTrace(); }
+        }
+    }
 
-            }
-
-        }}
     public void NetAsync(View view){
         new NetCheck().execute();
     }}

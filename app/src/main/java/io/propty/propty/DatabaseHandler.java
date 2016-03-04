@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.HashMap;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -55,7 +54,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
-
         // Create tables again
         onCreate(db);
     }
@@ -65,7 +63,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * */
     public void addUser(String fname, String lname, String email, String uname, String uid, String created_at) {
         SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(KEY_FIRSTNAME, fname); // FirstName
         values.put(KEY_LASTNAME, lname); // LastName
@@ -73,7 +70,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_USERNAME, uname); // UserName
         values.put(KEY_UID, uid); // Email
         values.put(KEY_CREATED_AT, created_at); // Created At
-
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
         db.close(); // Closing database connection
@@ -82,15 +78,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     /**
      * Getting user data from database
      * */
-    public HashMap<String, String> getUserDetails(){
+    public HashMap<String, String> getUserDetails() {
         HashMap<String, String> user = new HashMap<>();
         String selectQuery = "SELECT  * FROM " + TABLE_LOGIN;
-
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // Move to first row
         cursor.moveToFirst();
-        if(cursor.getCount() > 0){
+        if (cursor.getCount() > 0) {
             user.put("fname", cursor.getString(1));
             user.put("lname", cursor.getString(2));
             user.put("email", cursor.getString(3));
@@ -100,7 +95,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        // return user
         return user;
     }
 
@@ -115,8 +109,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         int rowCount = cursor.getCount();
         db.close();
         cursor.close();
-
-        // return row count
         return rowCount;
     }
 
@@ -124,13 +116,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      * Re create database
      * Delete all tables and create them again
      * */
-    public void resetTables(){
+    public void resetTables() {
         SQLiteDatabase db = this.getWritableDatabase();
         // Delete All Rows
         db.delete(TABLE_LOGIN, null, null);
         db.close();
     }
-
 }
-
-

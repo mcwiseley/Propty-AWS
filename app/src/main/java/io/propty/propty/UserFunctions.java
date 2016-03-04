@@ -3,14 +3,11 @@ package io.propty.propty;
 /**
  * Created by micheal on 11/18/15.
  */
-
-
+import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
-import android.content.Context;
 
 public class UserFunctions {
 
@@ -18,8 +15,9 @@ public class UserFunctions {
 
     //URL of the PHP API
 
-
-    // constructor
+    /**
+     * UserFunctions Constructor
+     **/
     public UserFunctions() {
         jsonParser = new JSONParser();
     }
@@ -27,7 +25,6 @@ public class UserFunctions {
     /**
      * Function to Login
      **/
-
     public JSONObject loginUser(String email, String password) {
         // TODO: assign values to login_tag and loginURL
         String login_tag = "";
@@ -44,7 +41,6 @@ public class UserFunctions {
     /**
      * Function to change password
      **/
-
     public JSONObject chgPass(String newpas, String email) {
         // TODO: assign values to chgpass_tag and chgpassURL
         String chgpass_tag = "";
@@ -61,7 +57,6 @@ public class UserFunctions {
     /**
      * Function to reset the password
      **/
-
     public JSONObject forPass(String forgotpassword) {
         // TODO: assign values to forpass_tag and forpassURL
         String forpass_tag = "";
@@ -102,8 +97,4 @@ public class UserFunctions {
         db.resetTables();
         return true;
     }
-
 }
-
-
-
