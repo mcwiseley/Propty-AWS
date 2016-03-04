@@ -199,7 +199,7 @@ public class LoginActivity extends Activity {
             }
             else {
                 nDialog.dismiss();
-                loginErrorMsg.setText("Error in Network Connection");
+                loginErrorMsg.setText(R.string.error_network_connection);
             }
         }
     }
@@ -229,8 +229,7 @@ public class LoginActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.loginUser(email, password);
-            return json;
+            return userFunction.loginUser(email, password);
         }
 
         @Override
@@ -258,7 +257,7 @@ public class LoginActivity extends Activity {
                     }
                     else {
                         pDialog.dismiss();
-                        loginErrorMsg.setText("Incorrect username/password");
+                        loginErrorMsg.setText(R.string.error_incorrect_user_pw);
                     }
                 }
             } catch (JSONException e) { e.printStackTrace(); }

@@ -103,7 +103,7 @@ public class ChangePasswordActivity extends Activity {
             }
             else {
                 nDialog.dismiss();
-                alert.setText("Error in Network Connection");
+                alert.setText(R.string.error_network_connection);
             }
         }
     }
@@ -146,13 +146,13 @@ public class ChangePasswordActivity extends Activity {
                     if (Integer.parseInt(res) == 1) {
                         // Dismiss the process dialog
                         pDialog.dismiss();
-                        alert.setText("Your Password is successfully changed.");
+                        alert.setText(R.string.pw_change_success);
                     } else if (Integer.parseInt(red) == 2) {
                         pDialog.dismiss();
-                        alert.setText("Invalid old Password.");
+                        alert.setText(R.string.error_invalid_old_pw);
                     } else {
                         pDialog.dismiss();
-                        alert.setText("Error occured in changing Password.");
+                        alert.setText(R.string.error_pw_change);
                     }
 
                 }

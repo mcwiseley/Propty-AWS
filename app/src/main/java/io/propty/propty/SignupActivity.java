@@ -2,7 +2,7 @@ package io.propty.propty;
 
 /**
  * Created by Michael on 1/28/2016.
- */
+ **/
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +74,6 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }, 3000);
     }
-
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);

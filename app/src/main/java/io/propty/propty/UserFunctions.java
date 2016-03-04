@@ -2,7 +2,7 @@ package io.propty.propty;
 
 /**
  * Created by micheal on 11/18/15.
- */
+ **/
 import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,7 @@ public class UserFunctions {
     /**
      * UserFunctions Constructor
      **/
-    public UserFunctions() {
-        jsonParser = new JSONParser();
-    }
+    public UserFunctions() { jsonParser = new JSONParser(); }
 
     /**
      * Function to Login
@@ -30,12 +28,11 @@ public class UserFunctions {
         String login_tag = "";
         String loginURL = "";
         // Building Parameters
-        List<BasicNameValuePair> params = new ArrayList();
+        List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("tag", login_tag));
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("password", password));
-        JSONObject json = jsonParser.getJSONFromUrl(loginURL, params);
-        return json;
+        return jsonParser.getJSONFromUrl(loginURL, params);
     }
 
     /**
@@ -46,12 +43,11 @@ public class UserFunctions {
         String chgpass_tag = "";
         String chgpassURL = "";
         // Building Parameters
-        List<BasicNameValuePair> params = new ArrayList();
+        List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("tag", chgpass_tag));
         params.add(new BasicNameValuePair("newpas", newpas));
         params.add(new BasicNameValuePair("email", email));
-        JSONObject json = jsonParser.getJSONFromUrl(chgpassURL, params);
-        return json;
+        return jsonParser.getJSONFromUrl(chgpassURL, params);
     }
 
     /**
@@ -62,11 +58,10 @@ public class UserFunctions {
         String forpass_tag = "";
         String forpassURL = "";
         // Building Parameters
-        List<BasicNameValuePair> params = new ArrayList();
+        List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("tag", forpass_tag));
         params.add(new BasicNameValuePair("forgotpassword", forgotpassword));
-        JSONObject json = jsonParser.getJSONFromUrl(forpassURL, params);
-        return json;
+        return jsonParser.getJSONFromUrl(forpassURL, params);
     }
 
     /**
@@ -77,15 +72,14 @@ public class UserFunctions {
         String register_tag = "";
         String registerURL = "";
         // Building Parameters
-        List<BasicNameValuePair> params = new ArrayList();
+        List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("tag", register_tag));
         params.add(new BasicNameValuePair("fname", fname));
         params.add(new BasicNameValuePair("lname", lname));
         params.add(new BasicNameValuePair("email", email));
         params.add(new BasicNameValuePair("uname", uname));
         params.add(new BasicNameValuePair("password", password));
-        JSONObject json = jsonParser.getJSONFromUrl(registerURL, params);
-        return json;
+        return jsonParser.getJSONFromUrl(registerURL, params);
     }
 
     /**

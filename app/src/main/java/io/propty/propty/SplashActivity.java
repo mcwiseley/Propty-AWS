@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Michael on 1/27/2016.
- */
+ **/
 public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -148,7 +148,7 @@ public class RegisterActivity extends Activity {
             }
             else {
                 nDialog.dismiss();
-                registerErrorMsg.setText("Error in Network Connection");
+                registerErrorMsg.setText(R.string.error_network_connection);
             }
         }
     }
@@ -178,8 +178,7 @@ public class RegisterActivity extends Activity {
         @Override
         protected JSONObject doInBackground(String... args) {
             UserFunctions userFunction = new UserFunctions();
-            JSONObject json = userFunction.registerUser(fname, lname, email, uname, password);
-            return json;
+            return userFunction.registerUser(fname, lname, email, uname, password);
         }
 
         @Override
@@ -194,7 +193,7 @@ public class RegisterActivity extends Activity {
                     if (Integer.parseInt(res) == 1) {
                         pDialog.setTitle("Getting Data");
                         pDialog.setMessage("Loading Info");
-                        registerErrorMsg.setText("Successfully Registered");
+                        registerErrorMsg.setText(R.string.register_success);
 
                         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
@@ -218,16 +217,16 @@ public class RegisterActivity extends Activity {
                     }
                     else if (Integer.parseInt(red) == 2) {
                         pDialog.dismiss();
-                        registerErrorMsg.setText("User already exists");
+                        registerErrorMsg.setText(R.string.error_user_exists);
                     }
                     else if (Integer.parseInt(red) == 3) {
                         pDialog.dismiss();
-                        registerErrorMsg.setText("Invalid Email id");
+                        registerErrorMsg.setText(R.string.error_invalid_email);
                     }
                 }
                 else {
                     pDialog.dismiss();
-                    registerErrorMsg.setText("Error occurred in registration");
+                    registerErrorMsg.setText(R.string.error_register);
                 }
             } catch (JSONException e) { e.printStackTrace(); }
         }

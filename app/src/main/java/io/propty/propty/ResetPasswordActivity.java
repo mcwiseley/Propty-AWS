@@ -141,16 +141,16 @@ public class ResetPasswordActivity extends Activity {
 
                     if (Integer.parseInt(res) == 1) {
                         pDialog.dismiss();
-                        alert.setText("A recovery email is sent to you, see it for more details.");
+                        alert.setText(R.string.recovery_email);
 
                     }
                     else if (Integer.parseInt(red) == 2) {
                         pDialog.dismiss();
-                        alert.setText("Your email does not exist in our database.");
+                        alert.setText(R.string.error_email_not_found);
                     }
                     else {
                         pDialog.dismiss();
-                        alert.setText("Error occured in changing Password");
+                        alert.setText(R.string.error_pw_change);
                     }
 
                 }

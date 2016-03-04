@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+import java.util.ArrayList;
 
 /**
  * Swipe Card Activity
@@ -53,7 +53,7 @@ public class SwipeCardActivity extends Activity {
                     card.getTypeFormatted()    );
         }
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al);
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
@@ -80,7 +80,7 @@ public class SwipeCardActivity extends Activity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add("XML ".concat(String.valueOf(i)));
+                al.add("Empty ".concat(String.valueOf(i)));
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
@@ -104,21 +104,19 @@ public class SwipeCardActivity extends Activity {
 
     }
 
-    static void makeToast(Context ctx, String s){
+    static void makeToast(Context ctx, String s) {
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
 
-
+    /**
+     * Trigger the right event manually.
+     */
     @OnClick(R.id.right)
-    public void right() {
-        /**
-         * Trigger the right event manually.
-         */
-        flingContainer.getTopCardListener().selectRight();
-    }
+    public void right() { flingContainer.getTopCardListener().selectRight(); }
 
+    /**
+     * Trigger the left event manually.
+     */
     @OnClick(R.id.left)
-    public void left() {
-        flingContainer.getTopCardListener().selectLeft();
-    }
+    public void left() { flingContainer.getTopCardListener().selectLeft(); }
 }

@@ -2,7 +2,7 @@ package io.propty.propty;
 
 /**
  * Created by micheal on 11/18/15.
- */
+ **/
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
