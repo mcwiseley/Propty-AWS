@@ -3,7 +3,8 @@ package io.propty.propty;
 /**
  * Created by tkelly on 3/4/16.
  * Swipe Card Data Class
- * Contains all of the relevant MLS data for a single listing, and get methods that convert the data into a String for display purposes
+ * Contains all of the relevant MLS data for a single listing, standard get[Data] methods,
+ *  and get[Data]Formatted methods that convert the data into a String for display purposes
  * Constructor takes 7 arguments:
  * 1. String description - the 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
  * 2. int bedrooms - the number of bedrooms ('Bedrooms' on MLS)
@@ -48,16 +49,15 @@ public class SwipeCard {
         }
     }
 
-    String getDesc() {
-        return desc;
-    }
+    String getDesc() { return desc; }
+    int getBeds() { return beds; }
+    double getBaths() { return baths; }
+    int getSqFt() { return sqFt; }
+    double getPrice() { return price; }
+    String getType() { return type; }
 
     String getDescFormatted() {
         return desc + "\n\n";
-    }
-
-    int getBeds() {
-        return beds;
     }
 
     String getBedsFormatted() {
@@ -69,10 +69,6 @@ public class SwipeCard {
         }
     }
 
-    double getBaths() {
-        return baths;
-    }
-
     String getBathsFormatted() {
         if (baths == 1d) {
             return baths_str + " bathroom\n";
@@ -82,24 +78,12 @@ public class SwipeCard {
         }
     }
 
-    int getSqFt() {
-        return sqFt;
-    }
-
     String getSqFtFormatted() {
         return sqFt_str + " sq. ft.\n";
     }
 
-    double getPrice() {
-        return price;
-    }
-
     String getPriceFormatted() {
         return "$" + price_str + "\n";
-    }
-
-    String getType() {
-        return type;
     }
 
     String getTypeFormatted() {
