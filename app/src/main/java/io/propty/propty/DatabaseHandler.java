@@ -20,10 +20,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "propty_login";
 
-    // L_ogin table name
+    // Login table name
     private static final String TABLE_LOGIN = "login";
 
-    // L_ogin Table Columns names
+    // Login Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_FIRSTNAME = "fname";
     private static final String KEY_LASTNAME = "lname";

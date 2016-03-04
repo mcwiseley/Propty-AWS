@@ -64,7 +64,7 @@ public class RegisterActivity extends Activity {
         registerErrorMsg = (TextView) findViewById(R.id.register_error);
 
         /**
-         * Back to L_ogin Button click event.
+         * Back to Login Button click event.
          * Switches back to the login screen when clicked
          */
         btnLogin.setOnClickListener(new View.OnClickListener() {

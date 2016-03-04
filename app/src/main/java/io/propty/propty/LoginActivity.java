@@ -116,7 +116,7 @@ public class LoginActivity extends Activity {
         }});
 
         /**
-         * L_ogin button click event
+         * Login button click event
          * A Toast is set to alert when the Email and Password field is empty
          **/
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -254,7 +254,7 @@ public class LoginActivity extends Activity {
                         upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         pDialog.dismiss();
                         startActivity(upanel);
-                        // Close L_ogin Screen
+                        // Close Login Screen
                         finish();
                     }
                     else {

@@ -7,11 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-
+import io.propty.propty.SwipeCard;
 import java.util.ArrayList;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -19,6 +17,7 @@ import butterknife.OnClick;
 
 public class SwipeCardActivity extends Activity {
 
+    private ArrayList<SwipeCard> sc;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
@@ -32,18 +31,27 @@ public class SwipeCardActivity extends Activity {
         setContentView(R.layout.activity_swipecard);
         ButterKnife.inject(this);
 
+        sc = new ArrayList<>();
+        // These are just examples for testing purposes.  Delete these before launch!
+        sc.add(new SwipeCard("Property 1", 2, 1, 1, 2000, 960.00d, "condo"));
+        sc.add(new SwipeCard("Property 2", 3, 2, 1, 3500, 2250.00d, "house"));
+        sc.add(new SwipeCard("Property 3", 1, 1, 0, 1200, 625.00d, "apartment"));
+        sc.add(new SwipeCard("Property 4", 1, 1, 1, 1500, 500.00d, "duplex"));
+        sc.add(new SwipeCard("Property 5", 1, 0, 1, 150, 99.99d, "closet"));
+        // TODO: populate sc array with MLS data
 
         al = new ArrayList<>();
-        al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-        al.add("html");
-        al.add("c++");
-        al.add("css");
-        al.add("javascript");
+        for (int idx = 0; idx < sc.size(); idx++) {
+            SwipeCard card = sc.get(idx);
+            al.add( card.getDesc() + "\n\n" +
+                    card.getBeds() + " bedroom(s)\n" +
+                    card.getBaths() + " bathroom(s)\n" +
+                    card.getSqFt() + " sq. ft.\n" +
+                    "$" + card.getPrice() + "\n" +
+                    "Type: " + card.getType()       );
+        }
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al );
 
 
         flingContainer.setAdapter(arrayAdapter);
@@ -61,12 +69,12 @@ public class SwipeCardActivity extends Activity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(getApplicationContext(), "Left!");
+                makeToast(getApplicationContext(), "Dislike!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                makeToast(getApplicationContext(), "Right!");
+                makeToast(getApplicationContext(), "Like!");
             }
 
             @Override
