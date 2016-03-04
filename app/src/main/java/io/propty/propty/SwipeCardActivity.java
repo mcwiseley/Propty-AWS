@@ -35,22 +35,22 @@ public class SwipeCardActivity extends Activity {
 
         sc = new ArrayList<>();
         // These are just examples for testing purposes.  Delete these before launch!
-        sc.add(new SwipeCard("Property 1", 2, 1, 1, 2000, 960.00d, "condo"));
+        sc.add(new SwipeCard("Property 1", 2, 2, 0, 2000, 960.00d, "condo"));
         sc.add(new SwipeCard("Property 2", 3, 2, 1, 3500, 2250.00d, "house"));
-        sc.add(new SwipeCard("Property 3", 1, 1, 0, 1200, 625.00d, "apartment"));
-        sc.add(new SwipeCard("Property 4", 1, 1, 1, 1500, 500.00d, "duplex"));
+        sc.add(new SwipeCard("Property 3", 1, 1, 0, 1200, 625.50d, "apartment"));
+        sc.add(new SwipeCard("Property 4", 1, 1, 1, 1500, 500.01d, "duplex"));
         sc.add(new SwipeCard("Property 5", 1, 0, 1, 150, 99.99d, "closet"));
         // TODO: populate sc array with MLS data
 
         al = new ArrayList<>();
         for (int idx = 0; idx < sc.size(); idx++) {
             SwipeCard card = sc.get(idx);
-            al.add( card.getDesc() + "\n\n" +
-                    card.getBeds() + " bedroom(s)\n" +
-                    card.getBaths() + " bathroom(s)\n" +
-                    card.getSqFt() + " sq. ft.\n" +
-                    "$" + card.getPrice() + "\n" +
-                    "Type: " + card.getType()       );
+            al.add( card.getDescFormatted() +
+                    card.getBedsFormatted() +
+                    card.getBathsFormatted() +
+                    card.getSqFtFormatted() +
+                    card.getPriceFormatted() +
+                    card.getTypeFormatted()    );
         }
 
         arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al );

@@ -14,25 +14,95 @@ package io.propty.propty;
  * 7. String property_type - the type of the property ('ListingType' or 'PropertyType' on MLS)
  **/
 public class SwipeCard {
-    private String desc, type;
+    private String desc, beds_str, baths_str, sqFt_str, price_str, type;
     private int beds, sqFt;
     private double baths, price;
 
     SwipeCard(String description, int bedrooms, int baths_full, int baths_half,
               int sq_ft, double list_price, String property_type) {
         desc = description;
-        beds = bedrooms;
-        double baths_raw = ((double) baths_full) + (((double) baths_half) / 2d);
-        baths = (double) Math.round(baths_raw * 10d) / 10d;
-        sqFt = sq_ft;
-        price = (double) Math.round(list_price * 100d) / 100d;
         type = property_type;
+        beds = bedrooms;
+        beds_str = Integer.toString(bedrooms);
+        sqFt = sq_ft;
+        sqFt_str = Integer.toString(sq_ft);
+
+        baths = (double) Math.round((((double) baths_full) + (((double) baths_half) / 2d)) * 10d);
+        if (baths % 10d == 0d) {
+            baths /= 10d;
+            baths_str = Integer.toString((int) baths);
+        }
+        else {
+            baths /= 10d;
+            baths_str = Double.toString(baths);
+        }
+
+        price = (double) Math.round(list_price * 100d);
+        if (price % 10d == 0d) {
+            price /= 100d;
+            price_str = Double.toString(price) + "0";
+        }
+        else {
+            price /= 100d;
+            price_str = Double.toString(price);
+        }
     }
 
-    String getDesc() { return desc; }
-    String getBeds() { return Integer.toString(beds); }
-    String getBaths() { return Double.toString(baths); }
-    String getSqFt() { return Integer.toString(sqFt); }
-    String getPrice() { return Double.toString(price); }
-    String getType() { return type; }
+    String getDesc() {
+        return desc;
+    }
+
+    String getDescFormatted() {
+        return desc + "\n\n";
+    }
+
+    int getBeds() {
+        return beds;
+    }
+
+    String getBedsFormatted() {
+        if (beds == 1) {
+            return beds_str + " bedroom\n";
+        }
+        else {
+            return beds_str + " bedrooms\n";
+        }
+    }
+
+    double getBaths() {
+        return baths;
+    }
+
+    String getBathsFormatted() {
+        if (baths == 1d) {
+            return baths_str + " bathroom\n";
+        }
+        else {
+            return baths_str + " bathrooms\n";
+        }
+    }
+
+    int getSqFt() {
+        return sqFt;
+    }
+
+    String getSqFtFormatted() {
+        return sqFt_str + " sq. ft.\n";
+    }
+
+    double getPrice() {
+        return price;
+    }
+
+    String getPriceFormatted() {
+        return "$" + price_str + "\n";
+    }
+
+    String getType() {
+        return type;
+    }
+
+    String getTypeFormatted() {
+        return "Type: " + type;
+    }
 }
