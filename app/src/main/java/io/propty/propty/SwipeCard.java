@@ -1,9 +1,17 @@
 package io.propty.propty;
 
-import java.util.HashMap;
-
 /**
  * Created by tkelly on 3/4/16.
+ * SwipeCard data class
+ * Contains all of the relevant MLS data for a single listing, and get methods that convert the data into a String for display purposes
+ * Constructor takes 7 arguments:
+ * 1. String description - the 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
+ * 2. int bedrooms - the number of bedrooms ('Bedrooms' on MLS)
+ * 3. int baths_full - the number of full bathrooms ('BathsFull' on MLS)
+ * 4. int baths_half - the number of half bathrooms ('BathsHalf' on MLS)
+ * 5. int sq_ft - the square footage ('SqFtTotal' or 'SqFtUnderRoof' on MLS)
+ * 6. double list_price - the listed price of the property ('ListPrice' on MLS)
+ * 7. String property_type - the type of the property ('ListingType' or 'PropertyType' on MLS)
  */
 public class SwipeCard {
     private String desc, type;
