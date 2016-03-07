@@ -18,7 +18,7 @@
     <string name="facebook_login_cancel">Login attempt canceled.</string>
     <string name="facebook_login_error">Login attempt failed.</string>
     <string name="facebook_login_success">Login attempt successful!\nUser ID: %1$s\nAuth Token: %2$s</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email\ncompletions."</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="pw_change_success">Your Password is successfully changed.</string>

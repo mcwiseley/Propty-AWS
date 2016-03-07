@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import java.util.HashMap;
+//import java.util.HashMap;
 
 public class MainActivity extends Activity {
 
@@ -30,10 +30,10 @@ public class MainActivity extends Activity {
         btnSwipeCard = (Button) findViewById(R.id.btswipecard);
         res = getResources();
 
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+//        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-        // Hashmap to load data from the Sqlite database
-        HashMap<String, String> user = db.getUserDetails();
+//        // Hashmap to load data from the Sqlite database
+//        HashMap<String, String> user = db.getUserDetails();
 
         /**
          * Change Password Activity Started
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View view) {
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(login);
             }
@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 
         btnSwipeCard.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View view) {
                 Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                 startActivity(swipecard);
             }

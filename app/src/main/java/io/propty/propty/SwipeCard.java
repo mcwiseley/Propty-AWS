@@ -5,20 +5,22 @@ package io.propty.propty;
  * Swipe Card Data Class
  * Contains all of the relevant MLS data for a single listing, standard get[Data] methods,
  *  and get[Data]Formatted methods that convert the data into a String for display purposes
- * Constructor takes 7 arguments:
- * 1. String description - the 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
- * 2. int bedrooms - the number of bedrooms ('Bedrooms' on MLS)
- * 3. int baths_full - the number of full bathrooms ('BathsFull' on MLS)
- * 4. int baths_half - the number of half bathrooms ('BathsHalf' on MLS)
- * 5. int sq_ft - the square footage ('SqFtTotal' or 'SqFtUnderRoof' on MLS)
- * 6. double list_price - the listed price of the property ('ListPrice' on MLS)
- * 7. String property_type - the type of the property ('ListingType' or 'PropertyType' on MLS)
  **/
 public class SwipeCard {
     private String desc, beds_str, baths_str, sqFt_str, price_str, type;
     private int beds, sqFt;
     private double baths, price;
 
+    /**
+     * SwipeCard Constructor
+     * @param description The 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
+     * @param bedrooms The number of bedrooms ('Bedrooms' on MLS)
+     * @param baths_full The number of full bathrooms ('BathsFull' on MLS)
+     * @param baths_half The number of half bathrooms ('BathsHalf' on MLS)
+     * @param sq_ft The square footage ('SqFtTotal' or 'SqFtUnderRoof' on MLS)
+     * @param list_price The listed price of the property ('ListPrice' on MLS)
+     * @param property_type The type of the property ('ListingType' or 'PropertyType' on MLS)
+     **/
     SwipeCard(String description, int bedrooms, int baths_full, int baths_half,
               int sq_ft, double list_price, String property_type) {
         desc = description;
