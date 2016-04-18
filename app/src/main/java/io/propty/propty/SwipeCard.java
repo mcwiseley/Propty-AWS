@@ -1,60 +1,59 @@
 package io.propty.propty;
 
+import java.text.NumberFormat;
+
 /**
- * Created by tkelly on 3/4/16.
  * Swipe Card Data Class
+ *
  * Contains all of the relevant MLS data for a single listing, standard get[Data] methods,
- *  and get[Data]Formatted methods that convert the data into a String for display purposes
- **/
+ * and get[Data]Formatted methods that convert the data into a String for display purposes
+ */
 public class SwipeCard {
-    private String desc, beds_str, baths_str, sqFt_str, price_str, type;
-    private int beds, sqFt;
+
+    private String desc, listId, areaUnits, type;
+    private int beds, area;
     private double baths, price;
 
     /**
      * SwipeCard Constructor
-     * @param description The 'headline' of the listing, or a brief description of the property (might not be provided by MLS)
-     * @param bedrooms The number of bedrooms ('Bedrooms' on MLS)
-     * @param baths_full The number of full bathrooms ('BathsFull' on MLS)
-     * @param baths_half The number of half bathrooms ('BathsHalf' on MLS)
-     * @param sq_ft The square footage ('SqFtTotal' or 'SqFtUnderRoof' on MLS)
-     * @param list_price The listed price of the property ('ListPrice' on MLS)
-     * @param property_type The type of the property ('ListingType' or 'PropertyType' on MLS)
-     **/
-    SwipeCard(String description, int bedrooms, int baths_full, int baths_half,
-              int sq_ft, double list_price, String property_type) {
+     *
+     * @param description The 'headline' of the listing, or a brief description of the property ('Remarks' on MLS?)
+     * @param listing_id The unique id of this property listing ('ListingId' in MLS)
+     * @param bedrooms The total number of bedrooms ('BedroomsTotal' in MLS)
+     * @param baths_full The total number of full bathrooms ('BathroomsFull' in MLS)
+     * @param baths_3quart The total number of 3-quarter bathrooms ('BathroomsThreeQuarter' in MLS)
+     * @param baths_half The total number of half bathrooms ('BathroomsHalf' in MLS)
+     * @param baths_1quart The total number of 1-quarter bathrooms ('BathroomsOneQuarter' in MLS)
+     * @param living_area The area of the actual living space ('LivingArea' in MLS)
+     * @param living_area_units The type of units used to measure area ('LivingAreaUnits' in MLS)
+     * @param list_price The listed price of the property ('ListPrice' in MLS)
+     * @param property_type The type of the property ('PropertyType' in MLS)
+     * @param property_sub_type The sub-type of the property ('PropertySubType' in MLS)
+     */
+    SwipeCard(String description, String listing_id, int bedrooms, int baths_full,
+              int baths_3quart, int baths_half, int baths_1quart, int living_area,
+              String living_area_units, double list_price, String property_type,
+              String property_sub_type) {
         desc = description;
-        type = property_type;
+        listId = listing_id;
         beds = bedrooms;
-        beds_str = Integer.toString(bedrooms);
-        sqFt = sq_ft;
-        sqFt_str = Integer.toString(sq_ft);
-
-        baths = (double) Math.round((((double) baths_full) + (((double) baths_half) / 2d)) * 10d);
-        if (baths % 10d == 0d) {
-            baths /= 10d;
-            baths_str = Integer.toString((int) baths);
-        }
-        else {
-            baths /= 10d;
-            baths_str = Double.toString(baths);
-        }
-
-        price = (double) Math.round(list_price * 100d);
-        if (price % 10d == 0d) {
-            price /= 100d;
-            price_str = Double.toString(price) + "0";
-        }
-        else {
-            price /= 100d;
-            price_str = Double.toString(price);
-        }
+        area = living_area;
+        areaUnits = living_area_units;
+        price = list_price;
+        type = property_type +
+                (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
+        baths = ((double) baths_full) +
+                (((double) baths_3quart) * 0.75) +
+                (((double) baths_half) * 0.5) +
+                (((double) baths_1quart) * 0.25);
     }
 
     String getDesc() { return desc; }
+    String getListId() { return listId; }
     int getBeds() { return beds; }
     double getBaths() { return baths; }
-    int getSqFt() { return sqFt; }
+    int getArea() { return area; }
+    String getAreaUnits() { return areaUnits; }
     double getPrice() { return price; }
     String getType() { return type; }
 
@@ -63,32 +62,24 @@ public class SwipeCard {
     }
 
     String getBedsFormatted() {
-        if (beds == 1) {
-            return beds_str + " bedroom\n";
-        }
-        else {
-            return beds_str + " bedrooms\n";
-        }
+        return beds + (beds == 1 ? " bedroom\n" : " bedrooms\n");
     }
 
     String getBathsFormatted() {
-        if (baths == 1d) {
-            return baths_str + " bathroom\n";
+        if ((baths * 100d) % 100d == 0d) {
+            return ((int) baths) + (baths == 1d ? " bathroom\n" : " bathrooms\n");
         }
         else {
-            return baths_str + " bathrooms\n";
+            return baths + " bathrooms\n";
         }
     }
 
-    String getSqFtFormatted() {
-        return sqFt_str + " sq. ft.\n";
-    }
+    String getAreaFormatted() { return area + " " + areaUnits + "\n"; }
 
     String getPriceFormatted() {
-        return "$" + price_str + "\n";
+        return NumberFormat.getCurrencyInstance().format(price) + "\n";
     }
 
-    String getTypeFormatted() {
-        return "Type: " + type;
-    }
+    String getTypeFormatted() { return type + "\n"; }
+
 }
