@@ -11,12 +11,13 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String PREFS_NAME = "MyPrefsFile";
+
     Button btnChangePass;
     Button btnLogout;
     Button btnLogin;
     Button btnSwipeCard;
     Resources res;
-    public static final String PREFS_NAME = "MyPrefsFile";
 
     /**
      * Called when the activity is first created.
@@ -33,20 +34,15 @@ public class MainActivity extends AppCompatActivity {
         res = getResources();
 
         // Restore preferences
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
-        boolean logged_in = prefs.getBoolean("logged_in", true);
+        final SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
+        boolean new_user = prefs.getBoolean("new_user", true);
+        boolean logged_in = prefs.getBoolean("logged_in", false);
 
-        if (logged_in) {
+        if (new_user) {
+            prefs.edit().putBoolean("new_user", false).apply();
+        } else if (logged_in) {
             startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
         }
-        else {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
-
-//        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-
-//        // Hashmap to load data from the Sqlite database
-//        HashMap<String, String> user = db.getUserDetails();
 
         /**
          * Change Password Activity Started
@@ -54,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         btnChangePass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent chgpass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
-                startActivity(chgpass);
+                Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                startActivity(chgPass);
             }
         });
 
@@ -65,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                prefs.edit().putBoolean("logged_in", false).apply();
                 UserFunctions logout = new UserFunctions();
                 logout.logoutUser(getApplicationContext());
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
@@ -89,28 +86,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(swipecard);
             }
         });
-
-//        // Set welcome message for a logged-in user.
-//        final TextView welcome = (TextView) findViewById(R.id.textwelcome);
-//        String fname = user.get("fname").toString();
-//        String welcomeText = String.format(res.getString(R.string.welcome_text), fname);
-//        welcome.setText(welcomeText);
-//        final TextView lname = (TextView) findViewById(R.id.lname);
-//        lname.setText(user.get("lname").toString());
     }
 
     @Override
     protected void onStop(){
         super.onStop();
-
-        // We need an Editor object to make preference changes.
-        // All objects are from android.context.Context
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor prefsEdit = prefs.edit();
-        prefsEdit.putBoolean("newUser", false);
-
-        // Apply the edits!
-        prefsEdit.apply();
+        prefs.edit().putBoolean("logged_in", false).apply();
     }
 
 }

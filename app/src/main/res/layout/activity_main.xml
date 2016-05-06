@@ -19,6 +19,15 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/logo_img"
+            android:src="@drawable/proptydog2"
+            android:contentDescription="logo"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="15dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +35,7 @@
             android:textSize="30sp"
             android:id="@+id/logo"
             android:layout_gravity="center"
-            android:textColor="#000000"/>
+            android:textColor="#eeeeee"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,6 +52,7 @@
             android:layout_marginTop="100dp"
             android:text="Log In"
             android:id="@+id/btlogin"
+            android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"
             android:layout_gravity="center"/>
@@ -53,6 +63,7 @@
             android:layout_marginTop="10dp"
             android:text="Change Password"
             android:id="@+id/btchangepass"
+            android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"
             android:layout_gravity="center"/>
@@ -63,6 +74,7 @@
             android:layout_marginTop="10dp"
             android:text="Log Out"
             android:id="@+id/btlogout"
+            android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"
             android:layout_gravity="center"/>
@@ -73,6 +85,7 @@
             android:layout_marginTop="10dp"
             android:text="Swipe Cards"
             android:id="@+id/btswipecard"
+            android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"
             android:layout_gravity="center"/>

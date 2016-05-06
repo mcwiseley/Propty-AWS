@@ -9,7 +9,9 @@
         android:id="@+id/cardText"
         android:textSize="13sp"
         android:textColor="@android:color/white"
-        android:background="#E339"
+        android:background="@drawable/house_0"
+        android:backgroundTint="#66333333"
+        android:backgroundTintMode="src_over"
         android:gravity="center"
         tools:text="@string/app_name"
         android:layout_width="match_parent"
@@ -21,7 +23,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
-        android:background="#ffffff" />
+        android:background="@android:drawable/ic_input_add" />
 
     <View
         android:id="@+id/item_swipe_right_indicator"
@@ -29,7 +31,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
-        android:layout_gravity="right"
-        android:background="#ffffff" />
+        android:layout_gravity="end"
+        android:background="@android:drawable/ic_delete" />
 
 </FrameLayout>

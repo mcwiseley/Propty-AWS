@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +30,7 @@ import java.net.URL;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private LoginButton fbLoginBtn;
@@ -35,10 +38,12 @@ public class LoginActivity extends Activity {
     private Button btnCancel;
     private Button btnRegister;
     private Button btnPassReset;
+    private Button btnNext;
     private EditText inputEmail;
     private EditText inputPassword;
-    private TextView loginErrorMsg;
-    private TextView fbLoginInfo;
+    private TextView loginResult;
+    private TextView fbLoginResult;
+    private Toolbar toolbar;
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
@@ -52,19 +57,34 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        final SharedPreferences prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.proptydog2);
+        toolbar.setLogoDescription("logo");
 
         fbLoginBtn = (LoginButton) findViewById(R.id.login_button);
         btnLogin = (Button) findViewById(R.id.login);
         btnCancel = (Button) findViewById(R.id.cancel);
         btnRegister = (Button) findViewById(R.id.registerbtn);
-        btnPassReset = (Button)findViewById(R.id.passres);
+        btnPassReset = (Button) findViewById(R.id.passres);
+        btnNext = (Button) findViewById(R.id.nextBtn);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.pword);
-        loginErrorMsg = (TextView) findViewById(R.id.loginErrorMsg);
-        fbLoginInfo = (TextView) findViewById(R.id.info);
+        loginResult = (TextView) findViewById(R.id.loginResult);
+        fbLoginResult = (TextView) findViewById(R.id.fbLoginResult);
+
+        if (prefs.getBoolean("logged_in", false)) {
+            btnNext.setVisibility(View.VISIBLE);
+        } else {
+            btnNext.setVisibility(View.GONE);
+        }
 
         fbLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             Resources res = getResources();
@@ -74,26 +94,30 @@ public class LoginActivity extends Activity {
                 String userId = loginResult.getAccessToken().getUserId();
                 String token = loginResult.getAccessToken().getToken();
                 String text = String.format(res.getString(R.string.facebook_login_success), userId, token);
-                fbLoginInfo.setText(text);
+                fbLoginResult.setText(text);
+                btnNext.setVisibility(View.VISIBLE);
+                prefs.edit().putBoolean("logged_in", true).apply();
             }
 
             @Override
             public void onCancel() {
                 String text = res.getString(R.string.facebook_login_cancel);
-                fbLoginInfo.setText(text);
+                fbLoginResult.setText(text);
             }
 
             @Override
             public void onError(FacebookException e) {
                 String text = res.getString(R.string.facebook_login_error);
-                fbLoginInfo.setText(text);
+                fbLoginResult.setText(text);
             }
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                prefs.edit().putBoolean("logged_in", false).apply();
                 Intent myIntent = new Intent(view.getContext(), MainActivity.class);
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(myIntent);
             }
         });
@@ -127,6 +151,8 @@ public class LoginActivity extends Activity {
                     // TODO: log the user in
                     Toast.makeText(getApplicationContext(),
                             "Logging in...", Toast.LENGTH_SHORT).show();
+                    btnNext.setVisibility(View.VISIBLE);
+                    prefs.edit().putBoolean("logged_in", true).apply();
                 }
                 else if ((!inputEmail.getText().toString().isEmpty())) {
                     Toast.makeText(getApplicationContext(),
@@ -140,6 +166,13 @@ public class LoginActivity extends Activity {
                     Toast.makeText(getApplicationContext(),
                             "Email and Password fields are empty", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
             }
         });
     }
@@ -199,7 +232,7 @@ public class LoginActivity extends Activity {
             }
             else {
                 nDialog.dismiss();
-                loginErrorMsg.setText(R.string.error_network_connection);
+                loginResult.setText(R.string.error_network_connection);
             }
         }
     }
@@ -257,7 +290,7 @@ public class LoginActivity extends Activity {
                     }
                     else {
                         pDialog.dismiss();
-                        loginErrorMsg.setText(R.string.error_incorrect_user_pw);
+                        loginResult.setText(R.string.error_incorrect_user_pw);
                     }
                 }
             } catch (JSONException e) { e.printStackTrace(); }

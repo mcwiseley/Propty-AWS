@@ -11,7 +11,7 @@ import java.text.NumberFormat;
 public class SwipeCard {
 
     private String desc, listId, areaUnits, type;
-    private int beds, area;
+    private int beds, area, image;
     private double baths, price;
 
     /**
@@ -29,17 +29,19 @@ public class SwipeCard {
      * @param list_price The listed price of the property ('ListPrice' in MLS)
      * @param property_type The type of the property ('PropertyType' in MLS)
      * @param property_sub_type The sub-type of the property ('PropertySubType' in MLS)
+     * @param image_id The id number of the image to be displayed in the background
      */
     SwipeCard(String description, String listing_id, int bedrooms, int baths_full,
               int baths_3quart, int baths_half, int baths_1quart, int living_area,
               String living_area_units, double list_price, String property_type,
-              String property_sub_type) {
+              String property_sub_type, int image_id) {
         desc = description;
         listId = listing_id;
         beds = bedrooms;
         area = living_area;
         areaUnits = living_area_units;
         price = list_price;
+        image = image_id;
         type = property_type +
                 (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
         baths = ((double) baths_full) +
@@ -56,6 +58,7 @@ public class SwipeCard {
     String getAreaUnits() { return areaUnits; }
     double getPrice() { return price; }
     String getType() { return type; }
+    int getImage() { return image; }
 
     String getDescFormatted() {
         return desc + "\n\n";

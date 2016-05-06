@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 //import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -19,6 +22,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -27,13 +31,17 @@ import java.util.ArrayList;
  * Called when the user wants to see local property listings in a swipe-card format
  * Uses an ArrayList of SwipeCard objects to populate the list
  */
-public class SwipeCardActivity extends Activity {
+public class SwipeCardActivity extends AppCompatActivity {
 
     private ArrayList<SwipeCard> sc;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
+    private Toolbar toolbar;
 
     private static final int MAX_CARDS_IN_STACK = 20;
+    private static final int MIN_CARDS_IN_STACK = 6;
+    private static final int MAX_RENDERED_CARDS = 4;
+    private int current_card = 0;
     private int idx = 1;
 //    private final String bucketName = "propty.mobilepull";
 //    private String key = "samples/sample";
@@ -46,9 +54,15 @@ public class SwipeCardActivity extends Activity {
         setContentView(R.layout.activity_swipecard);
         ButterKnife.inject(this);
 
+        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
+        toolbar.setTitle(R.string.app_name);
+        setSupportActionBar(toolbar);
+        toolbar.setLogo(R.drawable.proptydog2);
+        toolbar.setLogoDescription("logo");
+
         sc = new ArrayList<>();
         al = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.cardText, al);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.swipecard, R.id.cardText, al);
 
         // Initialize the Amazon Cognito credentials provider
 //        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
@@ -66,30 +80,23 @@ public class SwipeCardActivity extends Activity {
         // Populate Swipe Cards from the S3 bucket
 //        pullDataFromBucket(s3, bucketName, key);
 
-        // These are just examples for testing purposes.  Delete these before launch!
-        sc.add(new SwipeCard("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", ""));
-        sc.add(new SwipeCard("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", ""));
-        sc.add(new SwipeCard("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", ""));
-        sc.add(new SwipeCard("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", ""));
-        sc.add(new SwipeCard("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", ""));
-
-        for (int i = 0; i < sc.size(); i++) {
-            SwipeCard card = sc.get(i);
-            al.add( card.getDescFormatted() +
-                    card.getBedsFormatted() +
-                    card.getBathsFormatted() +
-                    card.getAreaFormatted() +
-                    card.getPriceFormatted() +
-                    card.getTypeFormatted()    );
-        }
+        // These are just examples for testing purposes.  TODO: Delete these before launch!
+        sc.add(new SwipeCard("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
+        sc.add(new SwipeCard("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", "", 2));
+        sc.add(new SwipeCard("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", "", 3));
+        sc.add(new SwipeCard("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", "", 4));
+        sc.add(new SwipeCard("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", "", 5));
 
         flingContainer.setAdapter(arrayAdapter);
+        flingContainer.setMaxVisible(MAX_RENDERED_CARDS);
+        flingContainer.setMinStackInAdapter(MIN_CARDS_IN_STACK);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 al.remove(0);
+                current_card = (current_card + 1) % sc.size();
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -109,16 +116,7 @@ public class SwipeCardActivity extends Activity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
 //                pullDataFromBucket(s3, bucketName, key);
-                for (int i = 0; i < sc.size(); i++) {
-                    SwipeCard card = sc.get(i);
-                    al.add( card.getDescFormatted() +
-                            card.getBedsFormatted() +
-                            card.getBathsFormatted() +
-                            card.getAreaFormatted() +
-                            card.getPriceFormatted() +
-                            card.getTypeFormatted()    );
-                }
-                arrayAdapter.notifyDataSetChanged();
+                updateCardArray(sc.size() * 4);
                 Log.d("LIST", "notified");
             }
 
@@ -137,6 +135,8 @@ public class SwipeCardActivity extends Activity {
                 makeToast(getApplicationContext(), "Clicked!");
             }
         });
+
+        updateCardArray(sc.size() * 4);
 
     }
 
@@ -187,7 +187,7 @@ public class SwipeCardActivity extends Activity {
             } catch (IOException e) { e.printStackTrace(); }
             cardsInStack = sc.size();
         }
-        updateCardArray();
+        updateCardArray(sc.size());
     }
 
     /**
@@ -262,28 +262,55 @@ public class SwipeCardActivity extends Activity {
             }
         }
 
+        int img = 0;
+
         return new SwipeCard(desc, listId, beds, bathsFull, baths3q, bathsHalf, baths1q,
-                             area, areaUnits, price, type, subType);
+                             area, areaUnits, price, type, subType, img);
     }
 
     /**
-     * Converts the ArrayList of SwipeCard objects (sc) into an ArrayList of Strings (al)
-     * This allows the activity to properly display the formatted SwipeCard data
+     * Converts SwipeCards from the ArrayList of SwipeCards (sc) into formatted Strings, then
+     * adds the specified number of converted SwipeCards to the ArrayList of formatted Strings (al).
+     * This allows the activity to properly display the formatted SwipeCard data.
+     *
+     * @param number_to_add The number of SwipeCards to add to the stack
      */
-    protected void updateCardArray() {
-        ArrayList<String> new_al = new ArrayList<>();
-        for (int i = 0; i < sc.size(); i++) {
-            SwipeCard card = sc.get(i);
-            new_al.add( card.getDescFormatted() +
-                        card.getBedsFormatted() +
-                        card.getBathsFormatted() +
-                        card.getAreaFormatted() +
-                        card.getPriceFormatted() +
-                        card.getTypeFormatted()    );
+    protected void updateCardArray(int number_to_add) {
+        for (int i = 0; i < number_to_add; i++) {
+            SwipeCard card = sc.get(i % sc.size());
+            al.add(card.getDescFormatted() +
+                    card.getBedsFormatted() +
+                    card.getBathsFormatted() +
+                    card.getAreaFormatted() +
+                    card.getPriceFormatted() +
+                    card.getTypeFormatted());
         }
-        al = new_al;
         arrayAdapter.notifyDataSetChanged();
     }
+
+//    protected void renderCardBackground() {
+//        if (flingContainer.getChildAt(0) == null) return;
+//        View view = flingContainer.getChildAt(0).findViewById(R.id.cardText);
+//        switch (current_card) {
+//            case 0:
+//                view.setBackgroundResource(R.drawable.house_0);
+//                break;
+//            case 1:
+//                view.setBackgroundResource(R.drawable.house_1);
+//                break;
+//            case 2:
+//                view.setBackgroundResource(R.drawable.house_2);
+//                break;
+//            case 3:
+//                view.setBackgroundResource(R.drawable.house_3);
+//                break;
+//            case 4:
+//                view.setBackgroundResource(R.drawable.house_4);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
 //    private class downloadFromBucket extends AsyncTask<S3Object, Void, Void> {
 //        protected S3Object doInBackground(AmazonS3 s3, String key_0) {
