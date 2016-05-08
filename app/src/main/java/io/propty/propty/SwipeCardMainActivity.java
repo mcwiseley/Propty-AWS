@@ -56,7 +56,6 @@ public class SwipeCardMainActivity extends AppCompatActivity {
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-    private View mSwipeView;
     //end of Ryan's variables
 
     private ArrayList<SwipeCard> sc;
@@ -80,6 +79,8 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_swipecard_main);
         ButterKnife.inject(this);
 
+        //TODO: Get logo centered with menu items present
+        //setting up toolbar...
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
@@ -174,7 +175,6 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
-
             }
 
             @Override
@@ -204,7 +204,7 @@ public class SwipeCardMainActivity extends AppCompatActivity {
                 //closes the drawer if the user taps the area outside of it
                 if(mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-                    mDrawerLayout.closeDrawer(GravityCompat.END);
+//                    mDrawerLayout.closeDrawer(GravityCompat.END);
                 }
 
                 return false;
