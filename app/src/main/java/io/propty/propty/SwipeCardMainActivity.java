@@ -40,9 +40,13 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Swipe Card Activity
+ * Swipe Card Main Activity
+ * This is Ryan's rendition of the Swipe Card Activity with a navigation drawer
+ * added on the right side.
+ *
  * Called when the user wants to see local property listings in a swipe-card format
  * Uses an ArrayList of SwipeCard objects to populate the list
+ * Also
  */
 public class SwipeCardMainActivity extends AppCompatActivity {
 
@@ -164,9 +168,9 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         //Ryan's section of implementing DrawerLayout
         //and preferences menu
         /////////////////////////////////////////////////////////
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
+        //initialize DrawerLayout and set an event listener
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -175,11 +179,14 @@ public class SwipeCardMainActivity extends AppCompatActivity {
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                //lock drawer when opened completely
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                //unlock drawer when it is completely closed
+                //in order to allow opening via swipe from right
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
 
@@ -189,10 +196,12 @@ public class SwipeCardMainActivity extends AppCompatActivity {
             }
         });
 
+        //listener created for when user taps the screen not filled
+        //by the drawer when it is open
         mDrawerLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
+                //closes the drawer if the user taps the area outside of it
                 if(mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                     mDrawerLayout.closeDrawer(GravityCompat.END);
@@ -204,12 +213,12 @@ public class SwipeCardMainActivity extends AppCompatActivity {
 
 
 
-        //Set up the Number Pickers
+        //Set up the Bedroom Number Picker with minimum and maximum values
         NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
         mBedroomPicker.setMaxValue(10);
         mBedroomPicker.setMinValue(1);
         mBedroomPicker.setWrapSelectorWheel(false);
-
+        //Set up Bathroom number picker with minimum and maximum values
         NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
         mBathroomPicker.setMaxValue(10);
         mBathroomPicker.setMinValue(1);
@@ -220,9 +229,8 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         //Create an ArrayAdapter using the home_array
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.home_array,
                 android.R.layout.simple_spinner_item);
-        //Specify layout
+        //Specify layout and apply adapter
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //apply typeAdapter
         typeSpinner.setAdapter(typeAdapter);
 
         //set up adapter for drop down menu of square feet
@@ -230,15 +238,14 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         //Create an ArrayAdapter using the home_array
         ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.sq_ft_array,
                 android.R.layout.simple_spinner_item);
-        //Specify layout
+        //Specify layout and apply adapter
         sqFtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //apply sqFtAdapter
         sqFtSpinner.setAdapter(sqFtAdapter);
 
-        //Set up the radio buttons
+        //initialize the radio buttons
         mCurrentZipButton = (RadioButton) findViewById(R.id.current_zip_radio);
         mOtherZipButton = (RadioButton) findViewById(R.id.other_zip_radio);
-
+        //create custom listener for when radio buttons are clicked
         mCurrentZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -252,7 +259,7 @@ public class SwipeCardMainActivity extends AppCompatActivity {
                 }
             }
         });
-
+        //custom listener for other radio button
         mOtherZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -267,11 +274,13 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         });
 
         //Set up the EditTexts
+        //TODO: Get variables of EditTexts!!!
 
-        //Set up the price sliders
+        //Set up the price slider and TextView for Minimum Price
         mMinTextView = (TextView) findViewById(R.id.min_price);
         SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
         mMinSeekBar.setMax(10);
+        //listener for price slider
         mMinSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             int mProgress = 0;
@@ -279,6 +288,7 @@ public class SwipeCardMainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mProgress = progress;
+                //change display of TextView when user presses slider
                 mMinTextView.setText("Min Price: $" + (mProgress * 1000));
             }
 
@@ -293,10 +303,11 @@ public class SwipeCardMainActivity extends AppCompatActivity {
             }
         });
 
-
+        //Set up price slider and TextView for Maximum Price
         mMaxTextView = (TextView) findViewById(R.id.max_price);
         SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
         mMaxSeekBar.setMax(10);
+        //listener for price slider
         mMaxSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             int mProgress = 0;
@@ -305,6 +316,7 @@ public class SwipeCardMainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
                 mProgress = progress;
+                //change display of TextView when user presses slider
                 mMaxTextView.setText("Max Price: $" + (mProgress * 100000));
             }
 
@@ -319,18 +331,17 @@ public class SwipeCardMainActivity extends AppCompatActivity {
             }
         });
 
-        //Set up the Update button
+        //Set up the Update button and apply listener to close drawer
         Button mUpdateButton = (Button) findViewById(R.id.update_button);
         mUpdateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //send variables to proper areas!!!
-
+                //TODO: get all variables and apply back to swipe card activity
 
 
                 //close the drawer
                 mDrawerLayout.closeDrawer(GravityCompat.END);
-//                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             }
         });
 
@@ -494,13 +505,13 @@ public class SwipeCardMainActivity extends AppCompatActivity {
     //specifically for the drawer and action bar icon
     ///////////////////////////////////////////////////
 
+    //close drawer when back button is pressed
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if(drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         }
         else {
             super.onBackPressed();
@@ -509,6 +520,7 @@ public class SwipeCardMainActivity extends AppCompatActivity {
 
     }
 
+    //create icons and actions in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -523,14 +535,10 @@ public class SwipeCardMainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //user presses gear icon, opens drawer and displays Toast
         if (id == R.id.update_preferences_icon) {
             Toast.makeText(this, "Update Preferences", Toast.LENGTH_SHORT).show();
             mDrawerLayout.openDrawer(GravityCompat.END);
-//            mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
-
-
-
 
             return true;
         }
