@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         btnSwipeCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent swipecard = new Intent(getApplicationContext(), SwipeCardMainActivity.class);
+                Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                 startActivity(swipecard);
             }
         });
