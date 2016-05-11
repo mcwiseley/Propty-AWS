@@ -1,14 +1,25 @@
 package io.propty.propty;
 
-import android.app.Activity;
 import android.content.Context;
 //import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.SeekBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.ButterKnife;
@@ -27,11 +38,23 @@ import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Swipe Card Activity
+ * Swipe Card Main Activity
+ * This is Ryan's rendition of the Swipe Card Activity with a navigation drawer
+ * added on the right side.
+ *
  * Called when the user wants to see local property listings in a swipe-card format
  * Uses an ArrayList of SwipeCard objects to populate the list
+ * Also
  */
 public class SwipeCardActivity extends AppCompatActivity {
+
+    //private variables that Ryan added for DrawerLayout
+    private DrawerLayout mDrawerLayout;
+    private TextView mMinTextView;
+    private TextView mMaxTextView;
+    private RadioButton mCurrentZipButton;
+    private RadioButton mOtherZipButton;
+    //end of Ryan's variables
 
     private ArrayList<SwipeCard> sc;
     private ArrayList<String> al;
@@ -51,9 +74,11 @@ public class SwipeCardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_swipecard);
+        setContentView(R.layout.drawer_preferences);
         ButterKnife.inject(this);
 
+        //TODO: Get logo centered with menu items present
+        //setting up toolbar...
         toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
@@ -137,6 +162,192 @@ public class SwipeCardActivity extends AppCompatActivity {
         });
 
         updateCardArray(sc.size() * 4);
+
+        //////////////////////////////////////////////////////////
+        //Ryan's section of implementing DrawerLayout
+        //and preferences menu
+        /////////////////////////////////////////////////////////
+
+        //initialize DrawerLayout and set an event listener
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //lock drawer when opened completely
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                //unlock drawer when it is completely closed
+                //in order to allow opening via swipe from right
+                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+
+        //listener created for when user taps the screen not filled
+        //by the drawer when it is open
+        mDrawerLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //closes the drawer if the user taps the area outside of it
+                if(mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//                    mDrawerLayout.closeDrawer(GravityCompat.END);
+                }
+
+                return false;
+            }
+        });
+
+
+
+        //Set up the Bedroom Number Picker with minimum and maximum values
+        NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
+        mBedroomPicker.setMaxValue(10);
+        mBedroomPicker.setMinValue(1);
+        mBedroomPicker.setWrapSelectorWheel(false);
+        //Set up Bathroom number picker with minimum and maximum values
+        NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
+        mBathroomPicker.setMaxValue(10);
+        mBathroomPicker.setMinValue(1);
+        mBathroomPicker.setWrapSelectorWheel(false);
+
+        //set up adapter for drop down menu of home types
+        Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
+        //Create an ArrayAdapter using the home_array
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.home_array,
+                android.R.layout.simple_spinner_item);
+        //Specify layout and apply adapter
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        typeSpinner.setAdapter(typeAdapter);
+
+        //set up adapter for drop down menu of square feet
+        Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
+        //Create an ArrayAdapter using the home_array
+        ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.sq_ft_array,
+                android.R.layout.simple_spinner_item);
+        //Specify layout and apply adapter
+        sqFtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sqFtSpinner.setAdapter(sqFtAdapter);
+
+        //initialize the radio buttons
+        mCurrentZipButton = (RadioButton) findViewById(R.id.current_zip_radio);
+        mOtherZipButton = (RadioButton) findViewById(R.id.other_zip_radio);
+        //create custom listener for when radio buttons are clicked
+        mCurrentZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked) {
+                    //get id of checked button
+                    int id = buttonView.getId();
+
+                    //uncheck other buttons
+                    mOtherZipButton.setChecked(false);
+                }
+            }
+        });
+        //custom listener for other radio button
+        mOtherZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked) {
+                    int id = buttonView.getId();
+
+                    //uncheck other radio buttons
+                    mCurrentZipButton.setChecked(false);
+                }
+            }
+        });
+
+        //Set up the EditTexts
+        //TODO: Get variables of EditTexts!!!
+
+        //Set up the price slider and TextView for Minimum Price
+        mMinTextView = (TextView) findViewById(R.id.min_price);
+        SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
+        mMinSeekBar.setMax(10);
+        //listener for price slider
+        mMinSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int mProgress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mProgress = progress;
+                //change display of TextView when user presses slider
+                mMinTextView.setText("Min Price: $" + (mProgress * 1000));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        //Set up price slider and TextView for Maximum Price
+        mMaxTextView = (TextView) findViewById(R.id.max_price);
+        SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
+        mMaxSeekBar.setMax(10);
+        //listener for price slider
+        mMaxSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            int mProgress = 0;
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+                mProgress = progress;
+                //change display of TextView when user presses slider
+                mMaxTextView.setText("Max Price: $" + (mProgress * 100000));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        //Set up the Update button and apply listener to close drawer
+        Button mUpdateButton = (Button) findViewById(R.id.update_button);
+        mUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //send variables to proper areas!!!
+                //TODO: get all variables and apply back to swipe card activity
+                Toast.makeText(getApplicationContext(), "Preferences have been updated",
+                        Toast.LENGTH_SHORT).show();
+
+                //close the drawer
+                mDrawerLayout.closeDrawer(GravityCompat.END);
+            }
+        });
+
+
+
+
+
 
     }
 
@@ -265,7 +476,7 @@ public class SwipeCardActivity extends AppCompatActivity {
         int img = 0;
 
         return new SwipeCard(desc, listId, beds, bathsFull, baths3q, bathsHalf, baths1q,
-                             area, areaUnits, price, type, subType, img);
+                area, areaUnits, price, type, subType, img);
     }
 
     /**
@@ -287,6 +498,55 @@ public class SwipeCardActivity extends AppCompatActivity {
         }
         arrayAdapter.notifyDataSetChanged();
     }
+
+    ////////////////////////////////////////////////////
+    //Ryan's section overridden methods
+    //specifically for the drawer and action bar icon
+    ///////////////////////////////////////////////////
+
+    //close drawer when back button is pressed
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        if(drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
+        }
+        else {
+            super.onBackPressed();
+        }
+
+
+    }
+
+    //create icons and actions in toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //user presses gear icon, opens drawer and displays Toast
+        if (id == R.id.update_preferences_icon) {
+            mDrawerLayout.openDrawer(GravityCompat.END);
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
+
 
 //    protected void renderCardBackground() {
 //        if (flingContainer.getChildAt(0) == null) return;
