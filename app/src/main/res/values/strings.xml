@@ -84,4 +84,39 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <!-- Example Update Preferences Setting-->
+    <string name="action_update">Quick Update</string>
+    <string name="message">Hit the Gear icon to open the drawer!!!</string>
+    <string name="sq_feet_text">Size(square feet)</string>
+    <string name="type_home">Type of Home</string>
+    <string name="update_button">Update</string>
+    <string name="drawer_name">Update Search Preferences</string>
+    <string name="min_price">Minimum Price</string>
+    <string name="max_price">Maximum Price</string>
+    <string name="num_bedroom">Bedrooms:</string>
+    <string name="num_bathroom">Bathrooms:</string>
+    <string name="within_text">Within </string>
+    <string name="miles_hint">      </string>
+    <string name="miles_of"> miles of </string>
+    <string name="current_location">Current location</string>
+    <string name="other_location">Other zip code: </string>
+    <string name="zip_hint">      </string>
+    <string-array name="home_array">
+        <item>House</item>
+        <item>Condo</item>
+        <item>Apartment</item>
+        <item>Duplex</item>
+    </string-array>
+    <string-array name="sq_ft_array">
+        <item>0-1000</item>
+        <item>1001-1500</item>
+        <item>1501-2000</item>
+        <item>2001-2500</item>
+        <item>2500-3000</item>
+        <item>3001+</item>
+    </string-array>
+
+
+
 </resources>

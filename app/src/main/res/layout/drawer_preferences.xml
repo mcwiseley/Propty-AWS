@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for SwipeCard Main activity -->
+<!-- uses DrawerLayout for swipe drawer from right(END) side -->
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end">
+
+<!-- include the swipecard activity layout first as main content-->
+    <include
+        layout="@layout/activity_swipecard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+
+<!-- "navigation" Layout for update preferences drawer -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:fitsSystemWindows="true"
+        >
+
+        <include
+            layout="@layout/update_preferences"
+            />
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>
