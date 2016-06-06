@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="io.propty.propty.SettingsResultsActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bedrooms: "
+        android:id="@+id/numBedrooms_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="numBedrooms_fill"
+        android:id="@+id/numBedrooms_fill"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/numBedrooms_result"
+        android:layout_toEndOf="@+id/numBedrooms_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bathrooms: "
+        android:id="@+id/numBathrooms_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/numBedrooms_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="numBathrooms_fill"
+        android:id="@+id/numBathrooms_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/numBedrooms_result"
+        android:layout_toRightOf="@+id/numBathrooms_result"
+        android:layout_toEndOf="@+id/numBathrooms_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="min price: "
+        android:id="@+id/minPrice_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/numBathrooms_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="minPrice_fill"
+        android:id="@+id/minPrice_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/numBathrooms_result"
+        android:layout_toRightOf="@+id/minPrice_result"
+        android:layout_toEndOf="@+id/minPrice_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="max price: "
+        android:id="@+id/maxPrice_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/minPrice_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="maxPrice_fill"
+        android:id="@+id/maxPrice_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/minPrice_result"
+        android:layout_toRightOf="@+id/maxPrice_result"
+        android:layout_toEndOf="@+id/maxPrice_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="square footage: "
+        android:id="@+id/squareFootage_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/maxPrice_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="squareFootage_fill"
+        android:id="@+id/squareFootage_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/maxPrice_result"
+        android:layout_toRightOf="@+id/squareFootage_result"
+        android:layout_toEndOf="@+id/squareFootage_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="structure: "
+        android:id="@+id/structure_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/squareFootage_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="structure_fill"
+        android:id="@+id/structure_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/squareFootage_result"
+        android:layout_toRightOf="@+id/structure_result"
+        android:layout_toEndOf="@+id/structure_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pool: "
+        android:id="@+id/pool_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/structure_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pool_fill"
+        android:id="@+id/pool_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/structure_fill"
+        android:layout_toRightOf="@+id/pool_result"
+        android:layout_toEndOf="@+id/pool_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="garage: "
+        android:id="@+id/garage_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/pool_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="garage_fill"
+        android:id="@+id/garage_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/pool_fill"
+        android:layout_toRightOf="@+id/garage_result"
+        android:layout_toEndOf="@+id/garage_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="within: "
+        android:id="@+id/within_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/garage_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="within_fill"
+        android:id="@+id/within_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/garage_fill"
+        android:layout_toRightOf="@+id/within_result"
+        android:layout_toEndOf="@+id/within_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zip: "
+        android:id="@+id/zip_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/within_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zip_fill"
+        android:id="@+id/zip_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/within_fill"
+        android:layout_toRightOf="@+id/zip_result"
+        android:layout_toEndOf="@+id/zip_result" />
+
+</RelativeLayout>

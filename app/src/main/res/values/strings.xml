@@ -28,6 +28,21 @@
     <string name="title_activity_preferences">Preferences</string>
 
     <!-- Strings related to Settings -->
+    <string-array name="squareFootage_array">
+        <item>> 1,000 sq. ft</item>
+        <item>> 5,000 sq. ft</item>
+        <item>> 10,000 sq. ft</item>
+        <item>>20,000 sq. ft</item>
+        <item>> 50,000 sq. ft</item>
+        <item>> 100,000 sq. ft</item>
+    </string-array>
+    <string-array name="structure_array">
+        <item>Condominium</item>
+        <item>Apartment</item>
+        <item>A-Frame</item>
+        <item>Colonial</item>
+        <item>Cottage</item>
+    </string-array>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

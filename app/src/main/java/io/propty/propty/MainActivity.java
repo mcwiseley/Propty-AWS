@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogout;
     Button btnLogin;
     Button btnSwipeCard;
+    Button btnSettings;
     Resources res;
 
     /**
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogout = (Button) findViewById(R.id.btlogout);
         btnLogin = (Button) findViewById(R.id.btlogin);
         btnSwipeCard = (Button) findViewById(R.id.btswipecard);
+        btnSettings = (Button) findViewById(R.id.settings);
         res = getResources();
 
         // Restore preferences
@@ -84,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                 startActivity(swipecard);
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(settings);
             }
         });
     }
