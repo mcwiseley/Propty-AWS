@@ -29,39 +29,45 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.lorentzos.flingswipe.SwipeFlingAdapterView
-        android:id="@+id/frame"
-        android:background="#e0f5ff"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:rotation_degrees="15"
-        tools:context=".SwipeCard" />
+        android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    </FrameLayout>
 
-        <Button
-            style="?android:buttonBarButtonStyle"
-            android:id="@+id/left"
-            android:layout_margin="10dp"
-            android:text="Dislike"
-            android:textColor="#ff0000"
+    <!-- TODO: Double check for safe removal all commented out lines -->
+    <!-- Commented out and prepared to be removed -->
+    <!--    <com.lorentzos.flingswipe.SwipeFlingAdapterView
+            android:id="@+id/frame"
+            android:background="#e0f5ff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:rotation_degrees="15"
+            tools:context=".SwipeCard" />
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+            <Button
+                style="?android:buttonBarButtonStyle"
+                android:id="@+id/left"
+                android:layout_margin="10dp"
+                android:text="Dislike"
+                android:textColor="#ff0000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                style="?android:buttonBarButtonStyle"
+                android:id="@+id/right"
+                android:layout_margin="10dp"
+                android:text="Like"
+                android:textColor="#00ff00"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>-->
 
-        <Button
-            style="?android:buttonBarButtonStyle"
-            android:id="@+id/right"
-            android:layout_margin="10dp"
-            android:text="Like"
-            android:textColor="#00ff00"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

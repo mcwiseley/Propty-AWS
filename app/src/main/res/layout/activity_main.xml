@@ -49,7 +49,7 @@
         <Button
             android:layout_width="160dp"
             android:layout_height="40dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="20dp"
             android:text="Log In"
             android:id="@+id/btlogin"
             android:background="#eeeeee"
@@ -96,6 +96,17 @@
             android:layout_marginTop="10dp"
             android:text="Settings"
             android:id="@+id/settings"
+            android:background="#eeeeee"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:text="Realtors"
+            android:id="@+id/btrealtor"
             android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"
