@@ -27,6 +27,9 @@
     <string name="welcome_text">Welcome, %1$s</string>
     <string name="title_activity_preferences">Preferences</string>
 
+    <!-- Google Maps API Key -->
+    <string name="google_maps_key">AIzaSyBlTIcWcWnDcAewqmpTF68fYOMIpweG4nQ</string>
+
     <!-- Strings related to Settings -->
     <string-array name="squareFootage_array">
         <item>> 1,000 sq. ft</item>
@@ -131,7 +134,36 @@
         <item>2500-3000</item>
         <item>3001+</item>
     </string-array>
+    <!-- Strings for realtor names -->
+    <string-array name="realtors">
+        <item>Frank Drebin</item>
+        <item>Bob Loblaw</item>
+        <item>Andi Garcia</item>
+        <item>Keyser Soze</item>
+    </string-array>
 
+    <!-- Strings for realtor info/description -->
+    <string-array name="realtor_info">
+        <item>Hey, It\'s Enrico Palazzo!</item>
+        <item>You don\'t need double-talk. You need Bob Loblaw.</item>
+        <item>That was my bad.</item>
+        <item>And like that...he\'s gone.</item>
+    </string-array>
 
+    <!-- Strings for realtor ratings in rating bars -->
+    <string-array name="realtor_ratings">
+        <item>4.5</item>
+        <item>3.75</item>
+        <item>2.5</item>
+        <item>3.0</item>
+    </string-array>
+
+    <!-- Strings for RealtorList Button and "picked realtor" TextView -->
+    <string name="picked_realtor">No realtor selected</string>
+    <string name="realtor_button">Pick This Realtor</string>
+    <string name="realtor_info">Realtor Info Here</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

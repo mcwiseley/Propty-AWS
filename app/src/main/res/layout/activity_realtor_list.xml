@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="io.propty.propty.RealtorListActivity">
+
+
+    <ExpandableListView
+        android:id="@+id/realtor_exp_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignParentTop="true"
+        android:divider="@android:drawable/divider_horizontal_bright"
+        android:dividerHeight="2dp"
+        />
+
+    <TextView
+        android:id="@+id/picked_realtor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:textSize="25sp"
+        android:text="@string/picked_realtor"
+        android:textColor="@android:color/holo_red_light"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:layout_alignParentBottom="true"
+        />
+
+</RelativeLayout>

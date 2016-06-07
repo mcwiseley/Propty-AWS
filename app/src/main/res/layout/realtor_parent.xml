@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <!-- Using imported CircularImageView to make circular images -->
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/realtor_circle_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/real1"
+        app:siBorderWidth="0dp"
+        app:siBorderColor="@android:color/transparent"
+        app:siBorderAlpha="0.0"
+        android:layout_marginLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+
+        />
+
+    <TextView
+        android:id="@+id/realtor_parent_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/realtor_circle_image"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25sp"
+        android:layout_marginLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+
+        />
+
+
+</RelativeLayout>

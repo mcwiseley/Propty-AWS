@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnLogin;
     Button btnSwipeCard;
     Button btnSettings;
+    Button btnRealtor;
     Resources res;
 
     /**
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = (Button) findViewById(R.id.btlogin);
         btnSwipeCard = (Button) findViewById(R.id.btswipecard);
         btnSettings = (Button) findViewById(R.id.settings);
+        btnRealtor = (Button) findViewById(R.id.btrealtor);
         res = getResources();
 
         // Restore preferences
@@ -94,6 +96,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(settings);
+            }
+        });
+
+        btnRealtor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
+                startActivity(realtor);
             }
         });
     }
