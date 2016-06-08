@@ -13,16 +13,17 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        android:title="Choose Realtor"
-        android:logo="@drawable/proptydog2"
+        >
 
-        />
+
+        </android.support.v7.widget.Toolbar>
 
     <ExpandableListView
         android:id="@+id/realtor_exp_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingTop="12dp"
         android:layout_alignParentTop="true"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="2dp"

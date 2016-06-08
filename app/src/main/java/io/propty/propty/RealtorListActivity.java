@@ -48,8 +48,7 @@ public class RealtorListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-
+        actionBar.setTitle("Choose Realtor");
 
         mExpandableListView = (ExpandableListView) findViewById(R.id.realtor_exp_listview);
 
