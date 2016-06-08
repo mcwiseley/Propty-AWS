@@ -7,34 +7,21 @@
     android:fillViewport="true"
     tools:context="io.propty.propty.SettingsActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/settings_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        >
-
-
-    </android.support.v7.widget.Toolbar>
-
-
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:focusableInTouchMode="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Propty"
-            android:id="@+id/logo"
-            android:layout_gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000000"/>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            >
+
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
             android:layout_width="250dp"
@@ -43,23 +30,22 @@
             android:id="@+id/numBedrooms_label"
             android:textSize="16sp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="?attr/actionBarSize"
             android:textColor="#000000"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:paddingTop="12dp"/>
 
         <NumberPicker
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/numBedrooms"
+            android:layout_marginTop="?attr/actionBarSize"
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="10dp"
-            android:layout_below="@+id/logo"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_toEndOf="@+id/numBedrooms_label"
-            android:layout_toRightOf="@+id/numBedrooms_label"/>
+            />
 
         <TextView
             android:layout_width="250dp"
