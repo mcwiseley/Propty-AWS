@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context="io.propty.propty.RealtorListActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/realtor_list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="Choose Realtor"
+        android:logo="@drawable/proptydog2"
+
+        />
 
     <ExpandableListView
         android:id="@+id/realtor_exp_listview"

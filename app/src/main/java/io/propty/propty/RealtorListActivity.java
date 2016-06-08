@@ -3,7 +3,9 @@ package io.propty.propty;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -41,9 +43,14 @@ public class RealtorListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_realtor_list);
 
-        //////////////////////////////////////////////////////////////////////
-        //All OF THE NEW EXPANDABLE LISTVIEW STUFF IS HERE!!!
-        /////////////////////////////////////////////////////////////////////
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.realtor_list_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+
         mExpandableListView = (ExpandableListView) findViewById(R.id.realtor_exp_listview);
 
         //calling function to get all of the data from xml files and other resources
