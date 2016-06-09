@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -28,24 +27,14 @@ public class SettingsActivity extends AppCompatActivity {
     public final static String EXTRA = "io.propty.propty.MESSAGE";
 
     private NumberPicker numBedrooms;
-    private TextView numBedrooms_label;
     private NumberPicker numBathrooms;
-    private TextView numBathrooms_label;
     private EditText minPrice;
-    private  TextView minPrice_label;
     private EditText maxPrice;
-    private TextView maxPrice_label;
     private Spinner squareFootage;
-    private TextView squareFootage_label;
     private Spinner structure;
-    private TextView structure_label;
     private CheckBox pool;
-    private TextView pool_label;
     private CheckBox garage;
-    private TextView garage_label;
     private EditText within;
-    private TextView within_label;
-    private  TextView milesOf_label;
     private RadioButton radioCurrentLocation;
     private RadioButton radioZip;
     private EditText zip;
@@ -79,24 +68,14 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         numBedrooms = (NumberPicker) findViewById(R.id.numBedrooms);
-        numBedrooms_label = (TextView) findViewById(R.id.numBedrooms_label);
         numBathrooms = (NumberPicker) findViewById(R.id.numBathrooms);
-        numBathrooms_label = (TextView) findViewById(R.id.numBathrooms_label);
         minPrice = (EditText) findViewById(R.id.minPrice);
-        minPrice_label = (TextView) findViewById(R.id.minPrice_label);
         maxPrice = (EditText) findViewById(R.id.maxPrice);
-        maxPrice_label = (TextView) findViewById(R.id.maxPrice_label);
         squareFootage = (Spinner) findViewById(R.id.squareFootage);
-        squareFootage_label = (TextView) findViewById(R.id.squareFootage_label);
         structure = (Spinner) findViewById(R.id.structure);
-        structure_label = (TextView) findViewById(R.id.structure_label);
         pool = (CheckBox) findViewById(R.id.pool);
-        pool_label = (TextView) findViewById(R.id.pool_label);
         garage = (CheckBox) findViewById(R.id.garage);
-        garage_label = (TextView) findViewById(R.id.garage_label);
         within = (EditText) findViewById(R.id.within);
-        within_label = (TextView) findViewById(R.id.within_label);
-        milesOf_label = (TextView) findViewById(R.id.milesOf_label);
         radioCurrentLocation = (RadioButton) findViewById(R.id.radioCurrentLocation);
         radioZip = (RadioButton) findViewById(R.id.radioZip);
         zip = (EditText) findViewById(R.id.zip);
