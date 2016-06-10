@@ -8,6 +8,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +28,7 @@ import java.util.HashMap;
  * Change Password Activity
  * Called when a logged-in user wants to change their password
  **/
-public class ChangePasswordActivity extends Activity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_ERROR = "error";
@@ -39,6 +42,14 @@ public class ChangePasswordActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
+
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.change_password_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Change Password");
+
 
         cancel = (Button) findViewById(R.id.btcancel);
         cancel.setOnClickListener(new View.OnClickListener() {

@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -63,11 +64,13 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_login);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
-        toolbar.setTitle(R.string.app_name);
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.login_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.proptydog2);
-        toolbar.setLogoDescription("logo");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Login");
+
 
         fbLoginBtn = (LoginButton) findViewById(R.id.login_button);
         btnLogin = (Button) findViewById(R.id.login);
@@ -127,7 +130,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), ResetPasswordActivity.class);
                 startActivityForResult(myIntent, 0);
-                finish();
+                //commented out finish() due to improper UP and
+                //BACK button navigation
+//                finish();
             }
         });
 
@@ -136,7 +141,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
                 startActivityForResult(myIntent, 0);
-                finish();
+                //commented out finish() due to improper UP and
+                //BACK button navigation
+//                finish();
             }
         });
 
