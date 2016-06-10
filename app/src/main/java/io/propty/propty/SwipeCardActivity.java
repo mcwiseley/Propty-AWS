@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -53,11 +54,18 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         //TODO: Get logo centered with menu items present
         //setting up toolbar...
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
+/*        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
         toolbar.setLogo(R.drawable.proptydog2);
-        toolbar.setLogoDescription("logo");
+        toolbar.setLogoDescription("logo");*/
+
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.swipecard_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Find Your Home");
 
         //initialize DrawerLayout and set an event listener
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -275,6 +283,18 @@ public class SwipeCardActivity extends AppCompatActivity {
             mDrawerLayout.openDrawer(GravityCompat.END);
 
             return true;
+        }
+        //user presses UP navigation arrow
+        if (id == android.R.id.home) {
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            //if fragments have been added to the stack
+            // go to previous fragment
+            if(fragmentManager.getBackStackEntryCount() > 0) {
+                fragmentManager.popBackStack();
+                return true;
+            }
+
         }
 
         return super.onOptionsItemSelected(item);
