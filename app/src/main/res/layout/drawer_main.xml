@@ -20,22 +20,16 @@
 
 <!-- Second content for navigation drawer -->
 
-<!--    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+    <android.support.design.widget.NavigationView
+        android:id="@+id/main_nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:background="#ffffff"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer"
-        />-->
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
+        app:menu="@menu/menu_drawer_main"
+        app:itemIconTint="@color/colorPrimaryDark"
         />
 
 
