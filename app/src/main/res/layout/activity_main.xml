@@ -9,15 +9,27 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        >
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="?attr/actionBarSize"
+        >
 
         <ImageView
             android:layout_width="70dp"
@@ -26,23 +38,24 @@
             android:src="@drawable/proptydog2"
             android:contentDescription="logo"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="15dp"/>
 
-        <TextView
+<!-- commented out because title in Toolbar already -->
+<!--        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Propty"
             android:textSize="30sp"
             android:id="@+id/logo"
             android:layout_gravity="center"
-            android:textColor="#eeeeee"/>
+            android:textColor="#eeeeee"/>-->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
             android:text="Welcome"
-            android:textSize="15sp"
+            android:textSize="30sp"
             android:id="@+id/textwelcome"
             android:layout_gravity="center"/>
 
@@ -112,6 +125,6 @@
             android:textSize="13sp"
             android:layout_gravity="center"/>
 
-    </android.support.design.widget.AppBarLayout>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
