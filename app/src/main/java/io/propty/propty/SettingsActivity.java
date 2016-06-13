@@ -1,13 +1,12 @@
 package io.propty.propty;
 
-//This is the relevant activity for the settings menu.  It requires activity_settings.xml
-//(obviously) and the string arrays in values/strings.xml to work properly.
 
 //TODO: Still need code for:
 //updating zip code when zip radio button is already selected and user changes zip EditText.
 //
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -25,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     //unique tag for intents:
     public final static String EXTRA = "io.propty.propty.MESSAGE";
+    public static final String PREFS = "MyPrefsFile";
 
     private NumberPicker numBedrooms;
     private NumberPicker numBathrooms;
@@ -49,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
     boolean pool_val;
     boolean garage_val;
     int within_val;
+    boolean radioCurrent_val;
+    boolean radioZip_val;
     int zip_val;
 
     final static String numBedrooms_string = EXTRA + "numBedrooms";
@@ -60,6 +62,8 @@ public class SettingsActivity extends AppCompatActivity {
     final static String pool_string = EXTRA + "pool";
     final static String garage_string = EXTRA + "garage";
     final static String within_string = EXTRA + "within";
+    final static String radioCurrent_string = EXTRA + "radioCurrent";
+    final static String radioZip_string = EXTRA + "radioZip";
     final static String zip_string = EXTRA + "zip";
 
     @Override
@@ -82,12 +86,39 @@ public class SettingsActivity extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
 
 
-        //Populate Number Pickers for number of bathrooms and bedrooms
+        //Load shared preferences
+        SharedPreferences settings = getSharedPreferences(PREFS, 0);
+
+        numBedrooms_val = settings.getFloat(numBedrooms_string, 1);
+        numBathrooms_val = settings.getFloat(numBathrooms_string, 1);
+        minPrice_val = settings.getInt(minPrice_string, 0);
+        maxPrice_val = settings.getInt(maxPrice_string, 0);
+        squareFootage_val = settings.getInt(squareFootage_string, 0);
+        structure_val = settings.getInt(structure_string, 0);
+        pool_val = settings.getBoolean(pool_string, false);
+        garage_val = settings.getBoolean(garage_string, false);
+        within_val = settings.getInt(within_string, 0);
+        radioCurrent_val = settings.getBoolean(radioCurrent_string, true);
+        radioZip_val = settings.getBoolean(radioZip_string, false);
+
+        zip_val = settings.getInt(zip_string, 0);
+
+
+        //Populate Number Pickers for number of bathrooms and bedrooms, set loaded preference
+        //values for both as well as min/max price
 
         populateNumberPicker(numBedrooms, 1, 10, 2);
         populateNumberPicker(numBathrooms, 1, 5, 4);
         numBedrooms.setWrapSelectorWheel(false);
         numBathrooms.setWrapSelectorWheel(false);
+        int numBedrooms_temp = (int)(numBedrooms_val * 2);
+        numBedrooms.setValue(numBedrooms_temp);
+        int numBathrooms_temp = (int)(numBathrooms_val * 4);
+        numBathrooms.setValue(numBathrooms_temp);
+
+        minPrice.setText(Integer.toString(minPrice_val));
+        maxPrice.setText(Integer.toString(maxPrice_val));
+
 
         //Populate Spinner of possible square footage options from string array in strings.xml
 
@@ -95,6 +126,7 @@ public class SettingsActivity extends AppCompatActivity {
                 R.array.squareFootage_array, android.R.layout.simple_spinner_item);
         footage_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         squareFootage.setAdapter(footage_adapter);
+        squareFootage.setSelection(squareFootage_val);
 
         //Populate Spinner of possible structures from string array in strings.xml
 
@@ -102,8 +134,17 @@ public class SettingsActivity extends AppCompatActivity {
                 R.array.structure_array, android.R.layout.simple_spinner_item);
         structure_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         structure.setAdapter(structure_adapter);
+        structure.setSelection(structure_val);
 
-        //Make editing Zip field update zip radio button
+        //Fill remaining settings based on shared preferences
+        pool.setChecked(pool_val);
+        garage.setChecked(garage_val);
+        if(within_val != 0)
+            within.setText(Integer.toString(within_val));
+        radioCurrentLocation.setChecked(radioCurrent_val);
+        radioZip.setChecked(radioZip_val);
+        if(radioZip_val)
+            zip.setText(Integer.toString(zip_val));
     }
 
     //Method to populate a number picker with fractional values.  Takes a NumberPicker, minimum
@@ -206,28 +247,44 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsResultsActivity.class);
 
         numBedrooms_val = (float)(numBedrooms.getValue()) / 2;
-
         numBathrooms_val = (float)(numBathrooms.getValue()) / 4;
-
         minPrice_val = Integer.parseInt(minPrice.getText().toString());
-
         maxPrice_val = Integer.parseInt(maxPrice.getText().toString());
-
         //Square Footage and Structure values will be integers corresponding to the selected index,
         //These values will only be meaningful once we settle on what the options are.
         squareFootage_val = squareFootage.getSelectedItemPosition();
-
         structure_val = structure.getSelectedItemPosition();
-
         pool_val = pool.isChecked();
-
         garage_val = garage.isChecked();
-
         within_val = Integer.parseInt(within.getText().toString());
-
         if(radioZip.isChecked()) {
+            radioZip_val = true;
+            radioCurrent_val = false;
             zip_val = Integer.parseInt(zip.getText().toString());
         }
+        else {
+            radioZip_val = false;
+            radioCurrent_val = true;
+            zip_val = 98765;
+        }
+
+        SharedPreferences settings = getSharedPreferences(PREFS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putFloat(numBedrooms_string, numBedrooms_val);
+        editor.putFloat(numBathrooms_string, numBathrooms_val);
+        editor.putInt(minPrice_string, minPrice_val);
+        editor.putInt(maxPrice_string, maxPrice_val);
+        editor.putInt(squareFootage_string, squareFootage_val);
+        editor.putInt(structure_string, structure_val);
+        editor.putBoolean(pool_string, pool_val);
+        editor.putBoolean(garage_string, garage_val);
+        editor.putInt(within_string, within_val);
+        editor.putBoolean(radioCurrent_string, radioCurrent_val);
+        editor.putBoolean(radioZip_string, radioZip_val);
+        editor.putInt(zip_string, zip_val);
+
+        // Commit the edits!
+        editor.apply();
 
         intent.putExtra(numBedrooms_string, numBedrooms_val);
         intent.putExtra(numBathrooms_string, numBathrooms_val);
