@@ -283,7 +283,6 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putBoolean(radioZip_string, radioZip_val);
         editor.putInt(zip_string, zip_val);
 
-        // Commit the edits!
         editor.apply();
 
         intent.putExtra(numBedrooms_string, numBedrooms_val);
