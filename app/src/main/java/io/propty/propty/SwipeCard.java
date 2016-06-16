@@ -10,9 +10,9 @@ import java.text.NumberFormat;
  */
 public class SwipeCard {
 
-    private String desc, listId, areaUnits, type;
-    private int beds, area, image;
-    private double baths, price;
+    protected String desc, listId, areaUnits, type;
+    protected int beds, area, image;
+    protected double baths, price;
 
     /**
      * SwipeCard Constructor
@@ -31,6 +31,13 @@ public class SwipeCard {
      * @param property_sub_type The sub-type of the property ('PropertySubType' in MLS)
      * @param image_id The id number of the image to be displayed in the background
      */
+
+    //I added a default constructor to be used with the property class - HK
+
+    SwipeCard(){
+
+    }
+
     SwipeCard(String description, String listing_id, int bedrooms, int baths_full,
               int baths_3quart, int baths_half, int baths_1quart, int living_area,
               String living_area_units, double list_price, String property_type,
