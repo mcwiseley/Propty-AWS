@@ -65,6 +65,9 @@ public class SwipeCardActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Find Your Home");
 
+        //TODO: Change the setDrawerListener to the toggle, and take out
+        //TODO: all of the stuff about the right drawer
+        
         //Set up DrawerLayout with ActionBarToggle for navigation drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
