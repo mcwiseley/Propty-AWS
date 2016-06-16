@@ -1,5 +1,6 @@
 package io.propty.propty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -65,57 +66,72 @@ public class SwipeCardActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Find Your Home");
 
-        //TODO: Change the setDrawerListener to the toggle, and take out
-        //TODO: all of the stuff about the right drawer
-        
         //Set up DrawerLayout with ActionBarToggle for navigation drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        left_drawer = (NavigationView) findViewById(R.id.nav_view_left);
+        right_drawer = (NavigationView) findViewById(R.id.nav_view_right);
+
+
         mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
-
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                if(drawerView.equals(right_drawer)) {
+
+                    actionBar.setTitle("");
+                }
+
+                super.onDrawerSlide(drawerView, slideOffset);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                //lock drawer when opened completely
 
                 if (drawerView.equals(left_drawer)) {
-                    actionBar.setTitle(getTitle());
+
+                    actionBar.setTitle("Find Your Home");
                     supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
+                    mDrawerLayout.closeDrawer(right_drawer);
                 }
-                else {
+
+                if (drawerView.equals(right_drawer)) {
 
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                    mDrawerLayout.closeDrawer(left_drawer);
                 }
 
+                super.onDrawerOpened(drawerView);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                //unlock drawer when it is completely closed
-                //in order to allow opening via swipe from right
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
                 if(drawerView.equals(left_drawer)) {
 
-                    getSupportActionBar().setTitle(getString(R.string.app_name));
+                    actionBar.setTitle("Find Your Home");
                     supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
                 }
 
+                if(drawerView.equals(right_drawer)) {
+
+                    actionBar.setTitle("Find Your Home");
+                    supportInvalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+
+                    //unlock drawer when it is completely closed
+                    //in order to allow opening via swipe from right
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+
+                super.onDrawerClosed(drawerView);
             }
 
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         //listener created for when user taps the screen not filled
         //by the drawer when it is open
@@ -123,11 +139,51 @@ public class SwipeCardActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //closes the drawer if the user taps the area outside of it
-                if (mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
+                if (mDrawerLayout.isDrawerOpen(right_drawer)) {
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
 
                 return false;
+            }
+        });
+
+        left_drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_login) {
+                    // Handle the camera action
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(login);
+                } else if (id == R.id.nav_change_password) {
+                    Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    startActivity(chgPass);
+                } else if (id == R.id.nav_logout) {
+//                    prefs.edit().putBoolean("logged_in", false).apply();
+                    UserFunctions logout = new UserFunctions();
+                    logout.logoutUser(getApplicationContext());
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(login);
+                    //commented out finish() due to improper UP and
+                    //BACK button navigation
+//                finish();
+                } else if (id == R.id.nav_swipecard) {
+
+                    mDrawerLayout.closeDrawer(left_drawer);
+
+                } else if (id == R.id.nav_settings) {
+                    Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(settings);
+                } else if (id == R.id.nav_realtor_list) {
+                    Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
+                    startActivity(realtor);
+                }
+
+                mDrawerLayout.closeDrawer(left_drawer);
+                return true;
             }
         });
 
@@ -260,7 +316,7 @@ public class SwipeCardActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 //close the drawer
-                mDrawerLayout.closeDrawer(GravityCompat.END);
+                mDrawerLayout.closeDrawer(right_drawer);
             }
         });
 
@@ -278,8 +334,8 @@ public class SwipeCardActivity extends AppCompatActivity {
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
+        if (drawer.isDrawerOpen(right_drawer)) {
+            drawer.closeDrawer(right_drawer);
         }
         else if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -319,7 +375,12 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         //user presses gear icon, opens drawer and displays Toast
         if (id == R.id.update_preferences_icon) {
-            mDrawerLayout.openDrawer(GravityCompat.END);
+/*            if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+            }*/
+
+            mDrawerLayout.openDrawer(right_drawer);
+
 
             return true;
         }

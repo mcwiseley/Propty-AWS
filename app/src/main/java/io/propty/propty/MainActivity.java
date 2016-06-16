@@ -152,7 +152,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                     login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(login);
-                    finish();
+                    //commented out finish() due to improper UP and
+                    //BACK button navigation
+//                finish();
                 } else if (id == R.id.nav_swipecard) {
                     Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                     startActivity(swipecard);
