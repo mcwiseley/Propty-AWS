@@ -1,11 +1,14 @@
 package io.propty.propty;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -33,6 +36,11 @@ import java.util.ArrayList;
 public class SwipeCardActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private NavigationView left_drawer;
+    private NavigationView right_drawer;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+
     private TextView mMinTextView;
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
@@ -41,7 +49,6 @@ public class SwipeCardActivity extends AppCompatActivity {
     private ArrayList<SwipeCard> sc;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
-    private Toolbar toolbar;
 
     int current_card = 0;
     int idx = 1;
@@ -51,23 +58,20 @@ public class SwipeCardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_preferences);
 
-        //TODO: Get logo centered with menu items present
-        //setting up toolbar...
-/*        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
-        toolbar.setTitle(R.string.app_name);
-        setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.proptydog2);
-        toolbar.setLogoDescription("logo");*/
-
         //set up the Toolbar with Up Navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.swipecard_toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Find Your Home");
 
-        //initialize DrawerLayout and set an event listener
+        //Set up DrawerLayout with ActionBarToggle for navigation drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+
         mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -76,7 +80,17 @@ public class SwipeCardActivity extends AppCompatActivity {
             @Override
             public void onDrawerOpened(View drawerView) {
                 //lock drawer when opened completely
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+
+                if (drawerView.equals(left_drawer)) {
+                    actionBar.setTitle(getTitle());
+                    supportInvalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+                }
+                else {
+
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                }
+
             }
 
             @Override
@@ -84,6 +98,14 @@ public class SwipeCardActivity extends AppCompatActivity {
                 //unlock drawer when it is completely closed
                 //in order to allow opening via swipe from right
                 mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+                if(drawerView.equals(left_drawer)) {
+
+                    getSupportActionBar().setTitle(getString(R.string.app_name));
+                    supportInvalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+                }
+
             }
 
             @Override
@@ -255,11 +277,22 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
-        } else {
+        }
+        else if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
             super.onBackPressed();
         }
 
 
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        mDrawerToggle.syncState();
     }
 
     //create icons and actions in toolbar
@@ -276,6 +309,10 @@ public class SwipeCardActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if(mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
         //user presses gear icon, opens drawer and displays Toast
         if (id == R.id.update_preferences_icon) {
