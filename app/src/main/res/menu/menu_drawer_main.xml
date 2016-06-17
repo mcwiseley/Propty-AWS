@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    //TODO: Get the 48dp versions of ALL of these icons!!!
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_login"

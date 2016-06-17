@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         actionBar.setTitle("Login");
 
 
-        fbLoginBtn = (LoginButton) findViewById(R.id.login_button);
+        fbLoginBtn = (LoginButton) findViewById(R.id.fb_login_button);
         btnLogin = (Button) findViewById(R.id.login);
         btnCancel = (Button) findViewById(R.id.cancel);
         btnRegister = (Button) findViewById(R.id.registerbtn);
