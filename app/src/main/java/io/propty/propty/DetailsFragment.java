@@ -28,11 +28,11 @@ import java.util.List;
 
 
 /**
- * Details Fragment opens in the SwipeCard Activity
+ * Details Fragment opens in the Property Activity
  * and uses a ListView to display data members of
- * a SwipeCard object. It also has a button that
+ * a Property object. It also has a button that
  * opens a Google Maps Fragment to show the location
- * of the current SwipeCard
+ * of the current Property
  */
 public class DetailsFragment extends Fragment {
 
@@ -54,7 +54,7 @@ public class DetailsFragment extends Fragment {
         card_num = getArguments().getInt("CARD_NUM");
 
 
-        //create new ArrayList and add data from SwipeCard from Bundle arguments
+        //create new ArrayList and add data from Property from Bundle arguments
         details = new ArrayList<>();
         details.add("Name: " + getArguments().getString("DESC"));
         details.add("Type: " + getArguments().getString("TYPE"));

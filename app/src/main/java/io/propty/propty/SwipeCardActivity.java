@@ -7,7 +7,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,13 +20,13 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.*;
+
 import java.util.ArrayList;
 
 /**
  * Swipe Card Main Activity
  * Called when the user wants to see local property listings in a swipe-card format
- * Uses an ArrayList of SwipeCard objects to populate the list
+ * Uses an ArrayList of Property objects to populate the list
  * Also
  */
 public class SwipeCardActivity extends AppCompatActivity {
@@ -38,7 +37,7 @@ public class SwipeCardActivity extends AppCompatActivity {
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
 
-    private ArrayList<SwipeCard> sc;
+    private ArrayList<Property> sc;
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private Toolbar toolbar;

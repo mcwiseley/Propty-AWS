@@ -1,12 +1,25 @@
 package io.propty.propty;
 
-/**
- * Created by hankerins on 6/14/16.
+import android.content.SharedPreferences;
+
+import java.text.NumberFormat;
+
+/*Property data class.  Contains MLS data for individual properties.  Used to make swipecards.
+* Old description is below
+* *
+ * Swipe Card Data Class
+ *
+ * Contains all of the relevant MLS data for a single listing, standard get[Data] methods,
+ * and get[Data]Formatted methods that convert the data into a String for display purposes
  */
-public class Property extends SwipeCard {
+public class Property {
+
+    protected String desc, listId, areaUnits, type, address;
+    protected int id, zip, beds, area, image;
+    protected double baths, price;
 
     /**
-     * SwipeCard Constructor
+     * Property Constructor
      *
      * @param description The 'headline' of the listing, or a brief description of the property ('Remarks' on MLS?)
      * @param listing_id The unique id of this property listing ('ListingId' in MLS)
@@ -23,8 +36,6 @@ public class Property extends SwipeCard {
      * @param image_id The id number of the image to be displayed in the background
      */
 
-    private String address;
-    private int id, zip;
 
     Property(){
 
@@ -34,27 +45,75 @@ public class Property extends SwipeCard {
              int baths_3quart, int baths_half, int baths_1quart, int living_area,
              String living_area_units, double list_price, String property_type,
              String property_sub_type, int image_id, String address, int zip) {
-        super(description, listing_id, bedrooms, baths_full,
-                baths_3quart, baths_half, baths_1quart, living_area,
-                living_area_units, list_price, property_type,
-                property_sub_type, image_id);
+        desc = description;
+        listId = listing_id;
+        beds = bedrooms;
+        area = living_area;
+        areaUnits = living_area_units;
+        price = list_price;
+        image = image_id;
+        type = property_type +
+                (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
+        baths = ((double) baths_full) +
+                (((double) baths_3quart) * 0.75) +
+                (((double) baths_half) * 0.5) +
+                (((double) baths_1quart) * 0.25);
         this.id = id;
         this.address = address;
         this.zip = zip;
     }
 
     Property(String description, String listing_id, int bedrooms, int baths_full,
-              int baths_3quart, int baths_half, int baths_1quart, int living_area,
-              String living_area_units, double list_price, String property_type,
-              String property_sub_type, int image_id, String address, int zip) {
-        super(description, listing_id, bedrooms, baths_full,
-         baths_3quart, baths_half, baths_1quart, living_area,
-         living_area_units, list_price, property_type,
-                 property_sub_type, image_id);
+             int baths_3quart, int baths_half, int baths_1quart, int living_area,
+             String living_area_units, double list_price, String property_type,
+             String property_sub_type, int image_id, String address, int zip) {
+        desc = description;
+        listId = listing_id;
+        beds = bedrooms;
+        area = living_area;
+        areaUnits = living_area_units;
+        price = list_price;
+        image = image_id;
+        type = property_type +
+                (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
+        baths = ((double) baths_full) +
+                (((double) baths_3quart) * 0.75) +
+                (((double) baths_half) * 0.5) +
+                (((double) baths_1quart) * 0.25);
         this.address = address;
         this.zip = zip;
     }
 
+    Property(String description, String listing_id, int bedrooms, int baths_full,
+             int baths_3quart, int baths_half, int baths_1quart, int living_area,
+             String living_area_units, double list_price, String property_type,
+             String property_sub_type, int image_id) {
+        desc = description;
+        listId = listing_id;
+        beds = bedrooms;
+        area = living_area;
+        areaUnits = living_area_units;
+        price = list_price;
+        image = image_id;
+        type = property_type +
+                (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
+        baths = ((double) baths_full) +
+                (((double) baths_3quart) * 0.75) +
+                (((double) baths_half) * 0.5) +
+                (((double) baths_1quart) * 0.25);
+        address = "";
+        zip = 12345;
+    }
+
+    String getDesc() { return desc; }
+    String getListId() { return listId; }
+    int getBeds() { return beds; }
+    double getBaths() { return baths; }
+    int getArea() { return area; }
+    String getAreaUnits() { return areaUnits; }
+    double getPrice() { return price; }
+    String getType() { return type; }
+    int getImage() { return image; }
     public int getId() { return this.id; }
     public String getAddress() { return this.address; }
     public int getZip() { return this.zip; }
@@ -72,61 +131,29 @@ public class Property extends SwipeCard {
     public void setAddress(String address) { this.address = address; }
     public void setZip(int zip) { this.zip = zip; }
 
-
-
-    //TODO delete old constructors (left for reference right now)
-    /*
-
-    public Property(int id, String propertyName, String address, int price,
-                    float numBeds, float numBaths, int sqFootage, String structure,
-                    int zip, boolean pool, boolean garage) {
-        this.id = id;
-        this.propertyName = propertyName;
-        this.address = address;
-        this.price = price;
-        this.numBeds = numBeds;
-        this.numBaths = numBaths;
-        this.sqFootage = sqFootage;
-        this.structure = structure;
-        this.zip = zip;
-        this.pool = pool;
-        this.garage = garage;
+    String getDescFormatted() {
+        return desc + "\n\n";
     }
 
-    public Property(String propertyName, String address, int price,
-                    float numBeds, float numBaths, int sqFootage, String structure,
-                    int zip, boolean pool, boolean garage) {
-        this.propertyName = propertyName;
-        this.address = address;
-        this.price = price;
-        this.numBeds = numBeds;
-        this.numBaths = numBaths;
-        this.sqFootage = sqFootage;
-        this.structure = structure;
-        this.zip = zip;
-        this.pool = pool;
-        this.garage = garage;
+    String getBedsFormatted() {
+        return beds + (beds == 1 ? " bedroom\n" : " bedrooms\n");
     }
-    */
 
+    String getBathsFormatted() {
+        if ((baths * 100d) % 100d == 0d) {
+            return ((int) baths) + (baths == 1d ? " bathroom\n" : " bathrooms\n");
+        }
+        else {
+            return baths + " bathrooms\n";
+        }
+    }
 
-    /*
-    public void setPropertyName(String propertyName) { this.propertyName = propertyName; }
-    public String getPropertyName() { return this.propertyName; }
+    String getAreaFormatted() { return area + " " + areaUnits + "\n"; }
 
-    public int getPrice() { return this.price; }
+    String getPriceFormatted() {
+        return NumberFormat.getCurrencyInstance().format(price) + "\n";
+    }
 
-    public float getNumBeds() { return this.numBeds; }
+    String getTypeFormatted() { return type + "\n"; }
 
-    public float getNumBaths() { return this.numBaths; }
-    public void setSqFootage(int sqFootage) { this.sqFootage = sqFootage; }
-    public int getSqFootage() { return this.sqFootage; }
-    public void setStructure(String structure) { this.structure = structure; }
-    public String getStructure() { return this.structure; }
-
-    public void setPool(boolean pool) { this.pool = pool; }
-    public boolean getPool() { return this.pool; }
-    public void setGarage(boolean garage) { this.garage = garage; }
-    public boolean getGarage(){ return this.garage; }
-    */
 }

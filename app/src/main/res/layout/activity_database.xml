@@ -276,6 +276,12 @@
                     android:text="delete by list ID"
                     android:id="@+id/removeProperty"
                     android:onClick="removeProperty"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Query Listings by Settings"
+                    android:id="@+id/btQueryListings" />
             </LinearLayout>
 
         </TableLayout>

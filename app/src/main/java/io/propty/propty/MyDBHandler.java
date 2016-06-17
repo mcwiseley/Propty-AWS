@@ -2,9 +2,12 @@ package io.propty.propty;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 /**
  * Created by hankerins on 6/14/16.
@@ -73,6 +76,74 @@ public class MyDBHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_PROPERTIES, null, values);
         db.close();
+    }
+
+
+    public ArrayList<Property> listProperties(Context context, ArrayList<Property> newList, int limit){
+
+        final  String EXTRA = "io.propty.propty.MESSAGE";
+        final String PREFS = "MyPrefsFile";
+
+        final  String numBedrooms_string = EXTRA + "numBedrooms";
+        final  String numBathrooms_string = EXTRA + "numBathrooms";
+        final  String minPrice_string = EXTRA + "minPrice";
+        final  String maxPrice_string = EXTRA + "maxPrice";
+        final  String squareFootage_string = EXTRA + "squareFootage";
+        final  String structure_string = EXTRA + "structure";
+        final  String pool_string = EXTRA + "pool";
+        final  String garage_string = EXTRA + "garage";
+        final  String within_string = EXTRA + "within";
+        final  String radioCurrent_string = EXTRA + "radioCurrent";
+        final  String radioZip_string = EXTRA + "radioZip";
+        final  String zip_string = EXTRA + "zip";
+        SharedPreferences settings = context.getSharedPreferences(PREFS, 0);
+
+        float numBedrooms_val = settings.getFloat(numBedrooms_string, 1);
+        float numBathrooms_val = settings.getFloat(numBathrooms_string, 1);
+        int minPrice_val = settings.getInt(minPrice_string, 0);
+        int maxPrice_val = settings.getInt(maxPrice_string, 0);
+        int squareFootage_val = settings.getInt(squareFootage_string, 0);
+        int structure_val = settings.getInt(structure_string, 0);
+        boolean pool_val = settings.getBoolean(pool_string, false);
+        boolean garage_val = settings.getBoolean(garage_string, false);
+        int within_val = settings.getInt(within_string, 0);
+        boolean radioCurrent_val = settings.getBoolean(radioCurrent_string, true);
+        boolean radioZip_val = settings.getBoolean(radioZip_string, false);
+        int zip_val = settings.getInt(zip_string, 0);
+
+        String query = "Select * FROM " + TABLE_PROPERTIES + " WHERE (" + BEDS + " =  " +
+                numBedrooms_val + ") AND (" + BATHS + " = " + numBathrooms_val + ") AND (" +
+                PRICE + " >= " + minPrice_val + ") AND (" + PRICE + " <= " + maxPrice_val +
+                ") ORDER BY " + PRICE + " LIMIT " + limit;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(query, null);
+
+
+
+        if (cursor.moveToFirst() == false)
+            return  newList;
+        for(int i = 0; i < cursor.getCount(); i ++){
+            Property property = new Property();
+            property.setId(Integer.parseInt(cursor.getString(0)));
+            property.setDesc(cursor.getString(1));
+            property.setListId(cursor.getString(2));
+            property.setAreaUnits(cursor.getString(3));
+            property.setType(cursor.getString(4));
+            property.setBeds(Integer.parseInt(cursor.getString(5)));
+            property.setArea(Integer.parseInt(cursor.getString(6)));
+            property.setImage(Integer.parseInt(cursor.getString(7)));
+            property.setBaths(Double.parseDouble(cursor.getString(8)));
+            property.setPrice(Double.parseDouble(cursor.getString(9)));
+            property.setAddress(cursor.getString(10));
+            property.setZip(Integer.parseInt(cursor.getString(11)));
+            newList.add(property);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return newList;
+
     }
 
     public Property findProperty(String listId) {

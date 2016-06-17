@@ -1,8 +1,10 @@
 package io.propty.propty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,7 @@ public class DatabaseActivity extends AppCompatActivity {
     EditText price;
     EditText address;
     EditText zip;
+    Button queryListings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,15 @@ public class DatabaseActivity extends AppCompatActivity {
         price = (EditText) findViewById(R.id.price);
         address = (EditText) findViewById(R.id.address);
         zip = (EditText) findViewById(R.id.zip);
+        queryListings = (Button) findViewById(R.id.btQueryListings);
+
+        queryListings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent queryDatabase = new Intent(getApplicationContext(), QueryDatabaseActivity.class);
+                startActivity(queryDatabase);
+            }
+        });
 
     }
 
@@ -126,4 +138,8 @@ public class DatabaseActivity extends AppCompatActivity {
         else
             idView.setText("No Match Found");
     }
+
+
+
+
 }
