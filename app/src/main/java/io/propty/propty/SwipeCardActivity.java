@@ -80,7 +80,7 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if(drawerView.equals(right_drawer)) {
 
-                    actionBar.setTitle("");
+//                    actionBar.setTitle("");
                 }
 
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -91,7 +91,7 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if (drawerView.equals(left_drawer)) {
 
-                    actionBar.setTitle("Find Your Home");
+//                    actionBar.setTitle("Find Your Home");
                     supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
                     mDrawerLayout.closeDrawer(right_drawer);
@@ -111,14 +111,14 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if(drawerView.equals(left_drawer)) {
 
-                    actionBar.setTitle("Find Your Home");
+//                    actionBar.setTitle("Find Your Home");
                     supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
                 }
 
                 if(drawerView.equals(right_drawer)) {
 
-                    actionBar.setTitle("Find Your Home");
+//                    actionBar.setTitle("Find Your Home");
                     supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
 
