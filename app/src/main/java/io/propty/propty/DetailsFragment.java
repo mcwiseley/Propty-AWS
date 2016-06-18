@@ -3,10 +3,14 @@ package io.propty.propty;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -44,7 +48,15 @@ public class DetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    //TODO: WHEN GOING BACK TO SWIPECARD FRAGMENT, KEEP SAME CARD ON SCREEN. CURRENTLY RESETS
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //allow options menu to be changed in this fragment.
+        setHasOptionsMenu(true);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,13 +118,14 @@ public class DetailsFragment extends Fragment {
 
     }
 
- /*   @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Bundle bundle = new Bundle();
-        bundle.putInt("CARD", card_num);
-        setArguments(bundle);
-    }*/
+    //Overridden method to make update preferences
+    //icon disappear in this fragment and map fragment.
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
 
+        MenuItem item = menu.findItem(R.id.update_preferences_icon);
+        item.setVisible(false);
 
+    }
 }
