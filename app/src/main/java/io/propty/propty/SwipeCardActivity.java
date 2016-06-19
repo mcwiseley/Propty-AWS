@@ -1,6 +1,7 @@
 package io.propty.propty;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -41,18 +42,12 @@ public class SwipeCardActivity extends AppCompatActivity {
     private NavigationView right_drawer;
     private ActionBarDrawerToggle mDrawerToggle;
 
+    private FragmentManager mfragmentManager;
 
     private TextView mMinTextView;
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-
-    private ArrayList<SwipeCard> sc;
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-
-    int current_card = 0;
-    int idx = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +58,7 @@ public class SwipeCardActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.swipecard_toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Find Your Home");
 
@@ -80,7 +76,6 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if(drawerView.equals(right_drawer)) {
 
-//                    actionBar.setTitle("");
                 }
 
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -91,8 +86,7 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if (drawerView.equals(left_drawer)) {
 
-//                    actionBar.setTitle("Find Your Home");
-                    supportInvalidateOptionsMenu();
+                    invalidateOptionsMenu();
                     mDrawerToggle.syncState();
                     mDrawerLayout.closeDrawer(right_drawer);
                 }
@@ -111,28 +105,37 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 if(drawerView.equals(left_drawer)) {
 
-//                    actionBar.setTitle("Find Your Home");
-                    supportInvalidateOptionsMenu();
+//                    supportInvalidateOptionsMenu();
                     mDrawerToggle.syncState();
                 }
 
                 if(drawerView.equals(right_drawer)) {
 
-//                    actionBar.setTitle("Find Your Home");
-                    supportInvalidateOptionsMenu();
+                    invalidateOptionsMenu();
                     mDrawerToggle.syncState();
 
                     //unlock drawer when it is completely closed
                     //in order to allow opening via swipe from right
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
                 }
 
                 super.onDrawerClosed(drawerView);
             }
 
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+        //toolbar listener to still allow clicks on toggle/UP arrow
+        //when drawer toggle has been disabled
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         //listener created for when user taps the screen not filled
         //by the drawer when it is open
         mDrawerLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -184,6 +187,32 @@ public class SwipeCardActivity extends AppCompatActivity {
 
                 mDrawerLayout.closeDrawer(left_drawer);
                 return true;
+            }
+        });
+
+        //set up Fragment Manager
+        mfragmentManager = getSupportFragmentManager();
+        //create new listener for when Back Stack changes amounts
+        mfragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                //if Swipecard fragment is the only one present
+                if(mfragmentManager.getBackStackEntryCount() == 0) {
+                    //replace UP arrow with drawer toggle
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+                    actionBar.setDisplayHomeAsUpEnabled(false);
+                    //unlock both drawers
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+                //else multiple fragments are in the stack
+                else {
+                    //replace toggle with UP arrow
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                    //lock both drawers
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                }
+                mDrawerToggle.syncState();
             }
         });
 
@@ -320,16 +349,15 @@ public class SwipeCardActivity extends AppCompatActivity {
             }
         });
 
-        //START FRAGMENT TRANSACTION
+        //START FRAGMENT TRANSACTION TO ADD SWIPECARD FRAGMENT
         SwipeCardFragment swipeCardFragment = new SwipeCardFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = mfragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, swipeCardFragment).commit();
 
         //END OF ONCREATE METHOD
     }
 
-    //close drawer when back button is pressed
+    //close drawers when back button is pressed
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -337,13 +365,12 @@ public class SwipeCardActivity extends AppCompatActivity {
         if (drawer.isDrawerOpen(right_drawer)) {
             drawer.closeDrawer(right_drawer);
         }
-        else if(drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        else if(drawer.isDrawerOpen(left_drawer)) {
+            drawer.closeDrawer(left_drawer);
         }
         else {
             super.onBackPressed();
         }
-
 
     }
 
@@ -352,6 +379,13 @@ public class SwipeCardActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
 
         mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     //create icons and actions in toolbar
@@ -369,35 +403,15 @@ public class SwipeCardActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        //user presses gear icon, opens drawer and displays Toast
+        //user presses gear icon, opens righ drawer
         if (id == R.id.update_preferences_icon) {
-/*            if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-            }*/
 
             mDrawerLayout.openDrawer(right_drawer);
 
-
             return true;
-        }
-        //user presses UP navigation arrow
-        if (id == android.R.id.home) {
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            //if fragments have been added to the stack
-            // go to previous fragment
-            if(fragmentManager.getBackStackEntryCount() > 0) {
-                fragmentManager.popBackStack();
-                return true;
-            }
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-}
+} // END OF SWIPECARD ACTIVITY CLASS

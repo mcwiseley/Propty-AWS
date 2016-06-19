@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,12 +50,18 @@ public class DetailsFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //allow options menu to be changed in this fragment.
         setHasOptionsMenu(true);
 
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -64,7 +71,6 @@ public class DetailsFragment extends Fragment {
         final View mView = inflater.inflate(R.layout.fragment_details, container, false);
 
         card_num = getArguments().getInt("CARD_NUM");
-
 
         //create new ArrayList and add data from SwipeCard from Bundle arguments
         details = new ArrayList<>();
@@ -110,11 +116,7 @@ public class DetailsFragment extends Fragment {
             }
         });
 
-
-
         return mView;
-
-
 
     }
 
@@ -128,4 +130,5 @@ public class DetailsFragment extends Fragment {
         item.setVisible(false);
 
     }
+
 }
