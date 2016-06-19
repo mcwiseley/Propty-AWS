@@ -153,7 +153,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="28dp"
             android:weightSum="1"
             >
 
@@ -220,7 +220,7 @@
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="28dp"
             android:weightSum="1"
             >
 
@@ -287,97 +287,101 @@
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="28dp"
+            android:weightSum="1"
             >
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Within "
-                android:id="@+id/within_label"
-                android:textSize="16sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#000000"
-                android:layout_below="@+id/garage_label"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"/>
+                android:layout_weight="0.60"
+                android:orientation="horizontal"
+                >
 
-            <EditText
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textSize="16sp"
-                android:id="@+id/within"
-                android:layout_marginBottom="10dp"
-                android:layout_below="@id/garage_label"
-                android:layout_toEndOf="@+id/within_label"
-                android:layout_toRightOf="@+id/within_label"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within "
+                    android:id="@+id/within_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+
+                    />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:id="@+id/within"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" miles of "
+                    android:id="@+id/milesOf_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    />
+            </LinearLayout>
 
 
-            <TextView
+            <LinearLayout
+                android:id="@+id/settings_linear7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="miles of"
-                android:id="@+id/milesOf_label"
-                android:textSize="16sp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:textColor="#000000"
-                android:layout_below="@+id/garage_label"
-                android:layout_toEndOf="@+id/within"
-                android:layout_toRightOf="@+id/within"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:layout_weight="0.40"
+                >
 
+<!--                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/within_group"
+                            android:layout_width="190dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_below="@id/within">-->
 
-        <LinearLayout
-            android:id="@+id/settings_linear7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_linear6"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            >
-
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/within_group"
-                        android:layout_width="190dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginLeft="10dp"
+                    <RadioButton
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_below="@id/within">
+                        android:text="Current Location"
+                        android:id="@+id/radioCurrentLocation"
+                        android:textSize="15sp"
+                        android:onClick="onRadioButtonClicked"
+                        />
 
-                <RadioButton
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Current Location"
-                    android:id="@+id/radioCurrentLocation"
-                    android:layout_marginRight="20dp"
-                    android:layout_below="@+id/within"
-                    android:onClick="onRadioButtonClicked"/>
+                    android:orientation="horizontal"
+                    >
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:id="@+id/radioZip"
-                    android:layout_below="@+id/within"
-                    android:layout_toRightOf="@+id/radioCurrentLocation"
-                    android:onClick="onRadioButtonClicked"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/radioZip"
+                        android:onClick="onRadioButtonClicked"
+                        />
 
-            </RadioGroup>
+                    <!--</RadioGroup>-->
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="5"
-                android:id="@+id/zip"
-                android:layout_below="@+id/within"
-                android:layout_toRightOf="@+id/within_group"
-                android:layout_toEndOf="@+id/within_group"
-                android:hint="ZIP code"/>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="5"
+                        android:textSize="15sp"
+                        android:id="@+id/zip"
+                        android:hint="ZIP code"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
 
@@ -386,9 +390,8 @@
             android:layout_height="50dp"
             android:text="Submit"
             android:id="@+id/submit"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp"
-            android:layout_below="@+id/settings_linear7"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/settings_linear6"
             android:layout_centerHorizontal="true"
             android:onClick="submitSettings"/>
 
