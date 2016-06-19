@@ -101,9 +101,9 @@ public class SettingsActivity extends AppCompatActivity {
         structure = (Spinner) findViewById(R.id.structure);
         structure_label = (TextView) findViewById(R.id.structure_label);
         pool = (CheckBox) findViewById(R.id.pool);
-        pool_label = (TextView) findViewById(R.id.pool_label);
+//        pool_label = (TextView) findViewById(R.id.pool_label);
         garage = (CheckBox) findViewById(R.id.garage);
-        garage_label = (TextView) findViewById(R.id.garage_label);
+//        garage_label = (TextView) findViewById(R.id.garage_label);
         within = (EditText) findViewById(R.id.within);
         within_label = (TextView) findViewById(R.id.within_label);
         milesOf_label = (TextView) findViewById(R.id.milesOf_label);
