@@ -1,13 +1,18 @@
 package io.propty.propty;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,7 +26,7 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.io.*;
+
 import java.util.ArrayList;
 
 /**
@@ -33,69 +38,181 @@ import java.util.ArrayList;
 public class SwipeCardActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private NavigationView left_drawer;
+    private NavigationView right_drawer;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private FragmentManager mfragmentManager;
+
     private TextView mMinTextView;
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-
-    private ArrayList<SwipeCard> sc;
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
-    private Toolbar toolbar;
-
-    int current_card = 0;
-    int idx = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_preferences);
 
-        //TODO: Get logo centered with menu items present
-        //setting up toolbar...
-        toolbar = (Toolbar) findViewById(R.id.toolbar); // Attaching the layout to the toolbar object
-        toolbar.setTitle(R.string.app_name);
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.swipecard_toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setLogo(R.drawable.proptydog2);
-        toolbar.setLogoDescription("logo");
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Find Your Home");
 
-        //initialize DrawerLayout and set an event listener
+        //Set up DrawerLayout with ActionBarToggle for navigation drawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+        left_drawer = (NavigationView) findViewById(R.id.nav_view_left);
+        right_drawer = (NavigationView) findViewById(R.id.nav_view_right);
+
+
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                if(drawerView.equals(right_drawer)) {
+
+                }
+
+                super.onDrawerSlide(drawerView, slideOffset);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                //lock drawer when opened completely
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+
+                if (drawerView.equals(left_drawer)) {
+
+                    invalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+                    mDrawerLayout.closeDrawer(right_drawer);
+                }
+
+                if (drawerView.equals(right_drawer)) {
+
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_OPEN);
+                    mDrawerLayout.closeDrawer(left_drawer);
+                }
+
+                super.onDrawerOpened(drawerView);
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                //unlock drawer when it is completely closed
-                //in order to allow opening via swipe from right
-                mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+                if(drawerView.equals(left_drawer)) {
+
+//                    supportInvalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+                }
+
+                if(drawerView.equals(right_drawer)) {
+
+                    invalidateOptionsMenu();
+                    mDrawerToggle.syncState();
+
+                    //unlock drawer when it is completely closed
+                    //in order to allow opening via swipe from right
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
+                }
+
+                super.onDrawerClosed(drawerView);
             }
 
-            @Override
-            public void onDrawerStateChanged(int newState) {
+        };
 
+        //toolbar listener to still allow clicks on toggle/UP arrow
+        //when drawer toggle has been disabled
+        mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         //listener created for when user taps the screen not filled
         //by the drawer when it is open
         mDrawerLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //closes the drawer if the user taps the area outside of it
-                if (mDrawerLayout.isDrawerOpen(GravityCompat.END)) {
+                if (mDrawerLayout.isDrawerOpen(right_drawer)) {
                     mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
                 }
 
                 return false;
+            }
+        });
+
+        left_drawer.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_login) {
+                    // Handle the camera action
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(login);
+                } else if (id == R.id.nav_change_password) {
+                    Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    startActivity(chgPass);
+                } else if (id == R.id.nav_logout) {
+//                    prefs.edit().putBoolean("logged_in", false).apply();
+                    UserFunctions logout = new UserFunctions();
+                    logout.logoutUser(getApplicationContext());
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(login);
+                    //commented out finish() due to improper UP and
+                    //BACK button navigation
+//                finish();
+                } else if (id == R.id.nav_swipecard) {
+
+                    mDrawerLayout.closeDrawer(left_drawer);
+
+                } else if (id == R.id.nav_settings) {
+                    Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(settings);
+                } else if (id == R.id.nav_realtor_list) {
+                    Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
+                    startActivity(realtor);
+                }
+
+                mDrawerLayout.closeDrawer(left_drawer);
+                return true;
+            }
+        });
+
+        //set up Fragment Manager
+        mfragmentManager = getSupportFragmentManager();
+        //create new listener for when Back Stack changes amounts
+        mfragmentManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                //if Swipecard fragment is the only one present
+                if(mfragmentManager.getBackStackEntryCount() == 0) {
+                    //replace UP arrow with drawer toggle
+                    mDrawerToggle.setDrawerIndicatorEnabled(true);
+                    actionBar.setDisplayHomeAsUpEnabled(false);
+                    //unlock both drawers
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                }
+                //else multiple fragments are in the stack
+                else {
+                    //replace toggle with UP arrow
+                    mDrawerToggle.setDrawerIndicatorEnabled(false);
+                    actionBar.setDisplayHomeAsUpEnabled(true);
+                    //lock both drawers
+                    mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                }
+                mDrawerToggle.syncState();
             }
         });
 
@@ -228,38 +345,54 @@ public class SwipeCardActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
 
                 //close the drawer
-                mDrawerLayout.closeDrawer(GravityCompat.END);
+                mDrawerLayout.closeDrawer(right_drawer);
             }
         });
 
-        //START FRAGMENT TRANSACTION
+        //START FRAGMENT TRANSACTION TO ADD SWIPECARD FRAGMENT
         SwipeCardFragment swipeCardFragment = new SwipeCardFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = mfragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, swipeCardFragment).commit();
 
         //END OF ONCREATE METHOD
     }
 
-    //close drawer when back button is pressed
+    //close drawers when back button is pressed
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
+        if (drawer.isDrawerOpen(right_drawer)) {
+            drawer.closeDrawer(right_drawer);
+        }
+        else if(drawer.isDrawerOpen(left_drawer)) {
+            drawer.closeDrawer(left_drawer);
+        }
+        else {
             super.onBackPressed();
         }
 
+    }
 
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     //create icons and actions in toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_preferences, menu);
         return true;
     }
 
@@ -270,9 +403,10 @@ public class SwipeCardActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //user presses gear icon, opens drawer and displays Toast
+        //user presses gear icon, opens righ drawer
         if (id == R.id.update_preferences_icon) {
-            mDrawerLayout.openDrawer(GravityCompat.END);
+
+            mDrawerLayout.openDrawer(right_drawer);
 
             return true;
         }
@@ -280,4 +414,4 @@ public class SwipeCardActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-}
+} // END OF SWIPECARD ACTIVITY CLASS

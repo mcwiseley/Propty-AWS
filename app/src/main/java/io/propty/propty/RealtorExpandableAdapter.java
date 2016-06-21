@@ -171,7 +171,7 @@ public class RealtorExpandableAdapter extends BaseExpandableListAdapter {
                 //get the TextView that displays the current realtor, in the RealtorList Activity
                 TextView tv = (TextView) ((Activity)mContext).findViewById(R.id.picked_realtor);
                 //set the textview to the color green, with the new value
-                tv.setTextColor(Color.GREEN);
+                tv.setTextColor(mContext.getResources().getColor(R.color.colorAccent));
                 tv.setText("Current Realtor: " + pickedRealtor);
                 //make a Toast for confirmation of the picked realtor
                 Toast.makeText(mContext, pickedRealtor + " is now your realtor", Toast.LENGTH_SHORT).show();

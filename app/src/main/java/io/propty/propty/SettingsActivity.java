@@ -9,7 +9,9 @@ package io.propty.propty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -78,6 +80,14 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.settings_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Settings");
+
+
         numBedrooms = (NumberPicker) findViewById(R.id.numBedrooms);
         numBedrooms_label = (TextView) findViewById(R.id.numBedrooms_label);
         numBathrooms = (NumberPicker) findViewById(R.id.numBathrooms);
@@ -91,9 +101,9 @@ public class SettingsActivity extends AppCompatActivity {
         structure = (Spinner) findViewById(R.id.structure);
         structure_label = (TextView) findViewById(R.id.structure_label);
         pool = (CheckBox) findViewById(R.id.pool);
-        pool_label = (TextView) findViewById(R.id.pool_label);
+//        pool_label = (TextView) findViewById(R.id.pool_label);
         garage = (CheckBox) findViewById(R.id.garage);
-        garage_label = (TextView) findViewById(R.id.garage_label);
+//        garage_label = (TextView) findViewById(R.id.garage_label);
         within = (EditText) findViewById(R.id.within);
         within_label = (TextView) findViewById(R.id.within_label);
         milesOf_label = (TextView) findViewById(R.id.milesOf_label);
@@ -147,11 +157,15 @@ public class SettingsActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radioCurrentLocation:
                 if (checked)
+                    //uncheck radioZip button
+                    radioZip.setChecked(false);
                     // set zip code variable to current location zip.  Using 98765 as a placeholder
                     zip_val = 98765;
                 break;
             case R.id.radioZip:
                 if (checked)
+                    //uncheck radioCurrentLocation button
+                    radioCurrentLocation.setChecked(false);
                     // set zip code variable to whatever is in the zip field
                     // needs checks for empty field or illegitimate zip code.  dummy check below
                     if(zip.getText().length()==0){

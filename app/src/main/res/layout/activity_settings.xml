@@ -8,301 +8,390 @@
     tools:context="io.propty.propty.SettingsActivity">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/settings_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            >
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+        <LinearLayout
+            android:id="@+id/settings_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#Bedrooms"
+                android:id="@+id/numBedrooms_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginEnd="12dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/numBedrooms"
+                android:layout_marginEnd="12dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#Bathrooms"
+                android:id="@+id/numBathrooms_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_marginEnd="12dp"
+                android:layout_gravity="center_vertical"
+                />
+
+            <NumberPicker
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/numBathrooms"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/settings_linear2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="Propty"
-            android:id="@+id/logo"
-            android:layout_gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:textColor="#000000"/>
-
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="# of Bedrooms"
-            android:id="@+id/numBedrooms_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="22dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/numBedrooms"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_below="@+id/logo"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_toEndOf="@+id/numBedrooms_label"
-            android:layout_toRightOf="@+id/numBedrooms_label"/>
-
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="# of Bathrooms"
-            android:id="@+id/numBathrooms_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="22dp"
-            android:textColor="#000000"
-            android:layout_below="@id/numBedrooms"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
-
-        <NumberPicker
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/numBathrooms"
-            android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_below="@id/numBedrooms"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_toEndOf="@+id/numBathrooms_label"
-            android:layout_toRightOf="@+id/numBathrooms_label"/>
-
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:text="Minimum Price:"
-            android:id="@+id/minPrice_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
+            android:layout_below="@+id/settings_linear1"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="12dp"
-            android:textColor="#000000"
-            android:layout_below="@id/numBathrooms"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
+            android:weightSum="1"
+            >
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="6"
-            android:textSize="16sp"
-            android:id="@+id/minPrice"
-            android:layout_below="@+id/numBathrooms"
-            android:layout_toRightOf="@+id/minPrice_label"
-            android:layout_toEndOf="@+id/minPrice_label"
-            android:hint="$" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Minimum Price:"
+                android:id="@+id/minPrice_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_weight="0.5"
+                />
 
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="40dp"
-            android:text="Maximum Price:"
-            android:id="@+id/maxPrice_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="12dp"
-            android:textColor="#000000"
-            android:layout_below="@id/minPrice"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:ems="10"
+                android:id="@+id/minPrice"
+                android:hint="$"
+                android:layout_marginStart="20dp"
+                android:layout_weight="0.5"
+                />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="6"
-            android:textSize="16sp"
-            android:id="@+id/maxPrice"
-            android:layout_below="@+id/minPrice"
-            android:layout_toRightOf="@+id/maxPrice_label"
-            android:layout_toEndOf="@+id/maxPrice_label"
-            android:hint="$" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:text="Square Footage"
-            android:id="@+id/squareFootage_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="17dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/maxPrice"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/squareFootage"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_below="@+id/maxPrice"
-            android:layout_toRightOf="@+id/squareFootage_label"
-            android:layout_toEndOf="@+id/squareFootage_label"
-            android:layout_alignBottom="@+id/squareFootage_label" />
-
-        <TextView
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:text="Structure"
-            android:id="@+id/structure_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="17dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/squareFootage"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/structure"
-            android:layout_marginBottom="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_below="@+id/squareFootage"
-            android:layout_toRightOf="@+id/structure_label"
-            android:layout_toEndOf="@+id/structure_label"
-            android:layout_alignBottom="@+id/structure_label" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pool"
-            android:id="@+id/pool_label"
-            android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/structure"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"/>
-
-        <CheckBox
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text=""
-            android:id="@+id/pool"
-            android:layout_marginBottom="20dp"
-            android:layout_below="@+id/structure"
-            android:layout_toRightOf="@id/pool_label" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Garage"
-            android:id="@+id/garage_label"
-            android:textSize="16sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="20dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/structure"
-            android:layout_toRightOf="@+id/pool" />
-
-        <CheckBox
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text=""
-            android:id="@+id/garage"
-            android:layout_marginBottom="20dp"
-            android:layout_below="@+id/structure"
-            android:layout_toRightOf="@id/garage_label" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Within "
-            android:id="@+id/within_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/garage_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true" />
-
-        <EditText
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:textSize="16sp"
-            android:id="@+id/within"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@id/garage_label"
-            android:layout_toEndOf="@+id/within_label"
-            android:layout_toRightOf="@+id/within_label"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="miles of"
-            android:id="@+id/milesOf_label"
-            android:textSize="16sp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#000000"
-            android:layout_below="@+id/garage_label"
-            android:layout_toEndOf="@+id/within"
-            android:layout_toRightOf="@+id/within" />
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/within_group"
-            android:layout_width="190dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
+        <LinearLayout
+            android:id="@+id/settings_linear3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_below="@id/within">
+            android:layout_below="@+id/settings_linear2"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="12dp"
+            android:weightSum="1"
+            >
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Current Location"
-                android:id="@+id/radioCurrentLocation"
-                android:layout_marginRight="20dp"
-                android:layout_below="@+id/within"
-                android:onClick="onRadioButtonClicked"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="Maximum Price:"
+                android:id="@+id/maxPrice_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:layout_weight="0.5"
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:id="@+id/radioZip"
-                android:layout_below="@+id/within"
-                android:layout_toRightOf="@+id/radioCurrentLocation"
-                android:onClick="onRadioButtonClicked"/>
+                />
 
-        </RadioGroup>
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:inputType="number"
+                android:textSize="16sp"
+                android:ems="10"
+                android:id="@+id/maxPrice"
+                android:hint="$"
+                android:layout_weight="0.5"
+                />
 
-        <EditText
-            android:layout_width="wrap_content"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settings_linear4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="5"
-            android:id="@+id/zip"
-            android:layout_below="@+id/within"
-            android:layout_toRightOf="@+id/within_group"
-            android:layout_toEndOf="@+id/within_group"
-            android:hint="ZIP code" />
+            android:layout_below="@+id/settings_linear3"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="28dp"
+            android:weightSum="1"
+            >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Square Footage"
+                    android:id="@+id/squareFootage_label"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/squareFootage"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="0.5"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Structure"
+                    android:id="@+id/structure_label"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:layout_gravity="center_horizontal"
+                    />
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/structure"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/settings_linear5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_linear4"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="28dp"
+            android:weightSum="1"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                >
+
+<!--                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pool"
+                    android:id="@+id/pool_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    />-->
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pool"
+                    android:textSize="16sp"
+                    android:id="@+id/pool"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                >
+
+<!--                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Garage"
+                    android:id="@+id/garage_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    />-->
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Garage"
+                    android:textSize="16sp"
+                    android:id="@+id/garage"
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/settings_linear6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/settings_linear5"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="28dp"
+            android:weightSum="1"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.60"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Within "
+                    android:id="@+id/within_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+
+                    />
+
+                <EditText
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:textSize="16sp"
+                    android:id="@+id/within"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" miles of "
+                    android:id="@+id/milesOf_label"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/settings_linear7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="4dp"
+                android:layout_weight="0.40"
+                >
+
+<!--                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/within_group"
+                            android:layout_width="190dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_below="@id/within">-->
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Current Location"
+                        android:id="@+id/radioCurrentLocation"
+                        android:textSize="15sp"
+                        android:onClick="onRadioButtonClicked"
+                        />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:id="@+id/radioZip"
+                        android:onClick="onRadioButtonClicked"
+                        />
+
+                    <!--</RadioGroup>-->
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:ems="5"
+                        android:textSize="15sp"
+                        android:id="@+id/zip"
+                        android:hint="ZIP code"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
 
         <Button
-            android:layout_width="170dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:text="Submit"
             android:id="@+id/submit"
-            android:textSize="13sp"
-            android:textColor="#000000"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="15dp"
-            android:layout_below="@+id/zip"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/settings_linear6"
             android:layout_centerHorizontal="true"
             android:onClick="submitSettings"/>
 

@@ -25,77 +25,93 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.Drawer">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".SignupActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="io.propty.propty.LoginActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="io.propty.propty.LoginActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.propty.propty.LoginActivity" />
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".RegisteredActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".LoginActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".LoginActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".ChangePasswordActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".SwipeCardActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar.Drawer"
+            android:parentActivityName=".MainActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".SettingsResultsActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity">
 
             <!-- STUB -->
         </activity>
         <activity
             android:name=".RealtorListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"
+
+            >
 
             <!-- STUB -->
         </activity>

@@ -4,7 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 //import java.util.HashMap;
@@ -27,7 +34,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawer_main);
+
+        //set up the Toolbar with Up Navigation
+        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(R.string.app_name);
+
+        //Set up DrawerLayout with ActionBarToggle for navigation drawer
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
         btnChangePass = (Button) findViewById(R.id.btchangepass);
         btnLogout = (Button) findViewById(R.id.btlogout);
@@ -71,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
-                finish();
+                //commented out finish() due to improper UP and
+                //BACK button navigation
+//                finish();
             }
         });
 
@@ -106,7 +129,50 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(realtor);
             }
         });
-    }
+
+        //Set up NavigationView with listener for clicking items in drawer
+        NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_view);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                // Handle navigation view item clicks here.
+                int id = item.getItemId();
+
+                if (id == R.id.nav_login) {
+                    // Handle the camera action
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(login);
+                } else if (id == R.id.nav_change_password) {
+                    Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    startActivity(chgPass);
+                } else if (id == R.id.nav_logout) {
+                    prefs.edit().putBoolean("logged_in", false).apply();
+                    UserFunctions logout = new UserFunctions();
+                    logout.logoutUser(getApplicationContext());
+                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(login);
+                    //commented out finish() due to improper UP and
+                    //BACK button navigation
+//                finish();
+                } else if (id == R.id.nav_swipecard) {
+                    Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
+                    startActivity(swipecard);
+                } else if (id == R.id.nav_settings) {
+                    Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+                    startActivity(settings);
+                } else if (id == R.id.nav_realtor_list) {
+                    Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
+                    startActivity(realtor);
+                }
+
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+    } //END OF ONCREATE()
 
     @Override
     protected void onStop(){
@@ -114,5 +180,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
         prefs.edit().putBoolean("logged_in", false).apply();
     }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
 
 }
