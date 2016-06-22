@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Entire Layout for update preferences drawer in SwipeCard Main activity -->
-
-
-
+<!-- Entire Layout for update preferences drawer in Property Main activity -->
+<!-- TODO: Change theme strictly for this drawer. Had issues creating a new theme -->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"

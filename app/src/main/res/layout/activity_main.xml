@@ -41,16 +41,6 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="15dp"/>
 
-<!-- commented out because title in Toolbar already -->
-<!--        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Propty"
-            android:textSize="30sp"
-            android:id="@+id/logo"
-            android:layout_gravity="center"
-            android:textColor="#eeeeee"/>-->
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -120,6 +110,17 @@
             android:layout_marginTop="10dp"
             android:text="Realtors"
             android:id="@+id/btrealtor"
+            android:background="#eeeeee"
+            android:textColor="#000000"
+            android:textSize="13sp"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:text="Database"
+            android:id="@+id/btdatabase"
             android:background="#eeeeee"
             android:textColor="#000000"
             android:textSize="13sp"

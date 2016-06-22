@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnSwipeCard;
     Button btnSettings;
     Button btnRealtor;
+    Button btnDatabase;
     Resources res;
 
     /**
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         btnSwipeCard = (Button) findViewById(R.id.btswipecard);
         btnSettings = (Button) findViewById(R.id.settings);
         btnRealtor = (Button) findViewById(R.id.btrealtor);
+        btnDatabase = (Button) findViewById(R.id.btdatabase);
         res = getResources();
 
         // Restore preferences
@@ -92,9 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
-                //commented out finish() due to improper UP and
-                //BACK button navigation
-//                finish();
             }
         });
 
@@ -152,9 +151,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                     login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(login);
-                    //commented out finish() due to improper UP and
-                    //BACK button navigation
-//                finish();
                 } else if (id == R.id.nav_swipecard) {
                     Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                     startActivity(swipecard);
@@ -169,6 +165,14 @@ public class MainActivity extends AppCompatActivity {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
+            }
+        });
+
+        btnDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                startActivity(database);
             }
         });
 
