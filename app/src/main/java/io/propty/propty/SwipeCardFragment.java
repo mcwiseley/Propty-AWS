@@ -6,28 +6,34 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
-import butterknife.OnClick;
+
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class SwipeCardFragment extends Fragment {
 
     View mView;
-    ArrayList<SwipeCard> sc;
+    ArrayList<Property> sc;
     ArrayList<String> al;
     ArrayAdapter<String> arrayAdapter;
     Toolbar toolbar;
@@ -54,11 +60,11 @@ public class SwipeCardFragment extends Fragment {
         arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.swipecard, R.id.cardText, al);
 
         // These are just examples for testing purposes.  TODO: Delete these before launch!
-        sc.add(new SwipeCard("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
-        sc.add(new SwipeCard("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", "", 2));
-        sc.add(new SwipeCard("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", "", 3));
-        sc.add(new SwipeCard("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", "", 4));
-        sc.add(new SwipeCard("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", "", 5));
+        sc.add(new Property("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
+        sc.add(new Property("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", "", 2));
+        sc.add(new Property("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", "", 3));
+        sc.add(new Property("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", "", 4));
+        sc.add(new Property("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", "", 5));
 
     }
 
@@ -118,10 +124,10 @@ public class SwipeCardFragment extends Fragment {
             public void onItemClicked(int itemPosition, Object dataObject) {
 
 //              makeToast(getActivity(), "Clicked!");
-                //create SwipeCard object from current card in array
-                SwipeCard card = sc.get(current_card);
+                //create Property object from current card in array
+                Property card = sc.get(current_card);
                 //create new Bundle and set arguments on
-                //SwipeCard object members
+                //Property object members
                 Bundle bundle = new Bundle();
                 bundle.putInt("CARD_NUM", current_card);
                 bundle.putString("DESC", card.getDesc());
@@ -201,12 +207,12 @@ public class SwipeCardFragment extends Fragment {
     }
 
     /**
-     * Parses the provided S3 bucket object data and generates a single SwipeCard object
+     * Parses the provided S3 bucket object data and generates a single Property object
      * @param objectData An InputStream object pulled from the S3 bucket
-     * @return Returns a new SwipeCard object containing the data parsed from objectData
+     * @return Returns a new Property object containing the data parsed from objectData
      * @throws IOException
      */
-    protected SwipeCard generateCardFromData(InputStream objectData) throws IOException {
+    protected Property generateCardFromData(InputStream objectData) throws IOException {
         // Default to null values
         String desc = "NULL";
         String listId = "NULL";
@@ -274,20 +280,20 @@ public class SwipeCardFragment extends Fragment {
 
         int img = 0;
 
-        return new SwipeCard(desc, listId, beds, bathsFull, baths3q, bathsHalf, baths1q,
+        return new Property(desc, listId, beds, bathsFull, baths3q, bathsHalf, baths1q,
                 area, areaUnits, price, type, subType, img);
     }
 
     /**
      * Converts SwipeCards from the ArrayList of SwipeCards (sc) into formatted Strings, then
      * adds the specified number of converted SwipeCards to the ArrayList of formatted Strings (al).
-     * This allows the activity to properly display the formatted SwipeCard data.
+     * This allows the activity to properly display the formatted Property data.
      *
      * @param number_to_add The number of SwipeCards to add to the stack
      */
     protected void updateCardArray(int number_to_add) {
         for (int i = 0; i < number_to_add; i++) {
-            SwipeCard card = sc.get(i % sc.size());
+            Property card = sc.get(i % sc.size());
             al.add(card.getDescFormatted() +
                     card.getBedsFormatted() +
                     card.getBathsFormatted() +

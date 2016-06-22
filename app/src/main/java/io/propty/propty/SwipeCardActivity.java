@@ -32,7 +32,7 @@ import java.util.ArrayList;
 /**
  * Swipe Card Main Activity
  * Called when the user wants to see local property listings in a swipe-card format
- * Uses an ArrayList of SwipeCard objects to populate the list
+ * Uses an ArrayList of Property objects to populate the list
  * Also
  */
 public class SwipeCardActivity extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class SwipeCardActivity extends AppCompatActivity {
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
