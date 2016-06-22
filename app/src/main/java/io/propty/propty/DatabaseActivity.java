@@ -69,8 +69,8 @@ public class DatabaseActivity extends AppCompatActivity {
         }
 
         Property property = new Property(desc.getText().toString(), listId.getText().toString(),
-                Integer.parseInt(beds.getText().toString()), (int)Double.parseDouble(baths.getText().toString()),
-                0, 0, 0, Integer.parseInt(area.getText().toString()), areaUnits.getText().toString(),
+                Integer.parseInt(beds.getText().toString()), Double.parseDouble(baths.getText().toString()),
+                Integer.parseInt(area.getText().toString()), areaUnits.getText().toString(),
                 Double.parseDouble(price.getText().toString()), type.getText().toString(),
                 "", Integer.parseInt(image.getText().toString()), address.getText().toString(),
                 Integer.parseInt(zip.getText().toString()));

@@ -111,10 +111,17 @@ public class MyDBHandler extends SQLiteOpenHelper {
         boolean radioZip_val = settings.getBoolean(radioZip_string, false);
         int zip_val = settings.getInt(zip_string, 0);
 
-        String query = "Select * FROM " + TABLE_PROPERTIES + " WHERE (" + BEDS + " =  " +
-                numBedrooms_val + ") AND (" + BATHS + " = " + numBathrooms_val + ") AND (" +
-                PRICE + " >= " + minPrice_val + ") AND (" + PRICE + " <= " + maxPrice_val +
-                ") ORDER BY " + PRICE + " LIMIT " + limit;
+        String[] structure_arr = context.getResources().getStringArray(R.array.structure_array);
+        String structure_str = structure_arr[structure_val].toLowerCase();
+
+
+        String query = "Select * FROM " + TABLE_PROPERTIES +
+                " WHERE (" + BEDS + " =  " + numBedrooms_val +
+                ") AND (" + BATHS + " = " + numBathrooms_val +
+                ") AND (" + PRICE + " >= " + minPrice_val +
+                ") AND (" + PRICE + " <= " + maxPrice_val +
+                ") AND (" + TYPE + " LIKE \'%" + structure_str + "%\')" +
+                " ORDER BY " + PRICE + " LIMIT " + limit;
 
         SQLiteDatabase db = this.getWritableDatabase();
 

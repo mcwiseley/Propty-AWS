@@ -84,6 +84,23 @@ public class Property {
         this.zip = zip;
     }
 
+    Property(String description, String listing_id, int bedrooms, double baths, int living_area,
+             String living_area_units, double list_price, String property_type,
+             String property_sub_type, int image_id, String address, int zip) {
+        desc = description;
+        listId = listing_id;
+        beds = bedrooms;
+        area = living_area;
+        areaUnits = living_area_units;
+        price = list_price;
+        image = image_id;
+        type = property_type +
+                (property_sub_type.isEmpty() ? "" : " - " + property_sub_type);
+        this.baths = baths;
+        this.address = address;
+        this.zip = zip;
+    }
+
     Property(String description, String listing_id, int bedrooms, int baths_full,
              int baths_3quart, int baths_half, int baths_1quart, int living_area,
              String living_area_units, double list_price, String property_type,

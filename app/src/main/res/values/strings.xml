@@ -40,11 +40,11 @@
         <item>> 100,000 sq. ft</item>
     </string-array>
     <string-array name="structure_array">
-        <item>Condominium</item>
+        <item>House</item>
         <item>Apartment</item>
-        <item>A-Frame</item>
-        <item>Colonial</item>
-        <item>Cottage</item>
+        <item>Condo</item>
+        <item>Commercial</item>
+        <item>Other</item>
     </string-array>
 
     <!-- Example General settings -->
