@@ -183,6 +183,9 @@ public class SwipeCardActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_realtor_list) {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
+                } else if (id == R.id.nav_database) {
+                    Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    startActivity(database);
                 }
 
                 mDrawerLayout.closeDrawer(left_drawer);
