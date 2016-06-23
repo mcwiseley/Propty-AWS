@@ -26,6 +26,11 @@
             android:id="@+id/nav_realtor_list"
             android:icon="@drawable/ic_realtor_black"
             android:title="Select Realtor"/>
+        <item
+            android:id="@+id/nav_database"
+            android:icon="@drawable/ic_database_black"
+            android:title="Database"
+            />
     </group>
 
 </menu>

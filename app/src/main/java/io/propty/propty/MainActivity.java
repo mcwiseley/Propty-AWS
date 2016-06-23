@@ -160,7 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_realtor_list) {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
+                } else if (id == R.id.nav_database) {
+                    Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    startActivity(database);
                 }
+
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
