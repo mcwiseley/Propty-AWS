@@ -1,29 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context="io.propty.propty.DatabaseActivity">
 
-
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#e0f5ff">
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:focusableInTouchMode="true">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:titleTextColor="?attr/colorAccent"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        >
 
-    </android.support.design.widget.AppBarLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="INSTRUCTIONS: \n
+To add a new property to the database, \n
+fill out all fields and click ADD. \n
+To look up a property, fill in the \n
+List ID field and click FIND BY LIST ID \n
+to return all the relevant data for that \n
+property from the database.  To delete a \n
+property from the database, fill in the \n
+List ID field and click DELETE BY LIST \n
+ID. The last button, QUERY LISTINGS BY \n
+SETTINGS, will take you to a list of \n
+properties in the database that meet \n
+the preferences you selected on the \n
+Settings page."
+            android:id="@+id/instructions" />
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -251,7 +271,7 @@
             </TableRow>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -287,3 +307,4 @@
 
 </LinearLayout>
 
+</ScrollView>

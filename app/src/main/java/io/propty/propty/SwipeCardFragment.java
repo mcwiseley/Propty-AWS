@@ -79,15 +79,6 @@ public class SwipeCardFragment extends Fragment {
         if(newList.isEmpty()){
             sc.add(new Property("No matching properties", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
         }
-
-        /* These are just examples for testing purposes.  TODO: Delete these before launch!
-        sc.add(new Property("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
-        sc.add(new Property("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", "", 2));
-        sc.add(new Property("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", "", 3));
-        sc.add(new Property("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", "", 4));
-        sc.add(new Property("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", "", 5));
-        */
-
     }
 
     @Override
