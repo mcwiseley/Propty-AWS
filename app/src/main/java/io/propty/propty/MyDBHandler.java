@@ -49,6 +49,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
             BEDS + " INTEGER," + AREA + " INTEGER," + IMAGE + " INTEGER," + BATHS + " REAL," +
            PRICE + " REAL," + ADDRESS + " TEXT," + ZIP + " INTEGER" + ")";
         db.execSQL(CREATE_PRODUCTS_TABLE);
+
+
     }
 
     @Override
