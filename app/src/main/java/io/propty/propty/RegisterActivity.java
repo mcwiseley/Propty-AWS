@@ -3,10 +3,10 @@ package io.propty.propty;
 /**
  * Created by micheal on 11/18/15.
  */
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -19,12 +19,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -216,6 +218,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                         // Stores registered data in SQlite Database
                         db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
+
+                        //Write the UID into MyPrefsFile so we can read settings from the settings table
+                        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString(KEY_UID, json_user.getString(KEY_UID));
+                        editor.apply();
 
                         // Launch RegisteredActivity screen
                         Intent registered = new Intent(getApplicationContext(), RegisteredActivity.class);

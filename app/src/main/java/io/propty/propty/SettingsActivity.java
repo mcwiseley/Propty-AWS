@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
@@ -27,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
     //unique tag for intents:
     public final static String EXTRA = "io.propty.propty.MESSAGE";
     public static final String PREFS = "MyPrefsFile";
+    private static String KEY_UID = "uid";
+    String uid;
 
     private NumberPicker numBedrooms;
     private NumberPicker numBathrooms;
@@ -34,12 +35,11 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText maxPrice;
     private Spinner squareFootage;
     private Spinner structure;
-    private CheckBox pool;
-    private CheckBox garage;
     private EditText within;
     private RadioButton radioCurrentLocation;
     private RadioButton radioZip;
     private EditText zip;
+    private EditText keywords;
     private Button submit;
 
     float numBedrooms_val;
@@ -48,12 +48,11 @@ public class SettingsActivity extends AppCompatActivity {
     int maxPrice_val;
     int squareFootage_val;
     int structure_val;
-    boolean pool_val;
-    boolean garage_val;
     int within_val;
     boolean radioCurrent_val;
     boolean radioZip_val;
     int zip_val;
+    String keywords_val;
 
     final static String numBedrooms_string = EXTRA + "numBedrooms";
     final static String numBathrooms_string = EXTRA + "numBathrooms";
@@ -61,12 +60,11 @@ public class SettingsActivity extends AppCompatActivity {
     final static String maxPrice_string = EXTRA + "maxPrice";
     final static String squareFootage_string = EXTRA + "squareFootage";
     final static String structure_string = EXTRA + "structure";
-    final static String pool_string = EXTRA + "pool";
-    final static String garage_string = EXTRA + "garage";
     final static String within_string = EXTRA + "within";
     final static String radioCurrent_string = EXTRA + "radioCurrent";
     final static String radioZip_string = EXTRA + "radioZip";
     final static String zip_string = EXTRA + "zip";
+    final static String keywords_string = EXTRA + "keywords";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,32 +85,50 @@ public class SettingsActivity extends AppCompatActivity {
         maxPrice = (EditText) findViewById(R.id.maxPrice);
         squareFootage = (Spinner) findViewById(R.id.squareFootage);
         structure = (Spinner) findViewById(R.id.structure);
-        pool = (CheckBox) findViewById(R.id.pool);
-        garage = (CheckBox) findViewById(R.id.garage);
         within = (EditText) findViewById(R.id.within);
         radioCurrentLocation = (RadioButton) findViewById(R.id.radioCurrentLocation);
         radioZip = (RadioButton) findViewById(R.id.radioZip);
         zip = (EditText) findViewById(R.id.zip);
         submit = (Button) findViewById(R.id.submit);
+        keywords = (EditText) findViewById(R.id.keywords);
 
 
         //Load shared preferences
         SharedPreferences settings = getSharedPreferences(PREFS, 0);
+        uid = settings.getString(KEY_UID, "");
 
+        //Load settings from the database.  Note: this should be done at the Register/Login activity,
+        //but it is not functioning yet.  We do assign the current UID to shared prefs in the
+        //register/login activities so we can look up the proper settings here.
+
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        UserSettings userSettings = db.getUserSettings(uid);
+
+        numBedrooms_val = userSettings.getNumBedrooms();
+        numBathrooms_val = userSettings.getNumBathrooms();
+        minPrice_val = userSettings.getMinPrice();
+        maxPrice_val = userSettings.getMaxPrice();
+        squareFootage_val = userSettings.getSquareFootage();
+        structure_val = userSettings.getStructure();
+        within_val = userSettings.getWithin();
+        radioCurrent_val = false;
+        radioZip_val = true;
+        zip_val = userSettings.getZip();
+        keywords_val = userSettings.getKeywords();
+
+        /*
         numBedrooms_val = settings.getFloat(numBedrooms_string, 1);
         numBathrooms_val = settings.getFloat(numBathrooms_string, 1);
         minPrice_val = settings.getInt(minPrice_string, 0);
         maxPrice_val = settings.getInt(maxPrice_string, 0);
         squareFootage_val = settings.getInt(squareFootage_string, 0);
         structure_val = settings.getInt(structure_string, 0);
-        pool_val = settings.getBoolean(pool_string, false);
-        garage_val = settings.getBoolean(garage_string, false);
         within_val = settings.getInt(within_string, 0);
         radioCurrent_val = settings.getBoolean(radioCurrent_string, true);
         radioZip_val = settings.getBoolean(radioZip_string, false);
-
         zip_val = settings.getInt(zip_string, 0);
-
+        keywords_val = settings.getString(keywords_string, "");
+        */
 
         //Populate Number Pickers for number of bathrooms and bedrooms, set loaded preference
         //values for both as well as min/max price
@@ -147,14 +163,13 @@ public class SettingsActivity extends AppCompatActivity {
         structure.setSelection(structure_val);
 
         //Fill remaining settings based on shared preferences
-        pool.setChecked(pool_val);
-        garage.setChecked(garage_val);
         if(within_val != 0)
             within.setText(Integer.toString(within_val));
         radioCurrentLocation.setChecked(radioCurrent_val);
         radioZip.setChecked(radioZip_val);
         if(radioZip_val)
             zip.setText(Integer.toString(zip_val));
+        keywords.setText(keywords_val);
     }
 
     //Method to populate a number picker with fractional values.  Takes a NumberPicker, minimum
@@ -268,8 +283,6 @@ public class SettingsActivity extends AppCompatActivity {
         //These values will only be meaningful once we settle on what the options are.
         squareFootage_val = squareFootage.getSelectedItemPosition();
         structure_val = structure.getSelectedItemPosition();
-        pool_val = pool.isChecked();
-        garage_val = garage.isChecked();
         within_val = Integer.parseInt(within.getText().toString());
         if(radioZip.isChecked()) {
             radioZip_val = true;
@@ -281,8 +294,17 @@ public class SettingsActivity extends AppCompatActivity {
             radioCurrent_val = true;
             zip_val = 98765;
         }
+        keywords_val = keywords.getText().toString();
 
-        SharedPreferences settings = getSharedPreferences(PREFS, 0);
+        //create new UserSettings object with these settings, use it to update the table
+        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        UserSettings userSettings = new UserSettings();
+        userSettings.setAll(uid, numBedrooms_val, numBathrooms_val, minPrice_val, maxPrice_val,
+                squareFootage_val, structure_val, within_val, zip_val, keywords_val);
+
+        db.updateSettings(userSettings);
+
+        /*SharedPreferences settings = getSharedPreferences(PREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putFloat(numBedrooms_string, numBedrooms_val);
         editor.putFloat(numBathrooms_string, numBathrooms_val);
@@ -290,14 +312,13 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putInt(maxPrice_string, maxPrice_val);
         editor.putInt(squareFootage_string, squareFootage_val);
         editor.putInt(structure_string, structure_val);
-        editor.putBoolean(pool_string, pool_val);
-        editor.putBoolean(garage_string, garage_val);
         editor.putInt(within_string, within_val);
         editor.putBoolean(radioCurrent_string, radioCurrent_val);
         editor.putBoolean(radioZip_string, radioZip_val);
         editor.putInt(zip_string, zip_val);
+        editor.putString(keywords_string, keywords_val);
 
-        editor.apply();
+        editor.apply();*/
 
         intent.putExtra(numBedrooms_string, numBedrooms_val);
         intent.putExtra(numBathrooms_string, numBathrooms_val);
@@ -305,10 +326,9 @@ public class SettingsActivity extends AppCompatActivity {
         intent.putExtra(maxPrice_string, maxPrice_val);
         intent.putExtra(squareFootage_string, squareFootage_val);
         intent.putExtra(structure_string, structure_val);
-        intent.putExtra(pool_string, pool_val);
-        intent.putExtra(garage_string, garage_val);
         intent.putExtra(within_string, within_val);
         intent.putExtra(zip_string, zip_val);
+        intent.putExtra(keywords_string, keywords_val);
         startActivity(intent);
 
     }

@@ -138,8 +138,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pool: "
-        android:id="@+id/pool_result"
+        android:text="within: "
+        android:id="@+id/within_result"
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_below="@+id/structure_result"
@@ -149,52 +149,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="pool_fill"
-        android:id="@+id/pool_fill"
-        android:textSize="20sp"
-        android:layout_below="@+id/structure_fill"
-        android:layout_toRightOf="@+id/pool_result"
-        android:layout_toEndOf="@+id/pool_result" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="garage: "
-        android:id="@+id/garage_result"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:layout_below="@+id/pool_result"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="garage_fill"
-        android:id="@+id/garage_fill"
-        android:textSize="20sp"
-        android:layout_below="@+id/pool_fill"
-        android:layout_toRightOf="@+id/garage_result"
-        android:layout_toEndOf="@+id/garage_result" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="within: "
-        android:id="@+id/within_result"
-        android:textSize="20sp"
-        android:textColor="#000000"
-        android:layout_below="@+id/garage_result"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="within_fill"
         android:id="@+id/within_fill"
         android:textSize="20sp"
-        android:layout_below="@+id/garage_fill"
+        android:layout_below="@+id/structure_fill"
         android:layout_toRightOf="@+id/within_result"
         android:layout_toEndOf="@+id/within_result" />
 
@@ -218,5 +176,27 @@
         android:layout_below="@+id/within_fill"
         android:layout_toRightOf="@+id/zip_result"
         android:layout_toEndOf="@+id/zip_result" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="keywords: "
+        android:id="@+id/keywords_result"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_below="@+id/zip_result"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="keywords_fill"
+        android:id="@+id/keywords_fill"
+        android:textSize="20sp"
+        android:layout_below="@+id/zip_fill"
+        android:layout_toRightOf="@+id/keywords_result"
+        android:layout_toEndOf="@+id/keywords_result" />
+
 
 </RelativeLayout>

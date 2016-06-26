@@ -16,10 +16,9 @@ public class SettingsResultsActivity extends AppCompatActivity {
     private TextView maxPrice_fill;
     private TextView squareFootage_fill;
     private TextView structure_fill;
-    private TextView pool_fill;
-    private TextView garage_fill;
     private TextView within_fill;
     private TextView zip_fill;
+    private TextView keywords_fill;
 
 
     @Override
@@ -33,10 +32,9 @@ public class SettingsResultsActivity extends AppCompatActivity {
         maxPrice_fill = (TextView) findViewById(R.id.maxPrice_fill);
         squareFootage_fill = (TextView) findViewById(R.id.squareFootage_fill);
         structure_fill = (TextView) findViewById(R.id.structure_fill);
-        pool_fill = (TextView) findViewById(R.id.pool_fill);
-        garage_fill = (TextView) findViewById(R.id.garage_fill);
         within_fill = (TextView) findViewById(R.id.within_fill);
         zip_fill = (TextView) findViewById(R.id.zip_fill);
+        keywords_fill = (TextView) findViewById(R.id.keywords_fill);
 
 
         Intent intent = getIntent();
@@ -53,14 +51,12 @@ public class SettingsResultsActivity extends AppCompatActivity {
         squareFootage_fill.setText(Integer.toString(sqTemp));
         int structureTemp = intent.getIntExtra(SettingsActivity.structure_string, 0);
         structure_fill.setText(Integer.toString(structureTemp));
-        boolean poolTemp = intent.getBooleanExtra(SettingsActivity.pool_string, true);
-        pool_fill.setText(Boolean.toString(poolTemp));
-        boolean garageTemp = intent.getBooleanExtra(SettingsActivity.garage_string, true);
-        garage_fill.setText(Boolean.toString(garageTemp));
         int withinTemp = intent.getIntExtra(SettingsActivity.within_string, 0);
         within_fill.setText(Integer.toString(withinTemp));
         int zipTemp = intent.getIntExtra(SettingsActivity.zip_string, 0);
         zip_fill.setText(Integer.toString(zipTemp));
+        String keywordsTemp = intent.getStringExtra(SettingsActivity.keywords_string);
+        keywords_fill.setText(keywordsTemp);
 
     }
 }

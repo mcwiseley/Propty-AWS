@@ -1,6 +1,5 @@
 package io.propty.propty;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +17,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView loginResult;
     private TextView fbLoginResult;
     private Toolbar toolbar;
+    private Button btnLoginAsHenry;
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
@@ -82,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.pword);
         loginResult = (TextView) findViewById(R.id.loginResult);
         fbLoginResult = (TextView) findViewById(R.id.fbLoginResult);
+        btnLoginAsHenry = (Button) findViewById(R.id.loginAsHenry);
 
         if (prefs.getBoolean("logged_in", false)) {
             btnNext.setVisibility(View.VISIBLE);
@@ -180,6 +184,21 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
+            }
+        });
+
+        btnLoginAsHenry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+
+                db.addUser("Henry","Kerins","hkerins@ufl.edu","hkerins","uniqueID","06.26.2016");
+
+                //Write the UID into MyPrefsFile so we can read settings from the settings table
+                SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString(KEY_UID, "uniqueID");
+                editor.apply();
             }
         });
     }
@@ -287,6 +306,13 @@ public class LoginActivity extends AppCompatActivity {
                         UserFunctions logout = new UserFunctions();
                         logout.logoutUser(getApplicationContext());
                         db.addUser(json_user.getString(KEY_FIRSTNAME),json_user.getString(KEY_LASTNAME),json_user.getString(KEY_EMAIL),json_user.getString(KEY_USERNAME),json_user.getString(KEY_UID),json_user.getString(KEY_CREATED_AT));
+
+                        //Write the UID into MyPrefsFile so we can read settings from the settings table
+                        SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
+                        editor.putString(KEY_UID, json_user.getString(KEY_UID));
+                        editor.apply();
+
                         // If JSON array details are stored in SQlite it launches the User Panel.
                         Intent upanel = new Intent(getApplicationContext(), MainActivity.class);
                         upanel.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -305,4 +331,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void NetAsync(View view) { new NetCheck().execute(); }
+
+
+
 }

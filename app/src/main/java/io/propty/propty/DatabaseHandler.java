@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import java.util.HashMap;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
@@ -22,6 +23,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Login table name
     private static final String TABLE_LOGIN = "login";
 
+    //Settings table name
+    private static final String TABLE_SETTINGS = "settings";
+
     // Login Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_FIRSTNAME = "fname";
@@ -30,6 +34,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_USERNAME = "uname";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
+
+    //Settings Table Column names
+    private static final String KEY_KEYWORDS = "keywords";
+    private static final String KEY_BEDS = "beds";
+    private static final String KEY_BATHS = "baths";
+    private static final String KEY_MIN_PRICE = "min_price";
+    private static final String KEY_MAX_PRICE = "max_price";
+    private static final String KEY_SQ_FT = "sq_ft";
+    private static final String KEY_STRUCTURE = "structure";
+    private static final String KEY_WITHIN = "within";
+    private static final String KEY_ZIP = "zip";
+
+
+
+
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,6 +66,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_UID + " TEXT,"
                 + KEY_CREATED_AT + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
+
+        String CREATE_SETTINGS_TABLE = "CREATE TABLE " + TABLE_SETTINGS + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_UID + " TEXT,"
+                + KEY_KEYWORDS + " TEXT,"
+                + KEY_BEDS + " REAL,"
+                + KEY_BATHS + " REAL,"
+                + KEY_MIN_PRICE + " INTEGER,"
+                + KEY_MAX_PRICE + " INTEGER,"
+                + KEY_SQ_FT + " INTEGER,"
+                + KEY_STRUCTURE + " INTEGER,"
+                + KEY_WITHIN + " INTEGER,"
+                + KEY_ZIP + " INTEGER" + ")";
+        db.execSQL(CREATE_SETTINGS_TABLE);
     }
 
     // Upgrading database
@@ -54,6 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_LOGIN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SETTINGS);
         // Create tables again
         onCreate(db);
     }
@@ -72,7 +106,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_CREATED_AT, created_at); // Created At
         // Inserting Row
         db.insert(TABLE_LOGIN, null, values);
+
+        //Write the UID into MyPrefsFile so we can read settings from the settings table
+        ContentValues settingsUID = new ContentValues();
+        settingsUID.put(KEY_UID, uid);
+        settingsUID.put(KEY_KEYWORDS, "");
+        settingsUID.put(KEY_BEDS, 1);
+        settingsUID.put(KEY_BATHS, 1);
+        settingsUID.put(KEY_MIN_PRICE, 0);
+        settingsUID.put(KEY_MAX_PRICE, 0);
+        settingsUID.put(KEY_SQ_FT, 0);
+        settingsUID.put(KEY_STRUCTURE, 0);
+        settingsUID.put(KEY_WITHIN, 0);
+        settingsUID.put(KEY_ZIP, 0);
+
+        db.insert(TABLE_SETTINGS, null, settingsUID);
         db.close(); // Closing database connection
+
     }
 
     /**
@@ -96,6 +146,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return user;
+    }
+
+    public UserSettings getUserSettings(String uid) {
+        UserSettings userSettings = new UserSettings();
+        String selectQuery = "SELECT  * FROM " + TABLE_SETTINGS + " WHERE " + KEY_UID +
+                " = \'" + uid + "\';";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // Move to first row
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            userSettings.setUid(uid);
+            userSettings.setKeywords(cursor.getString(2));
+            userSettings.setNumBedrooms(cursor.getFloat(3));
+            userSettings.setNumBathrooms(cursor.getFloat(4));
+            userSettings.setMinPrice(cursor.getInt(5));
+            userSettings.setMaxPrice(cursor.getInt(6));
+            userSettings.setSquareFootage(cursor.getInt(7));
+            userSettings.setStructure(cursor.getInt(8));
+            userSettings.setWithin(cursor.getInt(9));
+            userSettings.setZip(cursor.getInt(10));
+        }
+        cursor.close();
+        db.close();
+        return userSettings;
+    }
+
+    public void updateSettings(UserSettings settings){
+        String updateStatement = "UPDATE " + TABLE_SETTINGS + " SET " +
+                KEY_KEYWORDS + "=\'" + settings.getKeywords() + "\', " +
+                KEY_BEDS + "=\'" + settings.getNumBedrooms() + "\', " +
+                KEY_BATHS + "=\'" + settings.getNumBathrooms() + "\', " +
+                KEY_MIN_PRICE + "=\'" + settings.getMinPrice() + "\', " +
+                KEY_MAX_PRICE + "=\'" + settings.getMaxPrice() + "\', " +
+                KEY_SQ_FT + "=\'" + settings.getSquareFootage() + "\', " +
+                KEY_STRUCTURE + "=\'" + settings.getStructure() + "\', " +
+                KEY_WITHIN + "=\'" + settings.getWithin() + "\', " +
+                KEY_ZIP + "=\'" + settings.getZip() + "\' " +
+                "WHERE " + KEY_UID + "=\'" + settings.getUid() + "\';";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(updateStatement);
     }
 
     /**
