@@ -194,7 +194,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-                db.addUser("Henry","Kerins","hkerins@ufl.edu","hkerins","uniqueID","06.26.2016");
+                //Below db.addUser methods were used once each to create these user accounts,
+                //now that they exist the addUser methods have been commented out and these buttons
+                //just pull user info based on the unique ID for either user.
+
+                //db.addUser("Henry","Kerins","hkerins@ufl.edu","hkerins","uniqueID","06.26.2016");
 
                 //Write the UID into MyPrefsFile so we can read settings from the settings table
                 SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
@@ -209,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 DatabaseHandler db = new DatabaseHandler(getApplicationContext());
 
-                db.addUser("Danny","McBride","dmcbride@gmail.com","dmcbride","uniqueID2","06.27.2016");
+                //db.addUser("Danny","McBride","dmcbride@gmail.com","dmcbride","uniqueID2","06.27.2016");
 
                 //Write the UID into MyPrefsFile so we can read settings from the settings table
                 SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);

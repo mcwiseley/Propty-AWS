@@ -95,10 +95,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         //Load shared preferences
         SharedPreferences settings = getSharedPreferences(PREFS, 0);
-        uid = settings.getString(KEY_UID, "");
+        uid = settings.getString(KEY_UID, "default_user");
 
         //Load settings from the database.  Note: this should be done at the Register/Login activity,
-        //but it is not functioning yet.  We do assign the current UID to shared prefs in the
+        //but it is not functioning yet.  We do put the current UID in shared prefs in the
         //register/login activities so we can look up the proper settings here.
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
@@ -304,7 +304,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         db.updateSettings(userSettings);
 
-        /*SharedPreferences settings = getSharedPreferences(PREFS, 0);
+
+
+        SharedPreferences settings = getSharedPreferences(PREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putFloat(numBedrooms_string, numBedrooms_val);
         editor.putFloat(numBathrooms_string, numBathrooms_val);
@@ -318,7 +320,7 @@ public class SettingsActivity extends AppCompatActivity {
         editor.putInt(zip_string, zip_val);
         editor.putString(keywords_string, keywords_val);
 
-        editor.apply();*/
+        editor.apply();
 
         intent.putExtra(numBedrooms_string, numBedrooms_val);
         intent.putExtra(numBathrooms_string, numBathrooms_val);

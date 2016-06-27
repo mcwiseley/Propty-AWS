@@ -1,13 +1,13 @@
 package io.propty.propty;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -20,14 +20,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Swipe Card Main Activity
@@ -48,6 +47,8 @@ public class SwipeCardActivity extends AppCompatActivity {
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
+    private EditText mEditMiles;
+    private EditText mEditZip;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,38 +217,49 @@ public class SwipeCardActivity extends AppCompatActivity {
             }
         });
 
+        //Load shared preferences to fill in settings values
+        SharedPreferences settings = getSharedPreferences(SettingsActivity.PREFS, 0);
+
         //Set up the Bedroom Number Picker with minimum and maximum values
         NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
         mBedroomPicker.setMaxValue(10);
         mBedroomPicker.setMinValue(1);
         mBedroomPicker.setWrapSelectorWheel(false);
-        //Set up Bathroom number picker with minimum and maximum values
+
+        mBedroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBedrooms_string, 1));
+
+        // /Set up Bathroom number picker with minimum and maximum values
         NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
         mBathroomPicker.setMaxValue(10);
         mBathroomPicker.setMinValue(1);
         mBathroomPicker.setWrapSelectorWheel(false);
 
+        mBathroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBathrooms_string, 1));
+
         //set up adapter for drop down menu of home types
         Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
         //Create an ArrayAdapter using the home_array
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.home_array,
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.structure_array,
                 android.R.layout.simple_spinner_item);
         //Specify layout and apply adapter
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setSelection(settings.getInt(SettingsActivity.structure_string, 0));
 
         //set up adapter for drop down menu of square feet
         Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
         //Create an ArrayAdapter using the home_array
-        ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.sq_ft_array,
+        ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.squareFootage_array,
                 android.R.layout.simple_spinner_item);
         //Specify layout and apply adapter
         sqFtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sqFtSpinner.setAdapter(sqFtAdapter);
+        sqFtSpinner.setSelection(settings.getInt(SettingsActivity.squareFootage_string, 0));
 
         //initialize the radio buttons
         mCurrentZipButton = (RadioButton) findViewById(R.id.current_zip_radio);
         mOtherZipButton = (RadioButton) findViewById(R.id.other_zip_radio);
+
         //create custom listener for when radio buttons are clicked
         mCurrentZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -275,9 +287,14 @@ public class SwipeCardActivity extends AppCompatActivity {
                 }
             }
         });
+        mOtherZipButton.setChecked(settings.getBoolean(SettingsActivity.radioZip_string, true));
+        mCurrentZipButton.setChecked(settings.getBoolean(SettingsActivity.radioCurrent_string, false));
 
         //Set up the EditTexts
-        //TODO: Get variables of EditTexts!!!
+        mEditMiles = (EditText) findViewById(R.id.edit_miles);
+        mEditMiles.setText(Integer.toString(settings.getInt(SettingsActivity.within_string, 0)));
+        mEditZip = (EditText) findViewById(R.id.edit_zip);
+        mEditZip.setText(Integer.toString(settings.getInt(SettingsActivity.zip_string, 0)));
 
         //Set up the price slider and TextView for Minimum Price
         mMinTextView = (TextView) findViewById(R.id.min_price);
@@ -305,6 +322,9 @@ public class SwipeCardActivity extends AppCompatActivity {
 
             }
         });
+        mMinSeekBar.setProgress(settings.getInt(SettingsActivity.minPrice_string, 0) / 1000);
+        mMinTextView.setText("Min Price: $" + settings.getInt(SettingsActivity.minPrice_string, 0));
+
 
         //Set up price slider and TextView for Maximum Price
         mMaxTextView = (TextView) findViewById(R.id.max_price);
@@ -333,6 +353,8 @@ public class SwipeCardActivity extends AppCompatActivity {
 
             }
         });
+        mMaxSeekBar.setProgress(settings.getInt(SettingsActivity.maxPrice_string, 0) / 100000);
+        mMaxTextView.setText("Max Price: $" + settings.getInt(SettingsActivity.maxPrice_string, 0));
 
         //Set up the Update button and apply listener to close drawer
         Button mUpdateButton = (Button) findViewById(R.id.update_button);
