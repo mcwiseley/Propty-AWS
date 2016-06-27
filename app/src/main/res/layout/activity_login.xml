@@ -226,13 +226,33 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="15dp"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/loginAsHenry"
-        android:text="Login as Henry"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/gp_sign_in_button"
-        android:layout_marginTop="15dp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@id/gp_sign_in_button">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginAsHenry"
+            android:text="Login as Henry"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:layout_below="@id/gp_sign_in_button"
+            android:layout_marginTop="10dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginAsDanny"
+            android:text="Login as Danny"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:layout_below="@id/gp_sign_in_button"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+
 
 </RelativeLayout>

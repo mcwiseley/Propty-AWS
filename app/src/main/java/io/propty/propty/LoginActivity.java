@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView fbLoginResult;
     private Toolbar toolbar;
     private Button btnLoginAsHenry;
+    private Button btnLoginAsDanny;
 
     private static String KEY_SUCCESS = "success";
     private static String KEY_UID = "uid";
@@ -86,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         loginResult = (TextView) findViewById(R.id.loginResult);
         fbLoginResult = (TextView) findViewById(R.id.fbLoginResult);
         btnLoginAsHenry = (Button) findViewById(R.id.loginAsHenry);
+        btnLoginAsDanny = (Button) findViewById(R.id.loginAsDanny);
 
         if (prefs.getBoolean("logged_in", false)) {
             btnNext.setVisibility(View.VISIBLE);
@@ -198,6 +200,21 @@ public class LoginActivity extends AppCompatActivity {
                 SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString(KEY_UID, "uniqueID");
+                editor.apply();
+            }
+        });
+
+        btnLoginAsDanny.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+
+                db.addUser("Danny","McBride","dmcbride@gmail.com","dmcbride","uniqueID2","06.27.2016");
+
+                //Write the UID into MyPrefsFile so we can read settings from the settings table
+                SharedPreferences settings = getSharedPreferences(MainActivity.PREFS_NAME, 0);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString(KEY_UID, "uniqueID2");
                 editor.apply();
             }
         });
