@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,11 +16,31 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/settings_toolbar"
+=======
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:fillViewport="true"
+            tools:context="io.propty.propty.DatabaseActivity"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/database_toolbar"
+>>>>>>> 59a251057054b54f2fac0c4b4e047b8bc4877f5f
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
+<<<<<<< HEAD
         >
 
 
@@ -44,267 +65,371 @@ properties in the database that meet \n
 the preferences you selected on the \n
 Settings page."
             android:id="@+id/instructions" />
+=======
+            />
+>>>>>>> 59a251057054b54f2fac0c4b4e047b8bc4877f5f
 
         <TableLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp">
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            >
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="id PK:"
-                    android:id="@+id/textView" />
+                    android:id="@+id/textView"
+                    android:layout_weight="1"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="None"
-                    android:id="@+id/productID" />
+                    android:id="@+id/productID"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Desc:"
-                    android:id="@+id/textView2" />
+                    android:id="@+id/textView2"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/desc" />
+                    android:id="@+id/desc"
+                    android:layout_weight="1"
+
+                    />
+
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="List ID: "
-                    android:id="@+id/textView3" />
+                    android:id="@+id/textView3"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/listId" />
+                    android:id="@+id/listId"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Area Units: "
-                    android:id="@+id/textView4" />
+                    android:id="@+id/textView4"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/areaUnits" />
+                    android:id="@+id/areaUnits"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Type: "
-                    android:id="@+id/textView5" />
+                    android:id="@+id/textView5"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/type" />
+                    android:id="@+id/type"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Beds: "
-                    android:id="@+id/textView6" />
+                    android:id="@+id/textView6"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/beds" />
+                    android:id="@+id/beds"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Area: "
-                    android:id="@+id/textView7" />
+                    android:id="@+id/textView7"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/area" />
+                    android:id="@+id/area"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Image ID: "
-                    android:id="@+id/textView8" />
+                    android:id="@+id/textView8"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/image" />
+                    android:id="@+id/image"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Baths: "
-                    android:id="@+id/textView9" />
+                    android:id="@+id/textView9"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/baths" />
+                    android:id="@+id/baths"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Price: "
-                    android:id="@+id/textView10" />
+                    android:id="@+id/textView10"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="numberDecimal"
                     android:ems="10"
-                    android:id="@+id/price" />
+                    android:id="@+id/price"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="Address: "
-                    android:id="@+id/textView11" />
+                    android:id="@+id/textView11"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/address" />
+                    android:id="@+id/address"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="ZIP: "
-                    android:id="@+id/textView12" />
+                    android:id="@+id/textView12"
+                    android:layout_weight="1"
+                    />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/zip" />
+                    android:id="@+id/zip"
+                    android:layout_weight="1"
+                    />
             </TableRow>
 
+<<<<<<< HEAD
             <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="add"
-                    android:id="@+id/newProperty"
-                    android:onClick="newProperty" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="find by list ID"
-                    android:id="@+id/lookupProperty"
-                    android:onClick="lookupProperty" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="delete by list ID"
-                    android:id="@+id/removeProperty"
-                    android:onClick="removeProperty"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Query Listings by Settings"
-                    android:id="@+id/btQueryListings" />
-            </LinearLayout>
-
+=======
         </TableLayout>
 
-</LinearLayout>
+            <!--TODO: Make 2 linear layouts for two buttons per row -->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add"
+                android:id="@+id/newProperty"
+                android:onClick="newProperty"
+                android:layout_marginTop="16dp"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+>>>>>>> 59a251057054b54f2fac0c4b4e047b8bc4877f5f
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                >
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Find by list ID"
+                    android:id="@+id/lookupProperty"
+                    android:onClick="lookupProperty"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
+                    />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Delete by list ID"
+                    android:id="@+id/removeProperty"
+                    android:onClick="removeProperty"
+                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Query Listings by Settings"
+                android:id="@+id/btQueryListings"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+<<<<<<< HEAD
 </ScrollView>
+=======
+</ScrollView>
+>>>>>>> 59a251057054b54f2fac0c4b4e047b8bc4877f5f
