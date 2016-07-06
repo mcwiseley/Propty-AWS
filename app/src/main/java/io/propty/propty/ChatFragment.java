@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +36,7 @@ public class ChatFragment extends DialogFragment {
 
     EditText chatEdit;
     Button cancelButton;
-    Button sendButton;
+    ImageButton sendButton;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -61,10 +62,10 @@ public class ChatFragment extends DialogFragment {
 
         chatEdit = (EditText) view.findViewById(R.id.chat_edit);
 
-        cancelButton = (Button) view.findViewById(R.id.chat_cancel_button);
-        sendButton = (Button) view.findViewById(R.id.chat_send_button);
+//        cancelButton = (Button) view.findViewById(R.id.chat_cancel_button);
+        sendButton = (ImageButton) view.findViewById(R.id.chat_send_button);
 
-        //set listener for cancel button
+/*        //set listener for cancel button
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +73,7 @@ public class ChatFragment extends DialogFragment {
                 chatEdit.setText(null);
                 dismiss();
             }
-        });
+        });*/
 
         //TODO: Create Send image alongside EditText!!!
         //set listener for send button
