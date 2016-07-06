@@ -30,6 +30,7 @@ public class ChatFragment extends DialogFragment {
 
     String totalMessage;
 
+    //TODO: Change ScrollView to ListView for better scrolling of messages!!!
     NestedScrollView scrollView;
     LinearLayout chatWindow;
     LinearLayout.LayoutParams params;

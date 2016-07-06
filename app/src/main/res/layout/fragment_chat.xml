@@ -9,15 +9,6 @@
 
     >
 
-
-<!--    <LinearLayout
-        android:id="@+id/chat_linear_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center_horizontal"
-        >-->
-
     <LinearLayout
         android:id="@+id/chat_linear_title"
         android:layout_width="match_parent"
@@ -47,8 +38,7 @@
 
     </LinearLayout>
 
-
-    <!--</LinearLayout>-->
+<!--TODO: Change ScrollView to ListView for better scrolling!!!-->
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/chat_scrollview"
