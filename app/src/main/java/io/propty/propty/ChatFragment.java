@@ -1,28 +1,20 @@
 package io.propty.propty;
 
 
-import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.text.TextUtilsCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -48,10 +40,11 @@ public class ChatFragment extends DialogFragment {
     EditText chatEdit;
     ImageButton sendButton;
 
+    String uid;
+
     public ChatFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +52,28 @@ public class ChatFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        messages = new ArrayList<>();
-        messages.add("Sample");
+        //Load Shared preferences to get user's ID
+        //TODO LOAD UID FROM SHAREDPREFS (THIS IS FUNCTIONAL ON OTHER BRANCHES)
+        SharedPreferences settings = this.getContext().getSharedPreferences(MainActivity.PREFS_NAME, 0);
+        uid = "DUMMY USER ID";
+
+        //Load the ChatMessageDatabaseHandler and populate the ArrayList with (10) recent ChatMessages
+        int numLoadedMessages = 10;
+        final ChatDatabaseHandler dbHandler = new ChatDatabaseHandler(view.getContext(), null, null, 1);
+        ArrayList<ChatMessage> emptyList = new ArrayList<ChatMessage>();
+        ArrayList<ChatMessage> ChatMessageList = dbHandler.loadRecentMessages(emptyList, numLoadedMessages);
+
+        //Check for empty ChatMessageList and if so, add a welcome message.
+        if(ChatMessageList.isEmpty()){
+            ChatMessageList.add(new ChatMessage("x", "Welcome to the Chat Window!"));
+        }
+
+        //Extract the message text from the ChatMessage objects and put in a separate ArrayList.
+        messages = new ArrayList<String>();
+        for(int i = 0; i < ChatMessageList.size(); i++){
+            messages.add(ChatMessageList.get(i).getMessage());
+        }
+
 
         //get the chatWindow LinearLayout
 //        chatWindow = (LinearLayout) view.findViewById(R.id.chat_window);
@@ -108,6 +121,8 @@ public class ChatFragment extends DialogFragment {
                     //get message sent and add to total message
                     tempMessage = chatEdit.getText().toString();
                     totalMessage += "\n" + tempMessage;
+
+                    dbHandler.addMessage(new ChatMessage(uid, tempMessage));
 
 /*                    //create new TextView for tempMessage
                     TextView tv = new TextView(getContext());

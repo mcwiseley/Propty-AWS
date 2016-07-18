@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class QueryDatabaseActivity extends AppCompatActivity {
+public class QueryPropertyDatabaseActivity extends AppCompatActivity {
 
     public static final String PREFS = "MyPrefsFile";
     TextView id1;
@@ -28,7 +28,7 @@ public class QueryDatabaseActivity extends AppCompatActivity {
         id5 = (TextView) findViewById(R.id.id5);
 
         SharedPreferences settings = getSharedPreferences(PREFS, 0);
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        PropertyDatabaseHandler dbHandler = new PropertyDatabaseHandler(this, null, null, 1);
         ArrayList<Property> emptyList = new ArrayList<Property>();
         ArrayList<Property> fullList = dbHandler.listProperties(this, emptyList, 5);
 

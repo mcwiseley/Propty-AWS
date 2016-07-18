@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.HashMap;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class UserDatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
@@ -31,7 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
 
-    public DatabaseHandler(Context context) {
+    public UserDatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
