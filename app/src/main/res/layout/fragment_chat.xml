@@ -91,6 +91,7 @@
         android:layout_height="1dp"
         android:background="@color/colorPrimary"
         android:layout_below="@+id/chat_window"
+        android:layout_marginTop="16dp"
         />
 
     <LinearLayout

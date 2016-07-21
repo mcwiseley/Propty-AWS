@@ -81,14 +81,17 @@ public class ChatFragment extends DialogFragment {
                 String tempMessage;
 
                 //check if chatEdit is not empty
-                if(!TextUtils.isEmpty(chatEdit.getText())) {
+                if(!TextUtils.isEmpty(chatEdit.getText().toString().trim())) {
 
-                    //get message sent and add to total message
-                    tempMessage = chatEdit.getText().toString();
-                    totalMessage += "\n" + tempMessage;
-                    //add message to ArrayList in ChatAdapter
-                    mAdapter.addMessage(tempMessage);
-                    chatRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                    //get trimmed message sent and add to total message
+                    tempMessage = chatEdit.getText().toString().trim();
+                    //if tempMessage isn't empty after being trimmed
+                    //if(!tempMessage.isEmpty()) {
+                        totalMessage += "\n" + tempMessage;
+                        //add message to ArrayList in ChatAdapter
+                        mAdapter.addMessage(tempMessage);
+                        chatRecyclerView.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                    //}
                 }
 
                 //reset chatEdit back to empty
