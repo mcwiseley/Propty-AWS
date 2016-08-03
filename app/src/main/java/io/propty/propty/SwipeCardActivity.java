@@ -186,6 +186,10 @@ public class SwipeCardActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_database) {
                     Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
                     startActivity(database);
+                } else if (id == R.id.nav_chat) {
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    ChatFragment chatFragment = new ChatFragment();
+                    chatFragment.show(fragmentManager, "Test");
                 }
 
                 mDrawerLayout.closeDrawer(left_drawer);
