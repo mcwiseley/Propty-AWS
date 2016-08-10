@@ -29,10 +29,6 @@ public class ChatFragment extends DialogFragment {
     String totalMessage;
 
     //TODO: Get rid of remnants of ScrollView, clean up code in Fragments and Adapter, and get View to stay anchored on bottom when new texts are added!
-    NestedScrollView scrollView;
-    LinearLayout chatWindow;
-    LinearLayout.LayoutParams params;
-
     RecyclerView chatRecyclerView;
     LinearLayoutManager mLayoutManager;
     ChatAdapter mAdapter;
@@ -74,42 +70,25 @@ public class ChatFragment extends DialogFragment {
             messages.add(ChatMessageList.get(i).getMessage());
         }
 
-
-        //get the chatWindow LinearLayout
-//        chatWindow = (LinearLayout) view.findViewById(R.id.chat_window);
-
-        //get parameters of margin size for new texts added
-        params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0,16,0,16);
-
-
+        //initialize EditText and ImageButton and sending messages
         chatEdit = (EditText) view.findViewById(R.id.chat_edit);
-
         sendButton = (ImageButton) view.findViewById(R.id.chat_send_button);
 
-//SET UP RECYCLERVIEW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
+        //initialize RecyclerView and LayoutManager for the RecyclerView
         chatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
-
         mLayoutManager = new LinearLayoutManager(getContext());
         mLayoutManager.setStackFromEnd(true);
         chatRecyclerView.setLayoutManager(mLayoutManager);
 
+        //initialize and set ChatAdapter for RecyclerView
         mAdapter = new ChatAdapter(messages);
         chatRecyclerView.setAdapter(mAdapter);
 
-
-        chatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        //TODO: Create Send image alongside EditText!!!
         //set listener for send button
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //temporary String for message
                 String tempMessage;
 
                 //check if chatEdit is empty or not
@@ -144,8 +123,6 @@ public class ChatFragment extends DialogFragment {
 
             }
         });
-
-//        setCancelable(false);
 
         return view;
     }

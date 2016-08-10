@@ -26,15 +26,9 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         }
     }
 
+    //CONSTRUCTOR
     public ChatAdapter(ArrayList<String> messages) {
         this.messages = messages;
-    }
-
-    public void addMessage(String message) {
-
-        messages.add(message);
-        notifyItemInserted(messages.size() - 1);
-        
     }
 
     @Override
@@ -56,6 +50,18 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public int getItemCount() {
 
         return messages.size();
+    }
+
+    /********************************************
+     * Add Message Function
+     * adds String to next element in ArrayList
+     * and notifies the adapter to update itself
+     ********************************************/
+    public void addMessage(String message) {
+
+        messages.add(message);
+        notifyItemInserted(messages.size() - 1);
+
     }
 
 
