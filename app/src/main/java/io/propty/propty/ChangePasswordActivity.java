@@ -1,6 +1,5 @@
 package io.propty.propty;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -126,7 +125,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+            UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
             HashMap<String, String> user = db.getUserDetails();
             newpas = newpass.getText().toString();
             email = user.get("email");
