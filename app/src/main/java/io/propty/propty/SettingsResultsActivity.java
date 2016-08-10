@@ -53,10 +53,6 @@ public class SettingsResultsActivity extends AppCompatActivity {
         squareFootage_fill.setText(Integer.toString(sqTemp));
         int structureTemp = intent.getIntExtra(SettingsActivity.structure_string, 0);
         structure_fill.setText(Integer.toString(structureTemp));
-        boolean poolTemp = intent.getBooleanExtra(SettingsActivity.pool_string, true);
-        pool_fill.setText(Boolean.toString(poolTemp));
-        boolean garageTemp = intent.getBooleanExtra(SettingsActivity.garage_string, true);
-        garage_fill.setText(Boolean.toString(garageTemp));
         int withinTemp = intent.getIntExtra(SettingsActivity.within_string, 0);
         within_fill.setText(Integer.toString(withinTemp));
         int zipTemp = intent.getIntExtra(SettingsActivity.zip_string, 0);

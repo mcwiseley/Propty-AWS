@@ -1,6 +1,7 @@
 package io.propty.propty;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -43,6 +44,7 @@ public class SwipeCardFragment extends Fragment {
     static final int MAX_RENDERED_CARDS = 4;
     int current_card;
     int idx = 1;
+    public static final String PREFS = "MyPrefsFile";
 
     @InjectView(R.id.frame) SwipeFlingAdapterView flingContainer;
 
@@ -59,13 +61,24 @@ public class SwipeCardFragment extends Fragment {
         al = new ArrayList<>();
         arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.swipecard, R.id.cardText, al);
 
-        // These are just examples for testing purposes.  TODO: Delete these before launch!
-        sc.add(new Property("Property 1", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
-        sc.add(new Property("Property 2", "", 3, 2, 0, 1, 0, 3500, "sq ft", 2250.00d, "house", "", 2));
-        sc.add(new Property("Property 3", "", 1, 1, 0, 0, 0, 1200, "sq ft", 625.50d, "apartment", "", 3));
-        sc.add(new Property("Property 4", "", 1, 1, 0, 1, 0, 1500, "sq ft", 500.01d, "duplex", "", 4));
-        sc.add(new Property("Property 5", "", 1, 0, 0, 1, 0, 150, "sq ft", 99.99d, "closet", "", 5));
+        SharedPreferences settings = getContext().getSharedPreferences(PREFS, 0);
+        PropertyDatabaseHandler dbHandler = new PropertyDatabaseHandler(getContext(), null, null, 1);
+        ArrayList<Property> newList = new ArrayList<Property>();
+        newList = dbHandler.listProperties(getContext(), newList, 5);
 
+        if(newList.size() != 0)
+            sc.add(newList.get(0));
+        if(newList.size() > 1)
+            sc.add(newList.get(1));
+        if(newList.size() > 2)
+            sc.add(newList.get(2));
+        if(newList.size() > 3)
+            sc.add(newList.get(3));
+        if(newList.size() > 4)
+            sc.add(newList.get(4));
+        if(newList.isEmpty()){
+            sc.add(new Property("No matching properties", "", 2, 2, 0, 0, 0, 2000, "sq ft", 960.00d, "condo", "", 1));
+        }
     }
 
     @Override

@@ -2,9 +2,7 @@ package io.propty.propty;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,13 +29,6 @@ public class PropertyDatabaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_database);
-
-        //set up the Toolbar with Up Navigation
-        Toolbar toolbar = (Toolbar) findViewById(R.id.database_toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Database");
 
         idView = (TextView) findViewById(R.id.productID);
         desc = (EditText) findViewById(R.id.desc);
