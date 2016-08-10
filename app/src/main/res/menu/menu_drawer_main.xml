@@ -33,11 +33,11 @@
             android:title="Chat"
             />
 
-        <item
-            android:id="@+id/nav_database"
-            android:icon="@drawable/ic_database_black"
-            android:title="Database"
-            />
+        <!--<item-->
+            <!--android:id="@+id/nav_database"-->
+            <!--android:icon="@drawable/ic_database_black"-->
+            <!--android:title="Database"-->
+            <!--/>-->
 
 
 
