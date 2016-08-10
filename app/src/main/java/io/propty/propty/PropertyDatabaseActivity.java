@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DatabaseActivity extends AppCompatActivity {
+public class PropertyDatabaseActivity extends AppCompatActivity {
 
     TextView idView;
     EditText desc;
@@ -56,7 +56,7 @@ public class DatabaseActivity extends AppCompatActivity {
         queryListings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent queryDatabase = new Intent(getApplicationContext(), QueryDatabaseActivity.class);
+                Intent queryDatabase = new Intent(getApplicationContext(), QueryPropertyDatabaseActivity.class);
                 startActivity(queryDatabase);
             }
         });
@@ -64,7 +64,7 @@ public class DatabaseActivity extends AppCompatActivity {
     }
 
     public void newProperty(View view) {
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        PropertyDatabaseHandler dbHandler = new PropertyDatabaseHandler(this, null, null, 1);
 
         if(desc.getText().toString().isEmpty() || listId.getText().toString().isEmpty() ||
                 areaUnits.getText().toString().isEmpty() || type.getText().toString().isEmpty() ||
@@ -99,7 +99,7 @@ public class DatabaseActivity extends AppCompatActivity {
     }
 
     public void lookupProperty(View view) {
-        MyDBHandler dbHandler = new MyDBHandler(this, null, null, 1);
+        PropertyDatabaseHandler dbHandler = new PropertyDatabaseHandler(this, null, null, 1);
 
         Property property = dbHandler.findProperty(listId.getText().toString());
 
@@ -122,7 +122,7 @@ public class DatabaseActivity extends AppCompatActivity {
     }
 
     public void removeProperty(View view) {
-        MyDBHandler dbHandler = new MyDBHandler(this, null,
+        PropertyDatabaseHandler dbHandler = new PropertyDatabaseHandler(this, null,
                 null, 1);
 
         boolean result = dbHandler.deleteProperty(

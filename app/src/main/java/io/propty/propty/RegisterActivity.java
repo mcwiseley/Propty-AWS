@@ -3,7 +3,6 @@ package io.propty.propty;
 /**
  * Created by micheal on 11/18/15.
  */
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -207,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity {
                         pDialog.setMessage("Loading Info");
                         registerErrorMsg.setText(R.string.register_success);
 
-                        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                        UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
 
                         //Removes all the previous data in the SQlite database

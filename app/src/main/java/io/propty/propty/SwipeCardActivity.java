@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,8 +25,6 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 /**
  * Swipe Card Main Activity
@@ -184,7 +181,7 @@ public class SwipeCardActivity extends AppCompatActivity {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
                 } else if (id == R.id.nav_database) {
-                    Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
                     startActivity(database);
                 } else if (id == R.id.nav_chat) {
                     FragmentManager fragmentManager = getSupportFragmentManager();

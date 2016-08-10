@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
                 } else if (id == R.id.nav_database) {
-                    Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
                     startActivity(database);
                 } else if (id == R.id.nav_chat) {
 
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         btnDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
                 startActivity(database);
             }
         });

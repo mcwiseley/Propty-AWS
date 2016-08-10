@@ -21,7 +21,7 @@ public class RegisteredActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registered);
 
-        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+        UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
 
         HashMap<String, String> user = db.getUserDetails();
 
