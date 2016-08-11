@@ -126,9 +126,8 @@ public class SettingsActivity extends AppCompatActivity {
         int numBathrooms_temp = (int)(numBathrooms_val * 4);
         numBathrooms.setValue(numBathrooms_temp);
 
-        // TODO: Uncomment these lines, but make sure dollar sign is still present
-//        minPrice.setText(Integer.toString(minPrice_val));
-//        maxPrice.setText(Integer.toString(maxPrice_val));
+        minPrice.setText(Integer.toString(minPrice_val));
+        maxPrice.setText(Integer.toString(maxPrice_val));
 
 
         //Populate Spinner of possible square footage options from string array in strings.xml

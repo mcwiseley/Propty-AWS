@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,8 +47,6 @@ public class ChatFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-
-        setCancelable(true);
 
         //Load Shared preferences to get user's ID
         //TODO LOAD UID FROM SHAREDPREFS (THIS IS FUNCTIONAL ON OTHER BRANCHES)
@@ -124,8 +123,10 @@ public class ChatFragment extends DialogFragment {
 
             }
         });
+        setCancelable(true);
+        setStyle(STYLE_NO_FRAME, 0);
 
         return view;
-    }
+    }//END OF onCreateView()
 
-}
+}//END OF CHATFRAGMENT CLASS

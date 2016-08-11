@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 //import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -166,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     ChatFragment chatFragment = new ChatFragment();
                     chatFragment.show(fragmentManager, "Test");
+                    Toast.makeText(MainActivity.this, "" + chatFragment.isCancelable(), Toast.LENGTH_SHORT).show();
                 }
 
 
