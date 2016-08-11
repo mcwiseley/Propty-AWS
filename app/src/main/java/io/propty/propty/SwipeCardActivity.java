@@ -1,6 +1,7 @@
 package io.propty.propty;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,7 +46,14 @@ public class SwipeCardActivity extends AppCompatActivity {
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-    
+
+    private SharedPreferences prefs;
+    private boolean logged_in;
+    View header;
+    TextView textview1;
+    TextView textview2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +72,15 @@ public class SwipeCardActivity extends AppCompatActivity {
         left_drawer = (NavigationView) findViewById(R.id.nav_view_left);
         right_drawer = (NavigationView) findViewById(R.id.nav_view_right);
 
+        //Login testing stuff
+        header = left_drawer.getHeaderView(0);
+        textview1 = (TextView) header.findViewById(R.id.textview_1);
+        textview2 = (TextView) header.findViewById(R.id.textview_2);
+
+
+        //TESTING OUT LOGIN STUFF!!!
+        // Restore preferences
+        prefs = getSharedPreferences(MainActivity.PREFS_NAME, 0);
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
@@ -154,17 +171,17 @@ public class SwipeCardActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_login) {
-                    // Handle the camera action
                     Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(login);
+
                 } else if (id == R.id.nav_change_password) {
                     Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
                     startActivity(chgPass);
                 } else if (id == R.id.nav_logout) {
-//                    prefs.edit().putBoolean("logged_in", false).apply();
+                    prefs.edit().putBoolean("logged_in", false).apply();
                     UserFunctions logout = new UserFunctions();
                     logout.logoutUser(getApplicationContext());
-                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                    Intent login = new Intent(getApplicationContext(), MainActivity.class);
                     login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(login);
                     //commented out finish() due to improper UP and
@@ -356,6 +373,29 @@ public class SwipeCardActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.fragment_container, swipeCardFragment).commit();
 
         //END OF ONCREATE METHOD
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        logged_in = prefs.getBoolean("logged_in", false);
+
+        //Check for login or new user
+        if (logged_in) {
+            textview1.setText("Logged In");
+            textview2.setText("Via Facebook");
+            left_drawer.getMenu().clear();
+            left_drawer.inflateMenu(R.menu.menu_drawer_logout);
+
+        } else {
+
+            textview1.setText("Not logged in");
+            textview2.setText("Please login or create an account");
+            left_drawer.getMenu().clear();
+            left_drawer.inflateMenu(R.menu.menu_drawer_login);
+
+        }
     }
 
     //close drawers when back button is pressed

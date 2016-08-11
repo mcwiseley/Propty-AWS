@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 //import java.util.HashMap;
 
@@ -30,6 +31,15 @@ public class MainActivity extends AppCompatActivity {
     Button btnRealtor;
     Button btnDatabase;
     Resources res;
+
+    private SharedPreferences prefs;
+    View header;
+    NavigationView navDrawer;
+    private boolean new_user;
+    private boolean logged_in;
+    TextView textview1;
+    TextView textview2;
+
 
     /**
      * Called when the activity is first created.
@@ -62,16 +72,14 @@ public class MainActivity extends AppCompatActivity {
         btnDatabase = (Button) findViewById(R.id.btdatabase);
         res = getResources();
 
-        // Restore preferences
-        final SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
-        boolean new_user = prefs.getBoolean("new_user", true);
-        boolean logged_in = prefs.getBoolean("logged_in", false);
+        //Login testing stuff
+        navDrawer = (NavigationView)findViewById(R.id.main_nav_view);
+        header = navDrawer.getHeaderView(0);
+        textview1 = (TextView) header.findViewById(R.id.textview_1);
+        textview2 = (TextView) header.findViewById(R.id.textview_2);
 
-        if (new_user) {
-            prefs.edit().putBoolean("new_user", false).apply();
-        } else if (logged_in) {
-            startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
-        }
+        // Restore preferences
+        prefs = getSharedPreferences(PREFS_NAME, 0);
 
         /**
          * Change Password Activity Started
@@ -140,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 int id = item.getItemId();
 
                 if (id == R.id.nav_login) {
-                    // Handle the camera action
                     Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                     startActivity(login);
                 } else if (id == R.id.nav_change_password) {
@@ -150,9 +157,10 @@ public class MainActivity extends AppCompatActivity {
                     prefs.edit().putBoolean("logged_in", false).apply();
                     UserFunctions logout = new UserFunctions();
                     logout.logoutUser(getApplicationContext());
-                    Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-                    login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(login);
+                    textview1.setText("Not logged in");
+                    textview2.setText("Please login or create an account");
+                    navDrawer.getMenu().clear();
+                    navDrawer.inflateMenu(R.menu.menu_drawer_login);
                 } else if (id == R.id.nav_swipecard) {
                     Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
                     startActivity(swipecard);
@@ -188,11 +196,42 @@ public class MainActivity extends AppCompatActivity {
     } //END OF ONCREATE()
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        //Check for login or new user
+
+        new_user = prefs.getBoolean("new_user", true);
+
+        logged_in = prefs.getBoolean("logged_in", false);
+
+        if (new_user) {
+            prefs.edit().putBoolean("new_user", false).apply();
+        }
+
+        if (logged_in) {
+            textview1.setText("Logged In");
+            textview2.setText("Via Facebook");
+            navDrawer.getMenu().clear();
+            navDrawer.inflateMenu(R.menu.menu_drawer_logout);
+            startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
+
+
+        } else {
+
+            textview1.setText("Not logged in");
+            textview2.setText("Please login or create an account");
+            navDrawer.getMenu().clear();
+            navDrawer.inflateMenu(R.menu.menu_drawer_login);
+
+        }
+    }
+
+    /*    @Override
     protected void onStop(){
         super.onStop();
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, 0);
         prefs.edit().putBoolean("logged_in", false).apply();
-    }
+    }*/
 
     @Override
     public void onBackPressed() {
@@ -203,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
+
 
 
 }

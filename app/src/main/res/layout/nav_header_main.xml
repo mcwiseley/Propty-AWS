@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/nav_header_main"
               android:layout_width="match_parent"
               android:layout_height="160dp"
               android:background="@drawable/side_nav_bar"
@@ -23,14 +24,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
-        android:text="Not Logged In"
+        android:text="Not logged in"
         />
 
     <TextView
         android:id="@+id/textview_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please Login or Create an Account"
+        android:text="Please login or create an account"
         />
 
 </LinearLayout>
