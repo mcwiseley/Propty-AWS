@@ -161,10 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.nav_realtor_list) {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
-                } else if (id == R.id.nav_database) {
-                    Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
-                    startActivity(database);
-                } else if (id == R.id.nav_chat) {
+                }  else if (id == R.id.nav_chat) {
 
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     ChatFragment chatFragment = new ChatFragment();
