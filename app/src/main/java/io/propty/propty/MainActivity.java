@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                     FragmentManager fragmentManager = getSupportFragmentManager();
                     ChatFragment chatFragment = new ChatFragment();
                     chatFragment.show(fragmentManager, "Test");
-                    Toast.makeText(MainActivity.this, "" + chatFragment.isCancelable(), Toast.LENGTH_SHORT).show();
                 }
 
 

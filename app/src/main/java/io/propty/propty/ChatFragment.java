@@ -40,6 +40,7 @@ public class ChatFragment extends DialogFragment {
 
     public ChatFragment() {
         // Required empty public constructor
+        setStyle(STYLE_NO_TITLE, 0);
     }
 
     @Override
@@ -123,8 +124,8 @@ public class ChatFragment extends DialogFragment {
 
             }
         });
+
         setCancelable(true);
-        setStyle(STYLE_NO_FRAME, 0);
 
         return view;
     }//END OF onCreateView()
