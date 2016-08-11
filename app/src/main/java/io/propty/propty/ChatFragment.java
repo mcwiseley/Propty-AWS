@@ -28,7 +28,6 @@ public class ChatFragment extends DialogFragment {
 
     String totalMessage;
 
-    //TODO: Get rid of remnants of ScrollView, clean up code in Fragments and Adapter, and get View to stay anchored on bottom when new texts are added!
     RecyclerView chatRecyclerView;
     LinearLayoutManager mLayoutManager;
     ChatAdapter mAdapter;
@@ -47,6 +46,8 @@ public class ChatFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
+
+        setCancelable(true);
 
         //Load Shared preferences to get user's ID
         //TODO LOAD UID FROM SHAREDPREFS (THIS IS FUNCTIONAL ON OTHER BRANCHES)
