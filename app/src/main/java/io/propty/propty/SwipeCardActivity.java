@@ -219,9 +219,11 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         //Load shared preferences to fill in settings values
         SharedPreferences settings = getSharedPreferences(SettingsActivity.PREFS, 0);
+        //Create editor for submitting settings
+        final SharedPreferences.Editor editor = settings.edit();
 
         //Set up the Bedroom Number Picker with minimum and maximum values
-        NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
+        final NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
         mBedroomPicker.setMaxValue(10);
         mBedroomPicker.setMinValue(1);
         mBedroomPicker.setWrapSelectorWheel(false);
@@ -229,7 +231,7 @@ public class SwipeCardActivity extends AppCompatActivity {
         mBedroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBedrooms_string, 1));
 
         // /Set up Bathroom number picker with minimum and maximum values
-        NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
+        final NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
         mBathroomPicker.setMaxValue(10);
         mBathroomPicker.setMinValue(1);
         mBathroomPicker.setWrapSelectorWheel(false);
@@ -237,7 +239,7 @@ public class SwipeCardActivity extends AppCompatActivity {
         mBathroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBathrooms_string, 1));
 
         //set up adapter for drop down menu of home types
-        Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
+        final Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
         //Create an ArrayAdapter using the home_array
         ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.structure_array,
                 android.R.layout.simple_spinner_item);
@@ -247,7 +249,7 @@ public class SwipeCardActivity extends AppCompatActivity {
         typeSpinner.setSelection(settings.getInt(SettingsActivity.structure_string, 0));
 
         //set up adapter for drop down menu of square feet
-        Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
+        final Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
         //Create an ArrayAdapter using the home_array
         ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.squareFootage_array,
                 android.R.layout.simple_spinner_item);
@@ -259,6 +261,10 @@ public class SwipeCardActivity extends AppCompatActivity {
         //initialize the radio buttons
         mCurrentZipButton = (RadioButton) findViewById(R.id.current_zip_radio);
         mOtherZipButton = (RadioButton) findViewById(R.id.other_zip_radio);
+
+        //Load checked status from settings
+        mOtherZipButton.setChecked(settings.getBoolean(SettingsActivity.radioZip_string, true));
+        mCurrentZipButton.setChecked(settings.getBoolean(SettingsActivity.radioCurrent_string, false));
 
         //create custom listener for when radio buttons are clicked
         mCurrentZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -287,8 +293,7 @@ public class SwipeCardActivity extends AppCompatActivity {
                 }
             }
         });
-        mOtherZipButton.setChecked(settings.getBoolean(SettingsActivity.radioZip_string, true));
-        mCurrentZipButton.setChecked(settings.getBoolean(SettingsActivity.radioCurrent_string, false));
+
 
         //Set up the EditTexts
         mEditMiles = (EditText) findViewById(R.id.edit_miles);
@@ -298,7 +303,7 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         //Set up the price slider and TextView for Minimum Price
         mMinTextView = (TextView) findViewById(R.id.min_price);
-        SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
+        final SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
         mMinSeekBar.setMax(10);
         //listener for price slider
         mMinSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -328,7 +333,7 @@ public class SwipeCardActivity extends AppCompatActivity {
 
         //Set up price slider and TextView for Maximum Price
         mMaxTextView = (TextView) findViewById(R.id.max_price);
-        SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
+        final SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
         mMaxSeekBar.setMax(10);
         //listener for price slider
         mMaxSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -362,7 +367,20 @@ public class SwipeCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //send variables to proper areas!!!
-                //TODO: get all variables and apply back to swipe card activity
+
+                editor.putFloat(SettingsActivity.numBedrooms_string, mBedroomPicker.getValue());
+                editor.putFloat(SettingsActivity.numBathrooms_string, mBathroomPicker.getValue());
+                editor.putInt(SettingsActivity.minPrice_string, mMinSeekBar.getProgress() * 1000);
+                editor.putInt(SettingsActivity.maxPrice_string, mMaxSeekBar.getProgress() * 1000);
+                editor.putInt(SettingsActivity.squareFootage_string, sqFtSpinner.getSelectedItemPosition());
+                editor.putInt(SettingsActivity.structure_string, typeSpinner.getSelectedItemPosition());
+                editor.putInt(SettingsActivity.within_string, Integer.parseInt(mEditMiles.getText().toString()));
+                editor.putBoolean(SettingsActivity.radioCurrent_string, mCurrentZipButton.isChecked());
+                editor.putBoolean(SettingsActivity.radioZip_string, mOtherZipButton.isChecked());
+                editor.putInt(SettingsActivity.zip_string, Integer.parseInt(mEditZip.getText().toString()));
+
+                editor.apply();
+
                 Toast.makeText(getApplicationContext(), "Preferences have been updated",
                         Toast.LENGTH_SHORT).show();
 
