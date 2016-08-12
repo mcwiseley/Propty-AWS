@@ -328,16 +328,19 @@ public class SettingsActivity extends AppCompatActivity {
 
         editor.apply();
 
-        intent.putExtra(numBedrooms_string, numBedrooms_val);
-        intent.putExtra(numBathrooms_string, numBathrooms_val);
-        intent.putExtra(minPrice_string, minPrice_val);
-        intent.putExtra(maxPrice_string, maxPrice_val);
-        intent.putExtra(squareFootage_string, squareFootage_val);
-        intent.putExtra(structure_string, structure_val);
-        intent.putExtra(within_string, within_val);
-        intent.putExtra(zip_string, zip_val);
-        intent.putExtra(keywords_string, keywords_val);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
+
+
+//        intent.putExtra(numBedrooms_string, numBedrooms_val);
+//        intent.putExtra(numBathrooms_string, numBathrooms_val);
+//        intent.putExtra(minPrice_string, minPrice_val);
+//        intent.putExtra(maxPrice_string, maxPrice_val);
+//        intent.putExtra(squareFootage_string, squareFootage_val);
+//        intent.putExtra(structure_string, structure_val);
+//        intent.putExtra(within_string, within_val);
+//        intent.putExtra(zip_string, zip_val);
+//        intent.putExtra(keywords_string, keywords_val);
+//        startActivity(intent);
 
     }
 
