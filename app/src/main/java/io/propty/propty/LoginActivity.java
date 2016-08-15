@@ -17,28 +17,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private LoginButton fbLoginBtn;
     private Button btnLogin;
-    private Button btnCancel;
-    private Button btnRegister;
+    //private Button btnCancel;
+    //private Button btnRegister;
     private Button btnPassReset;
-    private Button btnNext;
+    //private Button btnNext;
     private EditText inputEmail;
     private EditText inputPassword;
     private TextView loginResult;
@@ -73,20 +76,20 @@ public class LoginActivity extends AppCompatActivity {
 
         fbLoginBtn = (LoginButton) findViewById(R.id.fb_login_button);
         btnLogin = (Button) findViewById(R.id.login);
-        btnCancel = (Button) findViewById(R.id.cancel);
-        btnRegister = (Button) findViewById(R.id.registerbtn);
+        //btnCancel = (Button) findViewById(R.id.cancel);
+        //btnRegister = (Button) findViewById(R.id.registerbtn);
         btnPassReset = (Button) findViewById(R.id.passres);
-        btnNext = (Button) findViewById(R.id.nextBtn);
+        //btnNext = (Button) findViewById(R.id.nextBtn);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.pword);
         loginResult = (TextView) findViewById(R.id.loginResult);
         fbLoginResult = (TextView) findViewById(R.id.fbLoginResult);
 
-        if (prefs.getBoolean("logged_in", false)) {
-            btnNext.setVisibility(View.VISIBLE);
-        } else {
-            btnNext.setVisibility(View.GONE);
-        }
+//        if (prefs.getBoolean("logged_in", false)) {
+//            btnNext.setVisibility(View.VISIBLE);
+//        } else {
+//            btnNext.setVisibility(View.GONE);
+//        }
 
         fbLoginBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             Resources res = getResources();
@@ -97,8 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                 String token = loginResult.getAccessToken().getToken();
                 String text = String.format(res.getString(R.string.facebook_login_success), userId, token);
                 fbLoginResult.setText(text);
-                btnNext.setVisibility(View.VISIBLE);
+                //btnNext.setVisibility(View.VISIBLE);
                 prefs.edit().putBoolean("logged_in", true).apply();
+                //AUtomatically start swipecard activity
+                startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
             }
 
             @Override
@@ -114,15 +119,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                prefs.edit().putBoolean("logged_in", false).apply();
-                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
-                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(myIntent);
-            }
-        });
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                prefs.edit().putBoolean("logged_in", false).apply();
+//                Intent myIntent = new Intent(view.getContext(), MainActivity.class);
+//                myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(myIntent);
+//            }
+//        });
 
         btnPassReset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,16 +140,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
-                startActivityForResult(myIntent, 0);
-                //commented out finish() due to improper UP and
-                //BACK button navigation
-//                finish();
-            }
-        });
+//        btnRegister.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
+//                startActivityForResult(myIntent, 0);
+//                //commented out finish() due to improper UP and
+//                //BACK button navigation
+////                finish();
+//            }
+//        });
 
         /**
          * Login button click event
@@ -157,8 +162,10 @@ public class LoginActivity extends AppCompatActivity {
                     // TODO: log the user in
                     Toast.makeText(getApplicationContext(),
                             "Logging in...", Toast.LENGTH_SHORT).show();
-                    btnNext.setVisibility(View.VISIBLE);
+//                    btnNext.setVisibility(View.VISIBLE);
                     prefs.edit().putBoolean("logged_in", true).apply();
+                    //Automatically start swipecard activity
+                    startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
                 }
                 else if ((!inputEmail.getText().toString().isEmpty())) {
                     Toast.makeText(getApplicationContext(),
@@ -175,12 +182,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
-            }
-        });
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getApplicationContext(), SwipeCardActivity.class));
+//            }
+//        });
     }
 
     @Override

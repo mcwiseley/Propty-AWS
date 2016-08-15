@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
@@ -46,13 +47,13 @@ public class SwipeCardActivity extends AppCompatActivity {
     private TextView mMaxTextView;
     private RadioButton mCurrentZipButton;
     private RadioButton mOtherZipButton;
-
     private SharedPreferences prefs;
     private boolean logged_in;
     View header;
     TextView textview1;
     TextView textview2;
-
+    private EditText mEditMiles;
+    private EditText mEditZip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,38 +235,57 @@ public class SwipeCardActivity extends AppCompatActivity {
             }
         });
 
+        //Load shared preferences to fill in settings values
+        SharedPreferences settings = getSharedPreferences(SettingsActivity.PREFS, 0);
+        //Create editor for submitting settings
+        final SharedPreferences.Editor editor = settings.edit();
+
         //Set up the Bedroom Number Picker with minimum and maximum values
-        NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
+        final NumberPicker mBedroomPicker = (NumberPicker) findViewById(R.id.num_bedroom);
         mBedroomPicker.setMaxValue(10);
         mBedroomPicker.setMinValue(1);
         mBedroomPicker.setWrapSelectorWheel(false);
-        //Set up Bathroom number picker with minimum and maximum values
-        NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
-        mBathroomPicker.setMaxValue(10);
-        mBathroomPicker.setMinValue(1);
+
+        mBedroomPicker.setValue(settings.getInt(SettingsActivity.numBedrooms_string, 1));
+
+        // /Set up Bathroom number picker with minimum and maximum values
+        final NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
+//        mBathroomPicker.setMaxValue(10);
+//        mBathroomPicker.setMinValue(1);
+        SettingsActivity.populateNumberPicker(mBathroomPicker, 1, 5, 4);
         mBathroomPicker.setWrapSelectorWheel(false);
 
+        int numBathrooms_temp = (int)(settings.getFloat(SettingsActivity.numBathrooms_string, 1) * 4);
+        mBathroomPicker.setValue(numBathrooms_temp);
+
         //set up adapter for drop down menu of home types
-        Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
+        final Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
         //Create an ArrayAdapter using the home_array
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.home_array,
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(this, R.array.structure_array,
                 android.R.layout.simple_spinner_item);
         //Specify layout and apply adapter
         typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         typeSpinner.setAdapter(typeAdapter);
+        typeSpinner.setSelection(settings.getInt(SettingsActivity.structure_string, 0));
 
         //set up adapter for drop down menu of square feet
-        Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
+        final Spinner sqFtSpinner = (Spinner) findViewById(R.id.sq_ft_drop);
         //Create an ArrayAdapter using the home_array
-        ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.sq_ft_array,
+        ArrayAdapter<CharSequence> sqFtAdapter = ArrayAdapter.createFromResource(this, R.array.squareFootage_array,
                 android.R.layout.simple_spinner_item);
         //Specify layout and apply adapter
         sqFtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sqFtSpinner.setAdapter(sqFtAdapter);
+        sqFtSpinner.setSelection(settings.getInt(SettingsActivity.squareFootage_string, 0));
 
         //initialize the radio buttons
         mCurrentZipButton = (RadioButton) findViewById(R.id.current_zip_radio);
         mOtherZipButton = (RadioButton) findViewById(R.id.other_zip_radio);
+
+        //Load checked status from settings
+        mOtherZipButton.setChecked(settings.getBoolean(SettingsActivity.radioZip_string, true));
+        mCurrentZipButton.setChecked(settings.getBoolean(SettingsActivity.radioCurrent_string, false));
+
         //create custom listener for when radio buttons are clicked
         mCurrentZipButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -294,12 +314,16 @@ public class SwipeCardActivity extends AppCompatActivity {
             }
         });
 
+
         //Set up the EditTexts
-        //TODO: Get variables of EditTexts!!!
+        mEditMiles = (EditText) findViewById(R.id.edit_miles);
+        mEditMiles.setText(Integer.toString(settings.getInt(SettingsActivity.within_string, 0)));
+        mEditZip = (EditText) findViewById(R.id.edit_zip);
+        mEditZip.setText(Integer.toString(settings.getInt(SettingsActivity.zip_string, 0)));
 
         //Set up the price slider and TextView for Minimum Price
         mMinTextView = (TextView) findViewById(R.id.min_price);
-        SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
+        final SeekBar mMinSeekBar = (SeekBar) findViewById(R.id.min_seekbar);
         mMinSeekBar.setMax(10);
         //listener for price slider
         mMinSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -323,10 +347,13 @@ public class SwipeCardActivity extends AppCompatActivity {
 
             }
         });
+        mMinSeekBar.setProgress(settings.getInt(SettingsActivity.minPrice_string, 0) / 1000);
+        mMinTextView.setText("Min Price: $" + settings.getInt(SettingsActivity.minPrice_string, 0));
+
 
         //Set up price slider and TextView for Maximum Price
         mMaxTextView = (TextView) findViewById(R.id.max_price);
-        SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
+        final SeekBar mMaxSeekBar = (SeekBar) findViewById(R.id.max_seekbar);
         mMaxSeekBar.setMax(10);
         //listener for price slider
         mMaxSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -351,6 +378,8 @@ public class SwipeCardActivity extends AppCompatActivity {
 
             }
         });
+        mMaxSeekBar.setProgress(settings.getInt(SettingsActivity.maxPrice_string, 0) / 100000);
+        mMaxTextView.setText("Max Price: $" + settings.getInt(SettingsActivity.maxPrice_string, 0));
 
         //Set up the Update button and apply listener to close drawer
         Button mUpdateButton = (Button) findViewById(R.id.update_button);
@@ -358,7 +387,20 @@ public class SwipeCardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //send variables to proper areas!!!
-                //TODO: get all variables and apply back to swipe card activity
+
+                editor.putInt(SettingsActivity.numBedrooms_string, mBedroomPicker.getValue());
+                editor.putFloat(SettingsActivity.numBathrooms_string, (float)(mBathroomPicker.getValue()) / 4);
+                editor.putInt(SettingsActivity.minPrice_string, mMinSeekBar.getProgress() * 1000);
+                editor.putInt(SettingsActivity.maxPrice_string, mMaxSeekBar.getProgress() * 100000);
+                editor.putInt(SettingsActivity.squareFootage_string, sqFtSpinner.getSelectedItemPosition());
+                editor.putInt(SettingsActivity.structure_string, typeSpinner.getSelectedItemPosition());
+                editor.putInt(SettingsActivity.within_string, Integer.parseInt(mEditMiles.getText().toString()));
+                editor.putBoolean(SettingsActivity.radioCurrent_string, mCurrentZipButton.isChecked());
+                editor.putBoolean(SettingsActivity.radioZip_string, mOtherZipButton.isChecked());
+                editor.putInt(SettingsActivity.zip_string, Integer.parseInt(mEditZip.getText().toString()));
+
+                editor.apply();
+
                 Toast.makeText(getApplicationContext(), "Preferences have been updated",
                         Toast.LENGTH_SHORT).show();
 

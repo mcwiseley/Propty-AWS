@@ -21,15 +21,18 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    //MUCH OF THIS IS COMMENTED OUT FOR PROTOTYPE PURPOSES
+
     public static final String PREFS_NAME = "MyPrefsFile";
 
-    Button btnChangePass;
+    //Button btnChangePass;
     Button btnLogout;
     Button btnLogin;
-    Button btnSwipeCard;
-    Button btnSettings;
-    Button btnRealtor;
-    Button btnDatabase;
+    Button btnRegister;
+    //Button btnSwipeCard;
+    //Button btnSettings;
+    //Button btnRealtor;
+    //Button btnDatabase;
     Resources res;
 
     private SharedPreferences prefs;
@@ -63,13 +66,15 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        btnChangePass = (Button) findViewById(R.id.btchangepass);
+
+        //btnChangePass = (Button) findViewById(R.id.btchangepass);
         btnLogout = (Button) findViewById(R.id.btlogout);
         btnLogin = (Button) findViewById(R.id.btlogin);
-        btnSwipeCard = (Button) findViewById(R.id.btswipecard);
-        btnSettings = (Button) findViewById(R.id.settings);
-        btnRealtor = (Button) findViewById(R.id.btrealtor);
-        btnDatabase = (Button) findViewById(R.id.btdatabase);
+        btnRegister = (Button) findViewById(R.id.registerbtn);
+        //btnSwipeCard = (Button) findViewById(R.id.btswipecard);
+        //btnSettings = (Button) findViewById(R.id.settings);
+        //btnRealtor = (Button) findViewById(R.id.btrealtor);
+        //btnDatabase = (Button) findViewById(R.id.btdatabase);
         res = getResources();
 
         //Login testing stuff
@@ -81,16 +86,28 @@ public class MainActivity extends AppCompatActivity {
         // Restore preferences
         prefs = getSharedPreferences(PREFS_NAME, 0);
 
+        //Set Visibility of buttons based on log-in boolean
+
+        if (prefs.getBoolean("logged_in", false)) {
+            btnLogout.setVisibility(View.VISIBLE);
+            btnLogin.setVisibility(View.GONE);
+            btnRegister.setVisibility(View.GONE);
+        } else {
+            btnLogout.setVisibility(View.GONE);
+            btnLogin.setVisibility(View.VISIBLE);
+            btnRegister.setVisibility(View.VISIBLE);
+        }
+
         /**
          * Change Password Activity Started
          **/
-        btnChangePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
-                startActivity(chgPass);
-            }
-        });
+//        btnChangePass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent chgPass = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+//                startActivity(chgPass);
+//            }
+//        });
 
         /**
          *Logout from the User Panel which clears the data in Sqlite database
@@ -115,29 +132,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnSwipeCard.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
-                startActivity(swipecard);
+                Intent myIntent = new Intent(view.getContext(), RegisterActivity.class);
+                startActivityForResult(myIntent, 0);
+                //commented out finish() due to improper UP and
+                //BACK button navigation
+//                finish();
             }
         });
 
-        btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
-                startActivity(settings);
-            }
-        });
-
-        btnRealtor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
-                startActivity(realtor);
-            }
-        });
+//        btnSwipeCard.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent swipecard = new Intent(getApplicationContext(), SwipeCardActivity.class);
+//                startActivity(swipecard);
+//            }
+//        });
+//
+//        btnSettings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent settings = new Intent(getApplicationContext(), SettingsActivity.class);
+//                startActivity(settings);
+//            }
+//        });
+//
+//        btnRealtor.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
+//                startActivity(realtor);
+//            }
+//        });
 
         //Set up NavigationView with listener for clicking items in drawer
         NavigationView navigationView = (NavigationView) findViewById(R.id.main_nav_view);
@@ -185,13 +213,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnDatabase.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
-                startActivity(database);
-            }
-        });
+//        btnDatabase.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
+//                startActivity(database);
+//            }
+//        });
 
     } //END OF ONCREATE()
 

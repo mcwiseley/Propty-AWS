@@ -213,83 +213,15 @@
 
 
         <LinearLayout
-            android:id="@+id/settings_linear5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_linear4"
-            android:orientation="horizontal"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="28dp"
-            android:weightSum="1"
-            >
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                >
-
-<!--                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pool"
-                    android:id="@+id/pool_label"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    />-->
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pool"
-                    android:textSize="16sp"
-                    android:id="@+id/pool"
-                    />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                >
-
-<!--                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Garage"
-                    android:id="@+id/garage_label"
-                    android:textSize="16sp"
-                    android:textColor="#000000"
-                    />-->
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Garage"
-                    android:textSize="16sp"
-                    android:id="@+id/garage"
-                    />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
             android:id="@+id/settings_linear6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/settings_linear5"
             android:orientation="horizontal"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginTop="28dp"
             android:weightSum="1"
-            >
+            android:layout_below="@+id/settings_linear4">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -337,23 +269,23 @@
                 android:layout_weight="0.30"
                 >
 
-<!--                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                            android:id="@+id/within_group"
-                            android:layout_width="190dp"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_below="@id/within">-->
+                <!--                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                                            android:id="@+id/within_group"
+                                            android:layout_width="190dp"
+                                            android:layout_marginStart="10dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:layout_below="@id/within">-->
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Current Location"
-                        android:id="@+id/radioCurrentLocation"
-                        android:textSize="15sp"
-                        android:onClick="onRadioButtonClicked"
-                        />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Current Location"
+                    android:id="@+id/radioCurrentLocation"
+                    android:textSize="15sp"
+                    android:onClick="onRadioButtonClicked"
+                    />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -386,13 +318,42 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/settings_linear8"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_below="@+id/settings_linear6">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Keywords: "
+                android:id="@+id/keywords_label"
+                android:textSize="16sp"
+                android:textColor="#000000"
+
+                />
+
+            <EditText
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:id="@+id/keywords"
+                />
+
+        </LinearLayout>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="Submit"
             android:id="@+id/submit"
             android:layout_marginTop="28dp"
-            android:layout_below="@+id/settings_linear6"
+            android:layout_below="@+id/settings_linear8"
             android:layout_centerHorizontal="true"
             android:onClick="submitSettings"/>
 
