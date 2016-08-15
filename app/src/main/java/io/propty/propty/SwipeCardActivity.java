@@ -228,15 +228,17 @@ public class SwipeCardActivity extends AppCompatActivity {
         mBedroomPicker.setMinValue(1);
         mBedroomPicker.setWrapSelectorWheel(false);
 
-        mBedroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBedrooms_string, 1));
+        mBedroomPicker.setValue(settings.getInt(SettingsActivity.numBedrooms_string, 1));
 
         // /Set up Bathroom number picker with minimum and maximum values
         final NumberPicker mBathroomPicker = (NumberPicker) findViewById(R.id.num_bathroom);
-        mBathroomPicker.setMaxValue(10);
-        mBathroomPicker.setMinValue(1);
+//        mBathroomPicker.setMaxValue(10);
+//        mBathroomPicker.setMinValue(1);
+        SettingsActivity.populateNumberPicker(mBathroomPicker, 1, 5, 4);
         mBathroomPicker.setWrapSelectorWheel(false);
 
-        mBathroomPicker.setValue((int)settings.getFloat(SettingsActivity.numBathrooms_string, 1));
+        int numBathrooms_temp = (int)(settings.getFloat(SettingsActivity.numBathrooms_string, 1) * 4);
+        mBathroomPicker.setValue(numBathrooms_temp);
 
         //set up adapter for drop down menu of home types
         final Spinner typeSpinner = (Spinner) findViewById(R.id.type_drop);
@@ -368,10 +370,10 @@ public class SwipeCardActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //send variables to proper areas!!!
 
-                editor.putFloat(SettingsActivity.numBedrooms_string, mBedroomPicker.getValue());
-                editor.putFloat(SettingsActivity.numBathrooms_string, mBathroomPicker.getValue());
+                editor.putInt(SettingsActivity.numBedrooms_string, mBedroomPicker.getValue());
+                editor.putFloat(SettingsActivity.numBathrooms_string, (float)(mBathroomPicker.getValue()) / 4);
                 editor.putInt(SettingsActivity.minPrice_string, mMinSeekBar.getProgress() * 1000);
-                editor.putInt(SettingsActivity.maxPrice_string, mMaxSeekBar.getProgress() * 1000);
+                editor.putInt(SettingsActivity.maxPrice_string, mMaxSeekBar.getProgress() * 100000);
                 editor.putInt(SettingsActivity.squareFootage_string, sqFtSpinner.getSelectedItemPosition());
                 editor.putInt(SettingsActivity.structure_string, typeSpinner.getSelectedItemPosition());
                 editor.putInt(SettingsActivity.within_string, Integer.parseInt(mEditMiles.getText().toString()));

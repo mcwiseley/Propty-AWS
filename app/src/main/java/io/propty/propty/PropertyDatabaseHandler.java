@@ -98,7 +98,7 @@ public class PropertyDatabaseHandler extends SQLiteOpenHelper {
         final  String zip_string = EXTRA + "zip";
         SharedPreferences settings = context.getSharedPreferences(PREFS, 0);
 
-        float numBedrooms_val = settings.getFloat(numBedrooms_string, 1);
+        int numBedrooms_val = settings.getInt(numBedrooms_string, 1);
         float numBathrooms_val = settings.getFloat(numBathrooms_string, 1);
         int minPrice_val = settings.getInt(minPrice_string, 0);
         int maxPrice_val = settings.getInt(maxPrice_string, 0);

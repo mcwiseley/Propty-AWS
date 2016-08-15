@@ -42,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     private EditText keywords;
     private Button submit;
 
-    float numBedrooms_val;
+    int numBedrooms_val;
     float numBathrooms_val;
     int minPrice_val;
     int maxPrice_val;
@@ -101,9 +101,10 @@ public class SettingsActivity extends AppCompatActivity {
         //but it is not functioning yet.  We do put the current UID in shared prefs in the
         //register/login activities so we can look up the proper settings here.
         //WE ARE NOT USING THIS IN PROTOTYPE.  Mike doesn't want any changes to the UserDatabaseHandler
-        //so we can't yet store or load user search preferences from it
-
+        //so we can't yet store or load user search preferences from it.  Also, the UserSettings
+        //class is not on prototype.
         /*
+
         UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
         UserSettings userSettings = db.getUserSettings(uid);
 
@@ -120,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         keywords_val = userSettings.getKeywords();
         */
 
-        numBedrooms_val = settings.getFloat(numBedrooms_string, 1);
+        numBedrooms_val = settings.getInt(numBedrooms_string, 1);
         numBathrooms_val = settings.getFloat(numBathrooms_string, 1);
         minPrice_val = settings.getInt(minPrice_string, 0);
         maxPrice_val = settings.getInt(maxPrice_string, 0);
@@ -136,12 +137,12 @@ public class SettingsActivity extends AppCompatActivity {
         //Populate Number Pickers for number of bathrooms and bedrooms, set loaded preference
         //values for both as well as min/max price
 
-        populateNumberPicker(numBedrooms, 1, 10, 2);
+        numBedrooms.setMinValue(1);
+        numBedrooms.setMaxValue(10);
         populateNumberPicker(numBathrooms, 1, 5, 4);
         numBedrooms.setWrapSelectorWheel(false);
         numBathrooms.setWrapSelectorWheel(false);
-        int numBedrooms_temp = (int)(numBedrooms_val * 2);
-        numBedrooms.setValue(numBedrooms_temp);
+        numBedrooms.setValue(numBedrooms_val);
         int numBathrooms_temp = (int)(numBathrooms_val * 4);
         numBathrooms.setValue(numBathrooms_temp);
 
@@ -178,7 +179,7 @@ public class SettingsActivity extends AppCompatActivity {
     //Method to populate a number picker with fractional values.  Takes a NumberPicker, minimum
     //value, maximum value, and divisor as argument.  For instance, (NumberPicker, 1, 2, 4) will
     //return a NumberPicker with the values 1, 1.25, 1.5, 1.75, and 2.
-    protected void populateNumberPicker(NumberPicker num, int min, int max, int divisor){
+    public static void populateNumberPicker(NumberPicker num, int min, int max, int divisor){
         num.setMinValue(min * divisor);
         num.setMaxValue(max * divisor);
         String[] fractionRooms = new String[num.getMaxValue() - num.getMinValue() + 1];
@@ -278,7 +279,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SettingsResultsActivity.class);
 
-        numBedrooms_val = (float)(numBedrooms.getValue()) / 2;
+        numBedrooms_val = numBedrooms.getValue();
         numBathrooms_val = (float)(numBathrooms.getValue()) / 4;
         minPrice_val = Integer.parseInt(minPrice.getText().toString());
         maxPrice_val = Integer.parseInt(maxPrice.getText().toString());
@@ -314,7 +315,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         SharedPreferences settings = getSharedPreferences(PREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putFloat(numBedrooms_string, numBedrooms_val);
+        editor.putInt(numBedrooms_string, numBedrooms_val);
         editor.putFloat(numBathrooms_string, numBathrooms_val);
         editor.putInt(minPrice_string, minPrice_val);
         editor.putInt(maxPrice_string, maxPrice_val);
