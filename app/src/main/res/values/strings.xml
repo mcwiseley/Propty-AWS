@@ -117,11 +117,9 @@
     <string name="num_bedroom">Bedrooms:</string>
     <string name="num_bathroom">Bathrooms:</string>
     <string name="within_text">Within </string>
-    <string name="miles_hint">      </string>
     <string name="miles_of"> miles of </string>
     <string name="current_location">Current location</string>
-    <string name="other_location">Other zip code: </string>
-    <string name="zip_hint">      </string>
+    <string name="zip_hint">ZIP code</string>
     <string-array name="home_array">
         <item>House</item>
         <item>Condo</item>

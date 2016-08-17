@@ -255,8 +255,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:ems="3"
                 android:maxLength="4"
-                android:hint="@string/miles_hint"
 
                 />
 
@@ -295,7 +295,6 @@
                     android:id="@+id/other_zip_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/other_location"
                     />
 
 

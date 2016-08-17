@@ -172,7 +172,7 @@ public class SettingsActivity extends AppCompatActivity {
         radioCurrentLocation.setChecked(radioCurrent_val);
         radioZip.setChecked(radioZip_val);
         if(radioZip_val)
-            zip.setText(Integer.toString(zip_val));
+            zip.setText(zip_val>0 ? Integer.toString(zip_val) : "");
         keywords.setText(keywords_val);
     }
 
@@ -199,7 +199,7 @@ public class SettingsActivity extends AppCompatActivity {
                     //uncheck radioZip button
                     radioZip.setChecked(false);
                 // set zip code variable to current location zip.  Using 98765 as a placeholder
-                zip_val = 98765;
+                zip_val = 0;
                 break;
             case R.id.radioZip:
                 if (checked)
@@ -208,7 +208,7 @@ public class SettingsActivity extends AppCompatActivity {
                 // set zip code variable to whatever is in the zip field
                 // needs checks for empty field or illegitimate zip code.  dummy check below
                 if(zip.getText().length()==0){
-                    zip_val = 00000;
+                    zip_val = 0;
                     break;
                 }
                 zip_val = Integer.parseInt(zip.getText().toString());
@@ -296,7 +296,7 @@ public class SettingsActivity extends AppCompatActivity {
         else {
             radioZip_val = false;
             radioCurrent_val = true;
-            zip_val = 98765;
+            zip_val = 0;
         }
         keywords_val = keywords.getText().toString();
 

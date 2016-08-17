@@ -319,7 +319,8 @@ public class SwipeCardActivity extends AppCompatActivity {
         mEditMiles = (EditText) findViewById(R.id.edit_miles);
         mEditMiles.setText(Integer.toString(settings.getInt(SettingsActivity.within_string, 0)));
         mEditZip = (EditText) findViewById(R.id.edit_zip);
-        mEditZip.setText(Integer.toString(settings.getInt(SettingsActivity.zip_string, 0)));
+        int zip = settings.getInt(SettingsActivity.zip_string, 0);
+        mEditZip.setText(zip>0 ? Integer.toString(zip) : "");
 
         //Set up the price slider and TextView for Minimum Price
         mMinTextView = (TextView) findViewById(R.id.min_price);
@@ -397,7 +398,10 @@ public class SwipeCardActivity extends AppCompatActivity {
                 editor.putInt(SettingsActivity.within_string, Integer.parseInt(mEditMiles.getText().toString()));
                 editor.putBoolean(SettingsActivity.radioCurrent_string, mCurrentZipButton.isChecked());
                 editor.putBoolean(SettingsActivity.radioZip_string, mOtherZipButton.isChecked());
-                editor.putInt(SettingsActivity.zip_string, Integer.parseInt(mEditZip.getText().toString()));
+                if (mEditZip.getText().toString().isEmpty())
+                    editor.putInt(SettingsActivity.zip_string, 0);
+                else
+                    editor.putInt(SettingsActivity.zip_string, Integer.parseInt(mEditZip.getText().toString()));
 
                 editor.apply();
 
