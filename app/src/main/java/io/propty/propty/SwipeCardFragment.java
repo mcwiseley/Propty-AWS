@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+//import com.amazonaws.services.s3.AmazonS3;
+//import com.amazonaws.services.s3.model.GetObjectRequest;
+//import com.amazonaws.services.s3.model.S3Object;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.io.BufferedReader;
@@ -192,32 +192,32 @@ public class SwipeCardFragment extends Fragment {
      * @param bucketName The name of the S3 bucket
      * @param key The object key
      */
-    protected void pullDataFromBucket(AmazonS3 s3, String bucketName, String key) {
-        String key_0;
-        int cardsInStack = sc.size();
-        while (cardsInStack < MAX_CARDS_IN_STACK) {
-            if (idx < 10) {
-                key_0 = key + "0" + Integer.toString(idx) + ".txt";
-            }
-            else {
-                key_0 = key + Integer.toString(idx) + ".txt";
-            }
-            idx++;
-            try {
-                S3Object object = s3.getObject(new GetObjectRequest(bucketName, key_0));
-                InputStream objectData = object.getObjectContent();
-                try {
-                    sc.add(generateCardFromData(objectData));
-                } finally {
-                    try {
-                        objectData.close();
-                    } catch (Throwable ignore) {}
-                }
-            } catch (IOException e) { e.printStackTrace(); }
-            cardsInStack = sc.size();
-        }
-        updateCardArray(sc.size());
-    }
+//    protected void pullDataFromBucket(AmazonS3 s3, String bucketName, String key) {
+//        String key_0;
+//        int cardsInStack = sc.size();
+//        while (cardsInStack < MAX_CARDS_IN_STACK) {
+//            if (idx < 10) {
+//                key_0 = key + "0" + Integer.toString(idx) + ".txt";
+//            }
+//            else {
+//                key_0 = key + Integer.toString(idx) + ".txt";
+//            }
+//            idx++;
+//            try {
+//                S3Object object = s3.getObject(new GetObjectRequest(bucketName, key_0));
+//                InputStream objectData = object.getObjectContent();
+//                try {
+//                    sc.add(generateCardFromData(objectData));
+//                } finally {
+//                    try {
+//                        objectData.close();
+//                    } catch (Throwable ignore) {}
+//                }
+//            } catch (IOException e) { e.printStackTrace(); }
+//            cardsInStack = sc.size();
+//        }
+//        updateCardArray(sc.size());
+//    }
 
     /**
      * Parses the provided S3 bucket object data and generates a single Property object

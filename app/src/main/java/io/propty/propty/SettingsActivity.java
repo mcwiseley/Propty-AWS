@@ -198,7 +198,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (checked)
                     //uncheck radioZip button
                     radioZip.setChecked(false);
-                // set zip code variable to current location zip.  Using 98765 as a placeholder
+                // set zip code variable to 0 when 'current location' radio is selected
                 zip_val = 0;
                 break;
             case R.id.radioZip:
