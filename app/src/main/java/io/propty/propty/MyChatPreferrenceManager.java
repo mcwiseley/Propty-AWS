@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import info.androidhive.gcm.model.User;
-
 /**
  * Created by Michael on 07/07/16
  */
@@ -26,7 +24,7 @@ public class MyPreferenceManager {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "androidhive_gcm";
+    private static final String PREF_NAME = "propty_chat";
 
     // All Shared Preferences Keys
     private static final String KEY_USER_ID = "user_id";

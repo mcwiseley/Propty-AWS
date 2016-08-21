@@ -28,7 +28,15 @@
     <string name="register_success">Successfully Registered</string>
     <string name="welcome_text">Welcome, %1$s</string>
     <string name="title_activity_preferences">Preferences</string>
-
+    <string name="app_name">Google Cloud Messaging</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">GcmLoginActivity</string>
+    <string name="hint_name">Full Name</string>
+    <string name="hint_email">Email</string>
+    <string name="err_msg_name">Enter full name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="title_activity_chat_room_discussion">ChatRoomDiscussionActivity</string>
+    <string name="action_logout">Logout</string>
     <!-- Google Maps API Key -->
     <string name="google_maps_key">AIzaSyBlTIcWcWnDcAewqmpTF68fYOMIpweG4nQ</string>
 
