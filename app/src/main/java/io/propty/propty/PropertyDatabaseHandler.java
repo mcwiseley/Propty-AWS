@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by hankerins on 6/14/16.
  */
-public class MyDBHandler extends SQLiteOpenHelper {
+public class PropertyDatabaseHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "propertyDB.db";
@@ -37,8 +37,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
     //private double baths, price;
     //string address, int zip
 
-    public MyDBHandler(Context context, String name,
-                       SQLiteDatabase.CursorFactory factory, int version) {
+    public PropertyDatabaseHandler(Context context, String name,
+                                   SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
     }
 

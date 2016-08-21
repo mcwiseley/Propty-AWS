@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.HashMap;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class UserDatabaseHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
@@ -35,6 +35,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
 
+<<<<<<< HEAD:app/src/main/java/io/propty/propty/DatabaseHandler.java
     //Settings Table Column names
     private static final String KEY_KEYWORDS = "keywords";
     private static final String KEY_BEDS = "beds";
@@ -51,6 +52,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 
     public DatabaseHandler(Context context) {
+=======
+    public UserDatabaseHandler(Context context) {
+>>>>>>> 1acad8634be55c36d0275d713c6144ab9803e96f:app/src/main/java/io/propty/propty/UserDatabaseHandler.java
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

@@ -87,7 +87,7 @@ public class UserFunctions {
      * Resets the temporary data stored in SQLite Database
      */
     public boolean logoutUser(Context context) {
-        DatabaseHandler db = new DatabaseHandler(context);
+        UserDatabaseHandler db = new UserDatabaseHandler(context);
         db.resetTables();
         return true;
     }

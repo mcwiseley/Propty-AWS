@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -161,9 +162,15 @@ public class MainActivity extends AppCompatActivity {
                     Intent realtor = new Intent(getApplicationContext(), RealtorListActivity.class);
                     startActivity(realtor);
                 } else if (id == R.id.nav_database) {
-                    Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                    Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
                     startActivity(database);
+                } else if (id == R.id.nav_chat) {
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+                    ChatFragment chatFragment = new ChatFragment();
+                    chatFragment.show(fragmentManager, "Test");
                 }
+
 
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.main_drawer_layout);
@@ -175,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         btnDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent database = new Intent(getApplicationContext(), DatabaseActivity.class);
+                Intent database = new Intent(getApplicationContext(), PropertyDatabaseActivity.class);
                 startActivity(database);
             }
         });

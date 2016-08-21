@@ -351,7 +351,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (Integer.parseInt(res) == 1) {
                         pDialog.setMessage("Loading User Space");
                         pDialog.setTitle("Getting Data");
-                        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                        UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
                         // Clear all previous data in SQlite database.
                         UserFunctions logout = new UserFunctions();

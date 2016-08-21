@@ -209,7 +209,7 @@ public class RegisterActivity extends AppCompatActivity {
                         pDialog.setMessage("Loading Info");
                         registerErrorMsg.setText(R.string.register_success);
 
-                        DatabaseHandler db = new DatabaseHandler(getApplicationContext());
+                        UserDatabaseHandler db = new UserDatabaseHandler(getApplicationContext());
                         JSONObject json_user = json.getJSONObject("user");
 
                         //Removes all the previous data in the SQlite database
